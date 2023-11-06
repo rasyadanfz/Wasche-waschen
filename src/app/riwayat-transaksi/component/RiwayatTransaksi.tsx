@@ -1,7 +1,12 @@
 export default function RiwayatTransaksi() {
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <h1>Riwayat Transaksi</h1>
-        </main>
+        <div className="bg-neutral-100 w-full min-h-screen">
+            <div className="container mx-auto">
+                <h1 className="font-bold text-3xl">Riwayat Transaksi</h1>
+                <div className="">
+                    
+                </div>
+            </div>
+        </div>
     );
 }
