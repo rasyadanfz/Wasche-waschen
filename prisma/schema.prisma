@@ -11,9 +11,9 @@ datasource db {
 }
 
 model User{
-  id String @id @default(uuid()) @map("_id") @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   email String @unique
-  name String
+  nama String
   no_telp String
   hashedPassword String
   role String @default("Customer")
