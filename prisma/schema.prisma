@@ -11,10 +11,16 @@ datasource db {
 }
 
 model User{
-  id String @id @default(uuid()) @map("_id") @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   email String @unique
   name String
   no_telp String
   hashedPassword String
   role String @default("Customer")
+}
+
+model Pakaian {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  price Int
 }
