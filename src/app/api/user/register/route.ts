@@ -6,9 +6,34 @@ const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
     const { email, nama, no_telp, password } = await req.json();
-    if (!email || !nama || !no_telp || !password) {
-        return new NextResponse(
-            "Email, nama, nomor telepon, atau password tidak boleh kosong!",
+    if (!email) {
+        return NextResponse.json(
+            { error: "Email tidak boleh kosong!" },
+            { status: 400 }
+        );
+    } else if (email) {
+        const emailString = email as string;
+        if (!emailString.includes("@")) {
+            return NextResponse.json(
+                { error: "Email tidak valid!" },
+                { status: 400 }
+            );
+        }
+    }
+
+    if (!nama) {
+        return NextResponse.json(
+            { error: "Nama tidak boleh kosong!" },
+            { status: 400 }
+        );
+    } else if (!no_telp) {
+        return NextResponse.json(
+            { error: "Nomor telepon tidak boleh kosong!" },
+            { status: 400 }
+        );
+    } else if (!password) {
+        return NextResponse.json(
+            { error: "Password tidak boleh kosong!" },
             { status: 400 }
         );
     }
@@ -20,7 +45,10 @@ export async function POST(req: NextRequest) {
     });
 
     if (isUserAlreadyExist) {
-        return new NextResponse("Email sudah terdaftar", { status: 400 });
+        return NextResponse.json(
+            { error: "Email sudah terdaftar!" },
+            { status: 400 }
+        );
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -34,7 +62,10 @@ export async function POST(req: NextRequest) {
     });
 
     if (!newUser) {
-        return new NextResponse("Gagal membuat akun", { status: 500 });
+        return NextResponse.json(
+            { error: "Gagal membuat akun!" },
+            { status: 500 }
+        );
     }
 
     return NextResponse.json(newUser);
