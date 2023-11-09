@@ -1,30 +1,15 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import Button from "../../../../../components/Button";
 import FormInput from "../../../../../components/FormInput";
+import toast, { Toaster } from "react-hot-toast";
+import { errorToastOptions, successToastOptions } from "@/toastConfig";
+import { useRouter } from "next/navigation";
 
-type RegisterFormProps = {
-    handleSubmit: (e: FormEvent<HTMLFormElement> | null) => void;
-    setFormData: (formData: {
-        email: string;
-        nama: string;
-        no_telp: string;
-        password: string;
-    }) => void;
-    formData: {
-        email: string;
-        nama: string;
-        no_telp: string;
-        password: string;
-    };
-};
+const RegisterForm = () => {
+    const router = useRouter();
 
-const RegisterForm: React.FC<RegisterFormProps> = ({
-    handleSubmit,
-    setFormData,
-    formData,
-}) => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -34,21 +19,34 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         no_telp: "",
         password: "",
     });
-    const [formEvent, setFormEvent] =
-        useState<FormEvent<HTMLFormElement> | null>(null);
-
-    useEffect(() => {
-        handleSubmit(formEvent);
-    }, [formData]);
 
     const onFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        if (currData.password !== confirmPassword) {
-            alert("Passwords do not match");
+        e.preventDefault();
+
+        if (currData.password && !confirmPassword) {
+            toast.error("Please enter password confirmation!");
             return;
         }
-        console.log("CURR DATA: ", currData);
-        setFormData(currData);
-        setFormEvent(e);
+        if (currData.password !== confirmPassword) {
+            toast.error("Passwords do not match!");
+            return;
+        }
+
+        const response = await fetch("/api/user/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(currData),
+        });
+
+        const res = await response.json();
+        if (res.error) {
+            toast.error(res.error);
+            return;
+        }
+
+        router.push("/login");
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,13 +73,16 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
 
     return (
         <div className="">
+            <div className="error_toast">
+                <Toaster toastOptions={errorToastOptions} />
+            </div>
             <form
                 action=""
                 className="flex flex-col gap-y-2.5"
                 onSubmit={onFormSubmit}
             >
                 <FormInput
-                    type="email"
+                    type="text"
                     id="email"
                     text="Email"
                     placeholder="example@gmail.com"
@@ -108,6 +109,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                     onChange={handleInputChange}
                     placeholder="Enter Password"
                     setShowPassword={handleShowPassword}
+                    isShowPassword={showPassword}
                 ></FormInput>
                 <FormInput
                     type={showConfirmPassword ? "text" : "password"}
@@ -116,8 +118,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                     onChange={handleConfirmPasswordChange}
                     placeholder="Confirm Password"
                     setShowPassword={handleShowConfirmPassword}
+                    isShowPassword={showConfirmPassword}
                 ></FormInput>
-                <Button text="Register" className="py-2 mx-[30px] mt-4" />
+                <Button
+                    text="Register"
+                    className="py-2 mx-[30px] mt-4"
+                    id="submit"
+                />
             </form>
         </div>
     );

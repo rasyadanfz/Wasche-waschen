@@ -1,3 +1,5 @@
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+
 const FormInput = ({
     type,
     id,
@@ -5,6 +7,7 @@ const FormInput = ({
     onChange,
     placeholder,
     setShowPassword,
+    isShowPassword,
 }: {
     type: string;
     id: string;
@@ -12,6 +15,7 @@ const FormInput = ({
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder: string;
     setShowPassword?: () => void;
+    isShowPassword?: boolean;
 }) => {
     return (
         <div className="flex flex-col gap-y-1">
@@ -29,13 +33,32 @@ const FormInput = ({
                     onChange={onChange}
                     placeholder={placeholder}
                 />
-                {(id === "password" || id === "confirmpassword") && (
+                {id === "password" && (
                     <button
+                        id="showPassword"
                         className="ml-5"
                         onClick={setShowPassword}
                         type="button"
                     >
-                        Show
+                        {isShowPassword ? (
+                            <AiOutlineEye />
+                        ) : (
+                            <AiOutlineEyeInvisible />
+                        )}
+                    </button>
+                )}
+                {id === "confirmpassword" && (
+                    <button
+                        id="showConfirmPassword"
+                        className="ml-5"
+                        onClick={setShowPassword}
+                        type="button"
+                    >
+                        {isShowPassword ? (
+                            <AiOutlineEye />
+                        ) : (
+                            <AiOutlineEyeInvisible />
+                        )}
                     </button>
                 )}
             </div>

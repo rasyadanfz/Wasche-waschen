@@ -1,37 +1,29 @@
-"use client";
-
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import Image from "next/image";
 import LoginForm from "./components/LoginForm";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-const LoginPage = () => {
-    const router = useRouter();
-    const [data, setData] = useState({
-        email: "",
-        name: "",
-        no_telp: "",
-        password: "",
-    });
-
-    const loginHandler = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const loginResult = await signIn("credentials", {
-            ...data,
-            redirect: false,
-        });
-        if (loginResult) {
-            router.push("/catalog");
-        }
-    };
+const LoginPage = async () => {
+    // Route
+    const session = await getServerSession(authOptions);
+    if (session) {
+        redirect("/catalog");
+    }
 
     return (
         <div className="lg:grid lg:grid-cols-2 lg:min-h-screen">
             <div className="hidden lg:grid items-center justify-center bg-gradient-to-b from-blue3 from-[10%] to-blue1 via-blue2">
-                <div className="text-white">
-                    <p className="text-[32px] font-bold">Wasche Waschen</p>
-                    <p>Laundry menjadi lebih efisien bersama kami</p>
+                <div className="text-white flex flex-col items-center gap-y-2">
+                    <Image
+                        alt="Logo"
+                        src="/images/Logo2W.svg"
+                        width={200}
+                        height={200}
+                    />
+                    <p className="text-[32px] font-bold mt-2">Wasche Waschen</p>
                 </div>
             </div>
             <div className="flex flex-col justify-center mx-[20px] mt-10">
@@ -40,7 +32,7 @@ const LoginPage = () => {
                         Login
                     </h1>
                     <div className="mt-5 lg:mt-10">
-                        <LoginForm handleSubmit={loginHandler} />
+                        <LoginForm />
                     </div>
                     <div className="flex justify-center mt-3">
                         <div className="flex gap-x-2 text-[13px]">
