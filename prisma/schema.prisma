@@ -18,3 +18,11 @@ model User{
   hashedPassword String
   role String @default("Customer")
 }
+
+model Transaksi{
+  id String @id @default(uuid()) @map("_id") @db.ObjectId
+  userId String
+  total_harga Int
+  status String @default("Not Confirmed")
+  tanggal DateTime @default(now())
+}
