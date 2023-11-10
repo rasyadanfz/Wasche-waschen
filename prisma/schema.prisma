@@ -17,13 +17,40 @@ model User{
   no_telp String
   hashedPassword String
   role String @default("Customer")
+  keranjang Keranjang[]
+}
 
+model Pakaian {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  price Int
+  unit String
+  orderline Orderline?
 }
 
 model Transaksi{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   nama String
-  total_harga Int
   status String @default("Not Confirmed")
   tanggal String
+  keranjang Keranjang @relation(fields: [keranjangId], references: [id])
+  keranjangId String @unique
+}
+
+model Orderline{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  kuantitas Int
+  noted String
+  pakaian Pakaian @relation(fields: [pakaianId], references: [id])
+  pakaianId String @unique
+  keranjang Keranjang @relation(fields: [keranjangId], references: [id])
+  keranjangId String
+}
+
+model Keranjang{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  orderline Orderline[]
+  transaksi Transaksi?
+  user User @relation(fields: [userId], references: [id])
+  userId String @unique
 }
