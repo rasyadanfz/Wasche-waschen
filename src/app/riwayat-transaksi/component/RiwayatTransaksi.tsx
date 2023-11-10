@@ -4,89 +4,40 @@ import { FaSearch } from "react-icons/fa";
 import React, { useEffect, useMemo, useState } from "react";
 import CardRiwayat from "./CardRiwayat";
 
-export default function RiwayatTransaksi() {
-  const data = useMemo(
-    () => [
-      {
-        id: 1,
-        nama: "Laundry 1",
-        tanggal: "2021-10-10",
-        status: "Done",
-      },
-      {
-        id: 2,
-        nama: "Laundry 2",
-        tanggal: "2021-10-11",
-        status: "On Progress",
-      },
-      {
-        id: 3,
-        nama: "Laundry 3",
-        tanggal: "2021-10-12",
-        status: "Not Confirmed",
-      },
-      {
-        id: 4,
-        nama: "Laundry 4",
-        tanggal: "2021-10-13",
-        status: "Done",
-      },
-      {
-        id: 5,
-        nama: "Laundry 5",
-        tanggal: "2021-10-14",
-        status: "Done",
-      },
-      {
-        id: 6,
-        nama: "Laundry 6",
-        tanggal: "2021-10-15",
-        status: "Done",
-      },
-      {
-        id: 7,
-        nama: "Laundry 7",
-        tanggal: "2021-10-16",
-        status: "Done",
-      },
-      {
-        id: 8,
-        nama: "Laundry 8",
-        tanggal: "2021-10-17",
-        status: "Done",
-      },
-      {
-        id: 9,
-        nama: "Laundry 9",
-        tanggal: "2021-10-18",
-        status: "Done",
-      },
-      {
-        id: 10,
-        nama: "Laundry 10",
-        tanggal: "2021-10-19",
-        status: "Done",
-      },
-      {
-        id: 11,
-        nama: "Laundry 11",
-        tanggal: "2021-10-20",
-        status: "Done",
-      },
-      {
-        id: 12,
-        nama: "Laundry 12",
-        tanggal: "2021-10-21",
-        status: "Done",
-      },
-    ],
-    []
-  );
 
+interface Transaksi {
+  id: string
+  nama: string
+  tanggal: string
+  status: string
+  total_harga: Number
+}
+
+async function getDataTransaksi() {
+  const res = await fetch("/api/transaksi", {
+    method: "GET",
+  });
+  const dataTransaksi = await res.json();
+  return dataTransaksi;
+}
+
+export default function RiwayatTransaksi() {
+
+  const [dataTransaksi, setDataTransaksi] = useState([]);
   const [query, setQuery] = useState("");
-  const [filteredData, setFilteredData] = useState(data); // State untuk menyimpan data yang telah difilter
+  const [filteredData, setFilteredData] = useState(dataTransaksi); // State untuk menyimpan data yang telah difilter
   const [currentPage, setCurrentPage] = useState(1); // State untuk menyimpan data halaman yang sedang dibuka
   const itemsPerPage = 5; // Jumlah item per halaman
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getDataTransaksi();
+      setDataTransaksi(data);
+      console.log(data);
+    };
+
+    fetchData();
+  }, []);
 
   const [statusFilters, setStatusFilters] = useState({
     done: false,
@@ -97,7 +48,7 @@ export default function RiwayatTransaksi() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const handleSearch = () => {
-    const result = data.filter((item) => {
+    const result = dataTransaksi.filter((item: Transaksi) => {
       const nameMatch = item.nama.toLowerCase().includes(query.toLowerCase());
 
       const statusMatch =
@@ -127,8 +78,8 @@ export default function RiwayatTransaksi() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   useEffect(() => {
-    setFilteredData(data);
-  }, [data]);
+    setFilteredData(dataTransaksi);
+  }, [dataTransaksi]);
 
   return (
     <>
@@ -228,7 +179,7 @@ export default function RiwayatTransaksi() {
       </div>
       <div className="container mx-auto flex flex-col gap-4">
         {currentItems.length > 0 ? (
-          currentItems.map((item) => (
+          currentItems.map((item: Transaksi) => (
             <CardRiwayat
               key={item.id}
               id={item.id}

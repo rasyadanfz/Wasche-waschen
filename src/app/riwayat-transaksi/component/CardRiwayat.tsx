@@ -1,7 +1,7 @@
 import Status from "./Status";
 
 interface CardRiwayatProps {
-  id: number;
+  id: string;
   nama: string;
   tanggal: string;
   status: string;
