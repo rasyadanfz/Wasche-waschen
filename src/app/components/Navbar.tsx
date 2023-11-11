@@ -41,14 +41,14 @@ const Navbar = () => {
     },
     {
       label: "Riwayat Transaksi",
-      link: "/explore",
+      link: "/riwayat-transaksi",
     },
   ];
 
   return (
     <>
       <div
-        className={`fixed top-0 left-0 w-full flex items-center duration-500 py-4 ${
+        className={`fixed top-0 left-0 w-full flex items-center duration-500 py-4 shadow-md ${
           isTop ? "bg-transparent" : "bg-primary"
         }`}
       >
@@ -77,7 +77,7 @@ const Navbar = () => {
                         isTop ? "text-primary" : "text-white"
                       }
                       ${
-                        pathName === item.link && "font-semibold"
+                        pathName === item.link && "font-semibold underline"
                       }`}
                     >
                       {item.label}
@@ -85,7 +85,9 @@ const Navbar = () => {
                   </Link>
                 );
               })}
-              <div className="px-7 py-2 bg-white text-primary font-bold cursor-pointer transition-colors duration-500 hover:bg-primary hover:text-white">
+              <div className={`px-7 py-2 font-bold cursor-pointer transition-colors duration-500 ${
+                isTop ? "bg-primary text-white hover:bg-white hover:text-primary" : "bg-white text-primary hover:bg-primary hover:text-white"
+              }`}>
                 MASUK
               </div>
             </div>
