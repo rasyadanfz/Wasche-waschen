@@ -10,10 +10,18 @@ async function main() {
     },
   });
 
+  const pakaian2 = await prisma.pakaian.findFirst({
+    where: {
+      name: "Jaket",
+    },
+  });
+
   // take userId from user table
-  const idPakaian = pakaian?.id;
+  const idPakaian = pakaian?.id || "";
+  const idPakaian2 = pakaian2?.id || "";
 
   const totalHarga = pakaian ? pakaian.price * 3 : 0;
+  const totalHarga2 = pakaian2 ? pakaian2.price * 3 : 0;
 
   // upsert user
   const user = await prisma.user.upsert({
@@ -24,25 +32,47 @@ async function main() {
       keranjang: {
         create: {
           orderlines: {
-            create: {
-              kuantitas: 3,
-              total_harga: totalHarga,
-              noted: "Sample Note",
-              pakaian: {
-                connect: {
-                  id: idPakaian,
+            createMany: {
+              data: [
+                {
+                  kuantitas: 3,
+                  total_harga: totalHarga,
+                  noted: "Sample Note",
+                  pakaianId: idPakaian,
                 },
-              },
+                {
+                  kuantitas: 3,
+                  total_harga: totalHarga2,
+                  noted: "Sample Note",
+                  pakaianId: idPakaian2,
+                },
+              ]
             },
           },
         },
       },
-      listTransaksi: {
-        create: {
-          nama: "Sample Transaction",
-          total_harga: totalHarga,
-          status: "Not Confirmed",
-          tanggal: "2023-11-11", // Replace with actual date
+      Transaksi: {
+        createMany: {
+          data: [
+            {
+              nama: "Sample Transaction",
+              total_harga: totalHarga,
+              status: "Done",
+              tanggal: "2023-11-11", // Replace with actual date
+            },
+            {
+              nama: "Sample Transaction 2",
+              total_harga: totalHarga,
+              status: "On Progress",
+              tanggal: "2023-11-11", // Replace with actual date
+            },
+            {
+              nama: "Sample Transaction 3",
+              total_harga: totalHarga2,
+              status: "Not Confirmed",
+              tanggal: "2023-11-11", // Replace with actual date
+            }
+          ]
         },
       },
     },
@@ -54,25 +84,47 @@ async function main() {
       keranjang: {
         create: {
           orderlines: {
-            create: {
-              kuantitas: 3,
-              total_harga: totalHarga,
-              noted: "Sample Note",
-              pakaian: {
-                connect: {
-                  id: idPakaian,
+            createMany: {
+              data: [
+                {
+                  kuantitas: 3,
+                  total_harga: totalHarga,
+                  noted: "Sample Note",
+                  pakaianId: idPakaian,
                 },
-              },
-            },
+                {
+                  kuantitas: 3,
+                  total_harga: totalHarga2,
+                  noted: "Sample Note",
+                  pakaianId: idPakaian2,
+                },
+              ]
+            }
           },
         },
       },
-      listTransaksi: {
-        create: {
-          nama: "Sample Transaction",
-          total_harga: totalHarga,
-          status: "Not Confirmed",
-          tanggal: "2023-11-11", // Replace with actual date
+      Transaksi: {
+        createMany: {
+          data: [
+            {
+              nama: "Sample Transaction",
+              total_harga: totalHarga,
+              status: "Done",
+              tanggal: "2023-11-11", // Replace with actual date
+            },
+            {
+              nama: "Sample Transaction 2",
+              total_harga: totalHarga,
+              status: "On Progress",
+              tanggal: "2023-11-11", // Replace with actual date
+            },
+            {
+              nama: "Sample Transaction 3",
+              total_harga: totalHarga2,
+              status: "Not Confirmed",
+              tanggal: "2023-11-11", // Replace with actual date
+            }
+          ]
         },
       },
     },
