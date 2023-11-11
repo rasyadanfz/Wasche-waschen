@@ -3,9 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
-  const [pathName, setPathName] = useState();
+  const [pathName, setPathName] = useState("");
   const [isTop, setIsTop] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -33,6 +34,12 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const currentPathName = usePathname();
+
+  useEffect(() => {
+    setPathName(currentPathName);
+  }, [currentPathName]);
 
   const navbarData = [
     {
@@ -77,7 +84,7 @@ const Navbar = () => {
                         isTop ? "text-primary" : "text-white"
                       }
                       ${
-                        pathName === item.link && "font-semibold"
+                        pathName === item.link && "font-semibold underline"
                       }`}
                     >
                       {item.label}
