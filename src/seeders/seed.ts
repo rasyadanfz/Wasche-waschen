@@ -3,53 +3,78 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  // Fetch a Pakaian record to get its ID
+  // take pakaian from pakaian table
   const pakaian = await prisma.pakaian.findFirst({
-    select: {
-      id: true,
+    where: {
+      name: "Sepatu",
     },
   });
 
-  if (!pakaian) {
-    console.error("No Pakaian found.");
-    return;
-  }
+  // take userId from user table
+  const idPakaian = pakaian?.id;
 
-  const pakaianId = pakaian.id;
+  const totalHarga = pakaian ? pakaian.price * 3 : 0;
 
-  const user1 = await prisma.user.upsert({
-    where: { email: "test12345@gmail.com" },
+  // upsert user
+  const user = await prisma.user.upsert({
+    where: {
+      email: "test12345@gmail.com",
+    },
     update: {
-      name: "Ahmad",
       keranjang: {
         create: {
-          transaksi: {
+          orderlines: {
             create: {
-              nama: "Transaksi 0",
-              tanggal: "2021-08-01",
-              status: "Not Confirmed",
-            },
-          },
-          orderline: {
-            createMany: {
-              data: [
-                {
-                  pakaianId: pakaianId,
-                  kuantitas: 3,
-                  noted: "test",
+              kuantitas: 3,
+              total_harga: totalHarga,
+              noted: "Sample Note",
+              pakaian: {
+                connect: {
+                  id: idPakaian,
                 },
-              ],
+              },
             },
           },
+        },
+      },
+      listTransaksi: {
+        create: {
+          nama: "Sample Transaction",
+          total_harga: totalHarga,
+          status: "Not Confirmed",
+          tanggal: "2023-11-11", // Replace with actual date
         },
       },
     },
     create: {
       email: "test12345@gmail.com",
-      name: "test12345",
-      hashedPassword: "test12345",
-      role: "Customer",
-      no_telp: "08123456789",
+      name: "John Doe",
+      no_telp: "123456789",
+      hashedPassword: "hashed_password", // Replace with actual hashed password
+      keranjang: {
+        create: {
+          orderlines: {
+            create: {
+              kuantitas: 3,
+              total_harga: totalHarga,
+              noted: "Sample Note",
+              pakaian: {
+                connect: {
+                  id: idPakaian,
+                },
+              },
+            },
+          },
+        },
+      },
+      listTransaksi: {
+        create: {
+          nama: "Sample Transaction",
+          total_harga: totalHarga,
+          status: "Not Confirmed",
+          tanggal: "2023-11-11", // Replace with actual date
+        },
+      },
     },
   });
 }
