@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -22,6 +23,9 @@ async function main() {
 
   const totalHarga = pakaian ? pakaian.price * 3 : 0;
   const totalHarga2 = pakaian2 ? pakaian2.price * 3 : 0;
+
+  const password = "fuckyou"
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   // upsert user
   const user = await prisma.user.upsert({
@@ -80,7 +84,7 @@ async function main() {
       email: "test12345@gmail.com",
       name: "John Doe",
       no_telp: "123456789",
-      hashedPassword: "hashed_password", // Replace with actual hashed password
+      hashedPassword: hashedPassword, // Replace with actual hashed password
       keranjang: {
         create: {
           orderlines: {
