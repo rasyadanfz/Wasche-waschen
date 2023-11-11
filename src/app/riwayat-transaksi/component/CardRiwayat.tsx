@@ -5,6 +5,7 @@ interface CardRiwayatProps {
   nama: string;
   tanggal: string;
   status: string;
+  total_harga: Number;
 }
 
 export default function CardRiwayat(props: CardRiwayatProps) {
@@ -16,6 +17,12 @@ export default function CardRiwayat(props: CardRiwayatProps) {
         <p className="text-sm text-neutral-500">Kode Transaksi: {props.id}</p>
         <p className="text-sm text-neutral-500">
           Tanggal Transaksi: {props.tanggal}
+        </p>
+        <p className="text-sm text-neutral-500 text-right">
+          {props.total_harga.toLocaleString("id-ID", {
+            style: "currency",
+            currency: "IDR",
+          })}
         </p>
         {/* show status */}
         <Status status={props.status} />

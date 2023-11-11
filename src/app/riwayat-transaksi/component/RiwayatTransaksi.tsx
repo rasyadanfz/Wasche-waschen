@@ -186,6 +186,7 @@ export default function RiwayatTransaksi() {
               nama={item.nama}
               tanggal={item.tanggal}
               status={item.status}
+              total_harga={item.total_harga}
             />
           ))
         ) : (
