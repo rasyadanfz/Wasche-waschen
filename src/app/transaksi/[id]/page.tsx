@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
 import { use, useEffect, useState } from "react";
+import StatusDetailTransaksi from "./components/StatusDetailTransaksi";
 
 type DetailTransaksiPageProps = {
   params: {
@@ -15,8 +16,8 @@ interface Transaksi {
   status: string;
   total_harga: Number;
   userId: string;
+  nama_customer: string;
 }
-
 
 export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
   const { id } = props.params;
@@ -25,7 +26,7 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/api/detail-transaksi?id=${id}`, {
+        const response = await fetch(`/api/transaksi?id=${id}`, {
           method: "GET",
         });
         const result = await response.json();
@@ -41,25 +42,29 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
 
   return (
     <>
-      <h1 className="">Detail Transaksi</h1>
-      {data ? (
-        <>
-          <p>Detail transaksi dengan id: {id}</p>
-          {data.nama ? (
-            <>
-              <p>Nama: {data.nama}</p>
-              <p>Tanggal: {data.tanggal}</p>
-              <p>Status: {data.status}</p>
-              <p>Total Harga: {data.total_harga.toLocaleString()}</p>
-              <p>User ID: {data.userId}</p>
-            </>
-          ) : (
-            <p>Data tidak ditemukan</p>
-          )}
-        </>
-      ) : (
-        <p className="">Loading...</p>
-      )}
+      <div>
+        <div className="w-full mb-[50px]">
+          <div className="container mx-auto">
+            <h1 className="font-bold text-3xl mt-[100px] mb-16">Detail Transaksi</h1>
+            {data ? (
+              <>
+                <div className="flex flex-row gap-10 mb-12">
+                  <h2 className="text-xl font-semibold">{data.nama}</h2>
+                  <StatusDetailTransaksi status={data.status} />
+                </div>
+                <div className="flex flex-col gap-5">
+                  <p>Kode Transaksi: {data.id}</p>
+                  <p>Tanggal: {data.tanggal}</p>
+                  <p>Nama Customer: {data.nama_customer}</p>
+                  <p>Daftar Pakaian:</p>
+                </div>
+              </>
+            ) : (
+              <p className="">Loading...</p>
+            )}
+          </div>
+        </div>
+      </div>
     </>
   );
 }
