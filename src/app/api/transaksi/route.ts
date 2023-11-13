@@ -8,43 +8,52 @@ export async function GET(req: NextRequest) {
   const id = searchParams.get("id");
 
   if (id) {
-    const detailTransaksi = await prisma.transaksi.findUnique({
-      where: {
-        id: id as string,
-      }, include: {
-        user: true,
-        orderlines: {
-          include: {
-            pakaian: true,
-          }
-        }
+    try {
+      const detailTransaksi = await prisma.transaksi.findUnique({
+        where: {
+          id: id as string,
+        },
+        include: {
+          user: true,
+          orderlines: {
+            include: {
+              pakaian: true,
+            },
+          },
+        },
+      });
+
+      if (!detailTransaksi) {
+        return NextResponse.json(
+          { error: "Transaksi not found." },
+          { status: 404 }
+        );
       }
-    });
 
-    // return not found
-    if (!detailTransaksi) {
-      return NextResponse.next();
+      const formattedData = {
+        id: detailTransaksi.id,
+        nama: detailTransaksi.nama,
+        total_harga: detailTransaksi.total_harga,
+        status: detailTransaksi.status,
+        tanggal: detailTransaksi.tanggal,
+        userId: detailTransaksi.userId,
+        nama_customer: detailTransaksi.user?.name,
+        orderlines: detailTransaksi.orderlines.map((item) => {
+          return {
+            id: item.id,
+            kuantitas: item.kuantitas,
+            pakaian: item.pakaianId,
+            nama_pakaian: item.pakaian?.name,
+            total_harga: item.total_harga,
+          };
+        }),
+      };
+
+      return NextResponse.json(formattedData, { status: 200 });
+    } catch (error) {
+      console.error(error);
+      return NextResponse.json({ error: "Error occured." }, { status: 403 });
     }
-
-    const formattedData = {
-      id: detailTransaksi.id,
-      nama: detailTransaksi.nama,
-      total_harga: detailTransaksi.total_harga,
-      status: detailTransaksi.status,
-      tanggal: detailTransaksi.tanggal,
-      userId: detailTransaksi.userId,
-      nama_customer: detailTransaksi.user?.name,
-      orderlines: detailTransaksi.orderlines.map((item) => {
-        return {
-          id: item.id,
-          kuantitas: item.kuantitas,
-          pakaian: item.pakaianId,
-          total_harga: item.total_harga,
-        };
-      }),
-    }
-
-    return NextResponse.json(formattedData, { status: 200 });
   }
 
   try {
@@ -70,6 +79,67 @@ export async function GET(req: NextRequest) {
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: "Error occured." }, { status: 403 });
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+
+export async function PUT(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get("id");
+
+  if (!id) {
+    return NextResponse.json({ error: "Missing ID parameter." }, { status: 400 });
+  }
+
+  try {
+    const body = await req.json(); // Use req.json() to parse the JSON body
+
+    if (!body) {
+      return NextResponse.json({ error: "Invalid or missing JSON body." }, { status: 400 });
+    }
+
+    const updatedTransaksi = await prisma.transaksi.update({
+      where: {
+        id: id as string,
+      },
+      data: {
+        status: body.status,
+      },
+      include: {
+        user: true,
+        orderlines: {
+          include: {
+            pakaian: true,
+          },
+        },
+      },
+    });
+
+    const formattedData = {
+      id: updatedTransaksi.id,
+      nama: updatedTransaksi.nama,
+      total_harga: updatedTransaksi.total_harga,
+      status: updatedTransaksi.status,
+      tanggal: updatedTransaksi.tanggal,
+      userId: updatedTransaksi.userId,
+      nama_customer: updatedTransaksi.user?.name,
+      orderlines: updatedTransaksi.orderlines.map((item) => {
+        return {
+          id: item.id,
+          kuantitas: item.kuantitas,
+          pakaian: item.pakaianId,
+          nama_pakaian: item.pakaian?.name,
+          total_harga: item.total_harga,
+        };
+      }),
+    };
+
+    return NextResponse.json(formattedData, { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: "Error occurred while updating the status." }, { status: 500 });
   } finally {
     await prisma.$disconnect();
   }
