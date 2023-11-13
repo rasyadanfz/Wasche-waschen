@@ -13,6 +13,11 @@ export async function GET(req: NextRequest) {
         id: id as string,
       }, include: {
         user: true,
+        orderlines: {
+          include: {
+            pakaian: true,
+          }
+        }
       }
     });
 
@@ -29,6 +34,14 @@ export async function GET(req: NextRequest) {
       tanggal: detailTransaksi.tanggal,
       userId: detailTransaksi.userId,
       nama_customer: detailTransaksi.user?.name,
+      orderlines: detailTransaksi.orderlines.map((item) => {
+        return {
+          id: item.id,
+          kuantitas: item.kuantitas,
+          pakaian: item.pakaianId,
+          total_harga: item.total_harga,
+        };
+      }),
     }
 
     return NextResponse.json(formattedData, { status: 200 });

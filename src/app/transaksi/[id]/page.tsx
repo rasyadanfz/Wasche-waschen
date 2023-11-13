@@ -19,6 +19,14 @@ interface Transaksi {
   nama_customer: string;
 }
 
+interface Orderline {
+  id: string;
+  kuantitas: number;
+  total_harga: number;
+  pakaianId: string;
+  nama_pakaian: string;
+}
+
 export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
   const { id } = props.params;
   const [data, setData] = useState<Transaksi>();
