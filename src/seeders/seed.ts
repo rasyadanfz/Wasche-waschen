@@ -33,28 +33,6 @@ async function main() {
       email: "test12345@gmail.com",
     },
     update: {
-      keranjang: {
-        create: {
-          orderlines: {
-            createMany: {
-              data: [
-                {
-                  kuantitas: 3,
-                  total_harga: totalHarga,
-                  noted: "Sample Note",
-                  pakaianId: idPakaian,
-                },
-                {
-                  kuantitas: 3,
-                  total_harga: totalHarga2,
-                  noted: "Sample Note",
-                  pakaianId: idPakaian2,
-                },
-              ]
-            },
-          },
-        },
-      },
       Transaksi: {
         createMany: {
           data: [
@@ -62,19 +40,19 @@ async function main() {
               nama: "Sample Transaction",
               total_harga: totalHarga,
               status: "Done",
-              tanggal: "2023-11-11", // Replace with actual date
+              tanggal: "2023-11-11",
             },
             {
               nama: "Sample Transaction 2",
               total_harga: totalHarga,
               status: "On Progress",
-              tanggal: "2023-11-11", // Replace with actual date
+              tanggal: "2023-11-11",
             },
             {
               nama: "Sample Transaction 3",
               total_harga: totalHarga2,
               status: "Not Confirmed",
-              tanggal: "2023-11-11", // Replace with actual date
+              tanggal: "2023-11-11",
             }
           ]
         },
@@ -114,19 +92,19 @@ async function main() {
               nama: "Sample Transaction",
               total_harga: totalHarga,
               status: "Done",
-              tanggal: "2023-11-11", // Replace with actual date
+              tanggal: "2023-11-11",
             },
             {
               nama: "Sample Transaction 2",
               total_harga: totalHarga,
               status: "On Progress",
-              tanggal: "2023-11-11", // Replace with actual date
+              tanggal: "2023-11-11",
             },
             {
               nama: "Sample Transaction 3",
               total_harga: totalHarga2,
               status: "Not Confirmed",
-              tanggal: "2023-11-11", // Replace with actual date
+              tanggal: "2023-11-11",
             }
           ]
         },
