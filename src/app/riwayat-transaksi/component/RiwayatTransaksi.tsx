@@ -4,13 +4,12 @@ import { FaSearch } from "react-icons/fa";
 import React, { useEffect, useMemo, useState } from "react";
 import CardRiwayat from "./CardRiwayat";
 
-
 interface Transaksi {
-  id: string
-  nama: string
-  tanggal: string
-  status: string
-  total_harga: Number
+  id: string;
+  nama: string;
+  tanggal: string;
+  status: string;
+  total_harga: Number;
 }
 
 async function getDataTransaksi() {
@@ -22,18 +21,24 @@ async function getDataTransaksi() {
 }
 
 export default function RiwayatTransaksi() {
-
   const [dataTransaksi, setDataTransaksi] = useState([]);
   const [query, setQuery] = useState("");
   const [filteredData, setFilteredData] = useState(dataTransaksi); // State untuk menyimpan data yang telah difilter
   const [currentPage, setCurrentPage] = useState(1); // State untuk menyimpan data halaman yang sedang dibuka
+  const [loading, setLoading] = useState(true);
   const itemsPerPage = 5; // Jumlah item per halaman
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getDataTransaksi();
-      setDataTransaksi(data);
-      console.log(data);
+      try {
+        const data = await getDataTransaksi();
+        setDataTransaksi(data);
+        setFilteredData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); // Set loading to false when fetch is complete
+      }
     };
 
     fetchData();
@@ -177,22 +182,29 @@ export default function RiwayatTransaksi() {
           </div>
         </div>
       </div>
-      <div className="container mx-auto flex flex-col gap-4">
-        {currentItems.length > 0 ? (
-          currentItems.map((item: Transaksi) => (
-            <CardRiwayat
-              key={item.id}
-              id={item.id}
-              nama={item.nama}
-              tanggal={item.tanggal}
-              status={item.status}
-              total_harga={item.total_harga}
-            />
-          ))
-        ) : (
-          <h2 className="font-semibold text-center">Tidak ada transaksi</h2>
-        )}
-      </div>
+
+      {loading ? (
+        <p className="text-center animate-pulse font-semibold">Loading...</p>
+      ) : (
+        <div className="container mx-auto flex flex-col gap-4">
+          {currentItems.length > 0 ? (
+            currentItems.map((item: Transaksi) => (
+              <CardRiwayat
+                key={item.id}
+                id={item.id}
+                nama={item.nama}
+                tanggal={item.tanggal}
+                status={item.status}
+                total_harga={item.total_harga}
+              />
+            ))
+          ) : (
+            <h2 className="font-semibold text-center text-red-500">
+              Tidak ada transaksi
+            </h2>
+          )}
+        </div>
+      )}
 
       {/* Pagination Controls */}
       <div className="flex justify-center mt-5 gap-4 mb-5 ">
