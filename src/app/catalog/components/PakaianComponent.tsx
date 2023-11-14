@@ -1,7 +1,7 @@
 import Button from "@/components/Button"
 import Image from "next/image"
 
-const Pakaian = ({ pakaian }) => {
+const PakaianComponent = ({ pakaian }) => {
     return (
         <div className="p-4 gap-x-[800px] border border-slate-300 flex justify-between my-5 items-start">
             <div className="flex gap-4">
@@ -24,4 +24,4 @@ const Pakaian = ({ pakaian }) => {
     )
 }
 
-export default Pakaian
+export default PakaianComponent
