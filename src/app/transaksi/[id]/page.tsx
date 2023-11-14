@@ -110,7 +110,7 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
               Detail Transaksi
             </h1>
             {loading ? (
-              <p className="">Loading...</p>
+              <p className="animate-pulse font-semibold">Loading...</p>
             ) : error ? (
               <p className="text-red-500">{error}</p>
             ) : (

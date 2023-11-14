@@ -3,9 +3,9 @@ import { Inter, Gloria_Hallelujah } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 
-// const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
 
-const inter = Gloria_Hallelujah({ subsets: ["latin"], weight: '400' });
+// const inter = Gloria_Hallelujah({ subsets: ["latin"], weight: '400' });
 
 export const metadata: Metadata = {
   title: "Wasche Waschen",
