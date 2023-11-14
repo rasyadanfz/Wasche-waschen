@@ -4,6 +4,7 @@ import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import PakaianComponent from "./PakaianComponent";
 import { Pakaian } from "@prisma/client";
+import Pagination from "./Pagination";
 
 async function getDataPakaian() {
   const res = await fetch("/api/pakaian", {
@@ -16,6 +17,18 @@ async function getDataPakaian() {
 
 const KatalogPakaian = () => {
   const [dataPakaian, setDataPakaian] = useState([]);
+  const [query, setQuery] = useState("");
+  const [filteredData, setFilteredData] = useState(dataPakaian);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const onHandlePage = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  }
 
   useEffect(() => {
     const fetchData = async() => {
@@ -27,9 +40,6 @@ const KatalogPakaian = () => {
     fetchData();
   }, []);
 
-  const [query, setQuery] = useState("");
-  const [filteredData, setFilteredData] = useState(dataPakaian);
-
   const handleSearch = () => {
     const result = dataPakaian.filter((item: Pakaian) => {
       const nameMatch = item.name.toLowerCase().includes(query.toLowerCase());
@@ -37,7 +47,6 @@ const KatalogPakaian = () => {
     });
 
     setFilteredData(result);
-    console.log(result);
   }
 
   return (
@@ -65,12 +74,19 @@ const KatalogPakaian = () => {
             </div>
           </div>
           <div>
-            {filteredData.map((pakaian: Pakaian) => (
+            {currentItems.map((pakaian: Pakaian) => (
               <PakaianComponent pakaian={pakaian} key={pakaian.id} />
               ))}
           </div>
         </div>
       </div>
+
+      <Pagination
+       filteredData={filteredData}
+       currentPage={currentPage}
+       itemsPerPage={itemsPerPage}
+       onHandlePage={onHandlePage}
+       />
     </>
   )
 }
