@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
-    const { email, nama, no_telp, password } = await req.json();
+    const { email, name, no_telp, password } = await req.json();
     if (!email) {
         return NextResponse.json(
             { error: "Email tidak boleh kosong!" },
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
         }
     }
 
-    if (!nama) {
+    if (!name) {
         return NextResponse.json(
             { error: "Nama tidak boleh kosong!" },
             { status: 400 }
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
     const newUser = await prisma.user.create({
         data: {
             email: email,
-            name: nama,
+            name: name,
             no_telp: no_telp,
             hashedPassword: hashedPassword,
         },

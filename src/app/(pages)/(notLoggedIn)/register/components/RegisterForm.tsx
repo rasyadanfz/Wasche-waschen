@@ -15,7 +15,7 @@ const RegisterForm = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [currData, setCurrData] = useState({
         email: "",
-        nama: "",
+        name: "",
         no_telp: "",
         password: "",
     });
@@ -90,7 +90,7 @@ const RegisterForm = () => {
                 ></FormInput>
                 <FormInput
                     type="text"
-                    id="nama"
+                    id="name"
                     text="Nama"
                     placeholder="Enter Your Name"
                     onChange={handleInputChange}
