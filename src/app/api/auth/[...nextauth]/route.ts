@@ -83,7 +83,7 @@ export const authOptions: NextAuthOptions = {
                 },
                 select: {
                     email: true,
-                    nama: true,
+                    name: true,
                     no_telp: true,
                     role: true,
                 },
