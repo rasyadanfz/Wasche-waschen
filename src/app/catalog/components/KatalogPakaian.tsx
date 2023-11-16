@@ -4,7 +4,8 @@ import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import PakaianComponent from "./PakaianComponent";
 import { Pakaian } from "@prisma/client";
-import Pagination from "./Pagination";
+import Pagination from "../../../components/Pagination";
+import Dropdown from "@/components/Dropdown";
 
 async function getDataPakaian() {
   const res = await fetch("/api/pakaian", {
@@ -49,6 +50,12 @@ const KatalogPakaian = () => {
     setFilteredData(result);
   }
 
+  const options = [
+    { value: "option1", label: "Option 1"},
+    { value: "option2", label: "Option 2"},
+    { value: "option3", label: "Option 3"},
+  ]
+
   return (
     <>
       <div className="w-full min-h-screen mb-[50px]">
@@ -72,6 +79,7 @@ const KatalogPakaian = () => {
                 <FaSearch size={18} />
               </button>
             </div>
+            <Dropdown options={options} />
           </div>
           <div>
             {currentItems.map((pakaian: Pakaian) => (
