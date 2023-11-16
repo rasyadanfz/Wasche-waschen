@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Provider from "@/context/Provider";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import { usePathname } from "next/navigation";
@@ -21,6 +22,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+<<<<<<< HEAD
 
   const pathName = usePathname();
   return (
@@ -31,4 +33,13 @@ export default function RootLayout({
       </body>
     </html>
   );
+=======
+    return (
+        <html lang="en">
+            <Provider>
+                <body className={inter.className}>{children}</body>
+            </Provider>
+        </html>
+    );
+>>>>>>> 5e766142c349cf3100ffcfdcf65eb32f03087049
 }
