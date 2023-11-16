@@ -2,7 +2,6 @@
 
 import { use, useEffect, useState } from "react";
 import StatusDetailTransaksi from "./components/StatusDetailTransaksi";
-import SuccessMessage from "./components/SuccessMessage";
 
 type DetailTransaksiPageProps = {
   params: {
