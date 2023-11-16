@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import Button from "../../../../../components/Button";
 import FormInput from "../../../../../components/FormInput";
 import toast, { Toaster } from "react-hot-toast";
-import { errorToastOptions, successToastOptions } from "@/toastConfig";
+import { errorToastOptions } from "@/toastConfig";
 import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {

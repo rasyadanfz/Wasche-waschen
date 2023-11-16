@@ -1,4 +1,3 @@
-import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import LoginForm from "./components/LoginForm";
