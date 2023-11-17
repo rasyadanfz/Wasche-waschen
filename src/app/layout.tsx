@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import Provider from "@/context/Provider";
@@ -25,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Provider>
-        <body className={`${raleway.className} min-h-[1000px]`}>
+        <body className={`${raleway.className}`}>
           <Navbar />
           {children}
         </body>

@@ -12,7 +12,7 @@ export const successToastOptions: DefaultToastOptions = {
 
 export const errorToastOptions: DefaultToastOptions = {
     duration: 4000,
-    position: "top-right",
+    position: "top-center",
     style: {
         background: "#25AAE1",
         color: "#FFFFFF",

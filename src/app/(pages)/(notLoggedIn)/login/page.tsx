@@ -13,34 +13,42 @@ const LoginPage = async () => {
     }
 
     return (
-        <div className="lg:grid lg:grid-cols-2 lg:min-h-screen">
-            <div className="hidden lg:grid items-center justify-center bg-gradient-to-b from-blue3 from-[10%] to-blue1 via-blue2">
-                <div className="text-white flex flex-col items-center gap-y-2">
-                    <Image
-                        alt="Logo"
-                        src="/images/Logo2W.svg"
-                        width={200}
-                        height={200}
-                    />
-                    <p className="text-[32px] font-bold mt-2">Wasche Waschen</p>
+        <div className="lg:mt-5 lg:mx-20">
+            <div className="hidden lg:flex justify-between items-center mb-5">
+                <div className="text-h3 font-itim text-primary-400">
+                    Wäsche Waschen
                 </div>
+                <Link
+                    href={"/register"}
+                    className="text-white text-h6 font-bold px-12 py-1.5 bg-primary-400 hover:bg-primary-300 active:bg-primary-300 rounded-md font-raleway"
+                >
+                    Register
+                </Link>
             </div>
-            <div className="flex flex-col justify-center mx-[20px] mt-10">
-                <div className="items-center mx-4 lg:mx-[120px]">
-                    <h1 className="text-[26px] sm:text-[28px] md:text-[30px] font-bold">
-                        Login
-                    </h1>
-                    <div className="mt-5 lg:mt-10">
+            <div className="lg:grid lg:grid-cols-2 lg:gap-x-12 lg:items-center lg:pb-6 lg:mt-14">
+                <div className="flex flex-col px-10 py-4 mt-3 mr-2 font-raleway border-2 border-black rounded-lg">
+                    <div className="text-h3 font-bold">Login</div>
+                    <p className="text-h6 mt-2">Hi, Welcome Back👋</p>
+                    <div className="mt-4">
                         <LoginForm />
                     </div>
-                    <div className="flex justify-center mt-3">
-                        <div className="flex gap-x-2 text-[13px]">
-                            <p>Belum punya akun?</p>
-                            <Link href={"/register"} className="underline">
-                                Daftar sekarang
-                            </Link>
-                        </div>
+                    <div className="text-center mt-3 text-body flex justify-center gap-x-1">
+                        <p>Not registered yet?</p>
+                        <Link
+                            href={"/register"}
+                            className="text-secondary-400 font-medium"
+                        >
+                            Register
+                        </Link>
                     </div>
+                </div>
+                <div className="hidden lg:flex justify-center">
+                    <Image
+                        alt="Man Fixing a Washing Machine"
+                        src="/images/Login Image.svg"
+                        width={500}
+                        height={400}
+                    />
                 </div>
             </div>
         </div>

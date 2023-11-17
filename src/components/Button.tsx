@@ -1,19 +1,32 @@
-const Button = ({
-    text,
-    className,
-    onClick,
-    id,
-}: {
+interface ButtonProps {
     text?: string;
     className?: string;
     onClick?: () => void;
     id?: string;
-}) => {
+    type?: string;
+    children?: React.ReactNode;
+}
+
+const Button = ({
+    text = "Button",
+    className,
+    onClick,
+    id,
+    type = "primary",
+}: ButtonProps) => {
+    const baseClassName =
+        "text-button px-4 py-2 rounded-md w-full h-full font-raleway";
+
+    const buttonClassName = baseClassName + " " + className;
     return (
         <>
             <button
                 type="submit"
-                className={`border border-black justify-center rounded-md bg-blue1 hover:bg-[#69ccf5] duration-300 ${className}`}
+                className={`${
+                    type === "primary"
+                        ? "bg-primary-400 hover:bg-primary-300 active:bg-primary-300"
+                        : "bg-secondary-400 hover:bg-secondary-300 active:bg-secondary-300"
+                } ${buttonClassName}`}
                 onClick={onClick}
                 id={id}
             >
