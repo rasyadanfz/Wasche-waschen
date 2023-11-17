@@ -51,9 +51,10 @@ const KatalogPakaian = () => {
   }
 
   const options = [
-    { value: "option1", label: "Option 1"},
-    { value: "option2", label: "Option 2"},
-    { value: "option3", label: "Option 3"},
+    { value: "harga1", label: "Kurang dari Rp4.000"},
+    { value: "harga2", label: "Rp4.000 - Rp6.500"},
+    { value: "harga3", label: "Rp6.500 - Rp10.000"},
+    { value: "harga4", label: "Lebih dari Rp10.000"},
   ]
 
   return (
