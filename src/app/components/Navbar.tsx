@@ -84,7 +84,7 @@ const Navbar = () => {
   const navbarDataAdmin = [
     {
       label: "Home",
-      link: "/",
+      link: "/catalog",
     },
     {
       label: "Daftar Transaksi",
@@ -136,17 +136,31 @@ const Navbar = () => {
                 ))}
               </div>
               <Link href="/profile">
-                <div className="flex flex-row gap-3 hover:underline cursor-pointer">
-                  <Image
-                    src="/icons/user.svg"
-                    alt="user-icon"
-                    width={30}
-                    height={30}
-                  />
-                  <div
-                    className={`py-2 font-semibold transition-colors duration-500 text-black`}
-                  >
-                    {username}
+                <div className="flex flex-row items-center gap-2">
+                  {!isAdmin && (
+                    <>
+                      <Image
+                        src="/icons/cart.svg"
+                        alt="cart-icon"
+                        width={30}
+                        height={30}
+                        className="transition-transform transform hover:scale-110 cursor-pointer"
+                      />
+                      <div className="border-r border-black h-6 mx-4" />
+                    </>
+                  )}
+                  <div className="flex flex-row gap-3 font-semibold transition-transform transform hover:scale-110 cursor-pointer items-center">
+                    <Image
+                      src="/icons/user.svg"
+                      alt="user-icon"
+                      width={30}
+                      height={30}
+                    />
+                    <div
+                      className={`transition-colors duration-500 text-black`}
+                    >
+                      {username}
+                    </div>
                   </div>
                 </div>
               </Link>
