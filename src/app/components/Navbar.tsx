@@ -41,7 +41,6 @@ const Navbar = () => {
     });
   }, []);
 
-
   const handleScroll = () => {
     setIsTop(window.scrollY < 5);
   };
@@ -99,8 +98,7 @@ const Navbar = () => {
 
   return (
     <>
-      {disabledNavbar.includes(currentPathName) ? null : loading ? null : 
-      (
+      {disabledNavbar.includes(currentPathName) ? null : loading ? null : (
         <div
           className={`fixed top-0 left-0 w-full flex items-center duration-500 py-4 shadow-lg ${
             isTop ? "bg-transparent" : "bg-primary-300"
@@ -135,19 +133,21 @@ const Navbar = () => {
                   </Link>
                 ))}
               </div>
-              <div className="flex flex-row gap-3">
-                <Image
-                  src="/icons/user.svg"
-                  alt="user-icon"
-                  width={30}
-                  height={30}
-                />
-                <div
-                  className={` py-2 font-semibold transition-colors duration-500 text-black`}
-                >
-                  {username}
+              <Link href="/profile">
+                <div className="flex flex-row gap-3 hover:underline cursor-pointer">
+                  <Image
+                    src="/icons/user.svg"
+                    alt="user-icon"
+                    width={30}
+                    height={30}
+                  />
+                  <div
+                    className={`py-2 font-semibold transition-colors duration-500 text-black`}
+                  >
+                    {username}
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
