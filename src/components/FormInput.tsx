@@ -1,5 +1,10 @@
+"use client";
+
+import { useState } from "react";
 import { IconContext } from "react-icons";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+
+// How to use: <FormInput type="password" id="password" text="Password" onChange={handleInputChange} placeholder="Enter password" />
 
 const FormInput = ({
     type,
@@ -7,17 +12,19 @@ const FormInput = ({
     text,
     onChange,
     placeholder,
-    setShowPassword,
-    isShowPassword,
 }: {
     type: string;
     id: string;
     text: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder: string;
-    setShowPassword?: () => void;
-    isShowPassword?: boolean;
 }) => {
+    const [showPassword, setShowPassword] = useState(false);
+    const handleShowPassword = () => {
+        const show = showPassword;
+        setShowPassword(!show);
+    };
+
     return (
         <div className="flex flex-col gap-y-1 font-raleway">
             <label htmlFor={id} className="font-semibold text-body">
@@ -25,7 +32,7 @@ const FormInput = ({
             </label>
             <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md">
                 <input
-                    type={type}
+                    type={showPassword ? "text" : type}
                     id={id}
                     className="rounded-md grow text-body bg-[#EDEDED] focus:outline-none"
                     onChange={onChange}
@@ -36,10 +43,10 @@ const FormInput = ({
                         <button
                             id="showPassword"
                             className="ml-5 text-body"
-                            onClick={setShowPassword}
+                            onClick={handleShowPassword}
                             type="button"
                         >
-                            {isShowPassword ? (
+                            {showPassword ? (
                                 <AiOutlineEye />
                             ) : (
                                 <AiOutlineEyeInvisible />
@@ -52,10 +59,10 @@ const FormInput = ({
                         <button
                             id="showConfirmPassword"
                             className="ml-5 text-body"
-                            onClick={setShowPassword}
+                            onClick={handleShowPassword}
                             type="button"
                         >
-                            {isShowPassword ? (
+                            {showPassword ? (
                                 <AiOutlineEye />
                             ) : (
                                 <AiOutlineEyeInvisible />
