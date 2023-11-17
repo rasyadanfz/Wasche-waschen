@@ -46,7 +46,10 @@ const RegisterForm = () => {
             return;
         }
 
-        router.push("/login");
+        toast.success("Successfully registered!");
+        setTimeout(() => {
+            router.push("/login");
+        }, 1500);
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,21 +81,21 @@ const RegisterForm = () => {
             </div>
             <form
                 action=""
-                className="flex flex-col gap-y-2.5"
+                className="flex flex-col gap-y-3"
                 onSubmit={onFormSubmit}
             >
-                <FormInput
-                    type="text"
-                    id="email"
-                    text="Email"
-                    placeholder="example@gmail.com"
-                    onChange={handleInputChange}
-                ></FormInput>
                 <FormInput
                     type="text"
                     id="name"
                     text="Nama"
                     placeholder="Enter Your Name"
+                    onChange={handleInputChange}
+                ></FormInput>
+                <FormInput
+                    type="text"
+                    id="email"
+                    text="Email"
+                    placeholder="example@gmail.com"
                     onChange={handleInputChange}
                 ></FormInput>
                 <FormInput
@@ -120,11 +123,7 @@ const RegisterForm = () => {
                     setShowPassword={handleShowConfirmPassword}
                     isShowPassword={showConfirmPassword}
                 ></FormInput>
-                <Button
-                    text="Register"
-                    className="py-2 mx-[30px] mt-4"
-                    id="submit"
-                />
+                <Button text="Register" className="py-2 mt-4" id="submit" />
             </form>
         </div>
     );
