@@ -1,4 +1,10 @@
+"use client";
+
+import { useState } from "react";
+import { IconContext } from "react-icons";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+
+// How to use: <FormInput type="password" id="password" text="Password" onChange={handleInputChange} placeholder="Enter password" />
 
 const FormInput = ({
     type,
@@ -6,60 +12,63 @@ const FormInput = ({
     text,
     onChange,
     placeholder,
-    setShowPassword,
-    isShowPassword,
 }: {
     type: string;
     id: string;
     text: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder: string;
-    setShowPassword?: () => void;
-    isShowPassword?: boolean;
 }) => {
+    const [showPassword, setShowPassword] = useState(false);
+    const handleShowPassword = () => {
+        const show = showPassword;
+        setShowPassword(!show);
+    };
+
     return (
-        <div className="flex flex-col gap-y-1">
-            <label
-                htmlFor={id}
-                className="font-semibold text-[12px] sm:text-[13px] md:text-[14px] lg:text-[16px]"
-            >
+        <div className="flex flex-col gap-y-1 font-raleway">
+            <label htmlFor={id} className="font-semibold text-body">
                 {text}
             </label>
-            <div className="flex border border-black justify-between p-1 px-2 rounded-md">
+            <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md">
                 <input
-                    type={type}
+                    type={showPassword ? "text" : type}
                     id={id}
-                    className="rounded-md grow text-[11px] sm:text-[12px] md:text-[13px] lg:text-[15px] focus:outline-none"
+                    className="rounded-md grow text-body bg-[#EDEDED] focus:outline-none"
                     onChange={onChange}
                     placeholder={placeholder}
                 />
                 {id === "password" && (
-                    <button
-                        id="showPassword"
-                        className="ml-5"
-                        onClick={setShowPassword}
-                        type="button"
-                    >
-                        {isShowPassword ? (
-                            <AiOutlineEye />
-                        ) : (
-                            <AiOutlineEyeInvisible />
-                        )}
-                    </button>
+                    <IconContext.Provider value={{ size: "1.5em" }}>
+                        <button
+                            id="showPassword"
+                            className="ml-5 text-body"
+                            onClick={handleShowPassword}
+                            type="button"
+                        >
+                            {showPassword ? (
+                                <AiOutlineEye />
+                            ) : (
+                                <AiOutlineEyeInvisible />
+                            )}
+                        </button>
+                    </IconContext.Provider>
                 )}
                 {id === "confirmpassword" && (
-                    <button
-                        id="showConfirmPassword"
-                        className="ml-5"
-                        onClick={setShowPassword}
-                        type="button"
-                    >
-                        {isShowPassword ? (
-                            <AiOutlineEye />
-                        ) : (
-                            <AiOutlineEyeInvisible />
-                        )}
-                    </button>
+                    <IconContext.Provider value={{ size: "1.5em" }}>
+                        <button
+                            id="showConfirmPassword"
+                            className="ml-5 text-body"
+                            onClick={handleShowPassword}
+                            type="button"
+                        >
+                            {showPassword ? (
+                                <AiOutlineEye />
+                            ) : (
+                                <AiOutlineEyeInvisible />
+                            )}
+                        </button>
+                    </IconContext.Provider>
                 )}
             </div>
         </div>

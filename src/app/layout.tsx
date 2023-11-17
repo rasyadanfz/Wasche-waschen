@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import Provider from "@/context/Provider";

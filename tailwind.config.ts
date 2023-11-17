@@ -57,7 +57,9 @@ const config: Config = {
             success: "#0CF023",
         },
         fontFamily: {
-            inter: ["Inter", "sans-serif"],
+            raleway: ["var(--font-raleway)"],
+            poppins: ["var(--font-poppins)"],
+            itim: ["var(--font-itim)"],
         },
         fontSize: {
             h1: "3.815rem",
@@ -67,9 +69,9 @@ const config: Config = {
             h5: "1.563rem",
             h6: "1.25rem",
             body: "1rem",
-            subtitle: "1rem",
-            button: "0.875rem",
-            caption: "0.75rem",
+            subtitle: "0.875rem",
+            button: "1rem",
+            caption: "0.8rem",
         },
     },
     plugins: [],

@@ -102,13 +102,13 @@ const Navbar = () => {
     <>
       {disabledNavbar.includes(currentPathName) ? null : loading ? null : (
         <div
-          className={`fixed top-0 left-0 w-full flex items-center duration-500 py-4 shadow-lg ${
+          className={` fixed top-0 left-0 w-full flex items-center duration-500 py-4 shadow-lg ${
             isTop ? "bg-transparent" : "bg-primary-300"
           }`}
         >
-          <div className="container relative z-50 mx-auto">
+          <div className="container relative z-50 mx-auto max-w-screen-xl">
             <div className="flex items-center justify-between relative">
-              <Link href="" className="px-4">
+              <Link href="/" className="px-4">
                 <h1
                   className={`font-bold text-[1.5rem] ${itim.className} ${
                     isTop ? "text-primary-500" : "text-white"

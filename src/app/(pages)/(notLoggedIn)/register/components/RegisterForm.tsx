@@ -10,8 +10,6 @@ import { useRouter } from "next/navigation";
 const RegisterForm = () => {
     const router = useRouter();
 
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState("");
     const [currData, setCurrData] = useState({
         email: "",
@@ -46,7 +44,10 @@ const RegisterForm = () => {
             return;
         }
 
-        router.push("/login");
+        toast.success("Successfully registered!");
+        setTimeout(() => {
+            router.push("/login");
+        }, 1500);
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,16 +62,6 @@ const RegisterForm = () => {
         setConfirmPassword(e.target.value);
     };
 
-    const handleShowPassword = () => {
-        const show = showPassword;
-        setShowPassword(!show);
-    };
-
-    const handleShowConfirmPassword = () => {
-        const show = showConfirmPassword;
-        setShowConfirmPassword(!show);
-    };
-
     return (
         <div className="">
             <div className="error_toast">
@@ -78,21 +69,21 @@ const RegisterForm = () => {
             </div>
             <form
                 action=""
-                className="flex flex-col gap-y-2.5"
+                className="flex flex-col gap-y-3"
                 onSubmit={onFormSubmit}
             >
-                <FormInput
-                    type="text"
-                    id="email"
-                    text="Email"
-                    placeholder="example@gmail.com"
-                    onChange={handleInputChange}
-                ></FormInput>
                 <FormInput
                     type="text"
                     id="name"
                     text="Nama"
                     placeholder="Enter Your Name"
+                    onChange={handleInputChange}
+                ></FormInput>
+                <FormInput
+                    type="text"
+                    id="email"
+                    text="Email"
+                    placeholder="example@gmail.com"
                     onChange={handleInputChange}
                 ></FormInput>
                 <FormInput
@@ -103,28 +94,20 @@ const RegisterForm = () => {
                     onChange={handleInputChange}
                 ></FormInput>
                 <FormInput
-                    type={showPassword ? "text" : "password"}
+                    type="password"
                     id="password"
                     text="Password"
                     onChange={handleInputChange}
                     placeholder="Enter Password"
-                    setShowPassword={handleShowPassword}
-                    isShowPassword={showPassword}
                 ></FormInput>
                 <FormInput
-                    type={showConfirmPassword ? "text" : "password"}
+                    type="password"
                     id="confirmpassword"
                     text="Confirm Password"
                     onChange={handleConfirmPasswordChange}
                     placeholder="Confirm Password"
-                    setShowPassword={handleShowConfirmPassword}
-                    isShowPassword={showConfirmPassword}
                 ></FormInput>
-                <Button
-                    text="Register"
-                    className="py-2 mx-[30px] mt-4"
-                    id="submit"
-                />
+                <Button text="Register" className="py-2 mt-4" id="submit" />
             </form>
         </div>
     );
