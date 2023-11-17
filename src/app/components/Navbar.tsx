@@ -43,7 +43,6 @@ const Navbar = () => {
     }
   }, [currentPathName]);
 
-
   const handleScroll = () => {
     setIsTop(window.scrollY < 5);
   };
@@ -74,7 +73,7 @@ const Navbar = () => {
   const navbarDataCustomer = [
     {
       label: "Home",
-      link: "/",
+      link: "/catalog",
     },
     {
       label: "Riwayat Transaksi",
@@ -85,7 +84,7 @@ const Navbar = () => {
   const navbarDataAdmin = [
     {
       label: "Home",
-      link: "/",
+      link: "/catalog",
     },
     {
       label: "Daftar Transaksi",
@@ -101,8 +100,7 @@ const Navbar = () => {
 
   return (
     <>
-      {disabledNavbar.includes(currentPathName) ? null : loading ? null : 
-      (
+      {disabledNavbar.includes(currentPathName) ? null : loading ? null : (
         <div
           className={`fixed top-0 left-0 w-full flex items-center duration-500 py-4 shadow-lg ${
             isTop ? "bg-transparent" : "bg-primary-300"
@@ -137,19 +135,35 @@ const Navbar = () => {
                   </Link>
                 ))}
               </div>
-              <div className="flex flex-row gap-3">
-                <Image
-                  src="/icons/user.svg"
-                  alt="user-icon"
-                  width={30}
-                  height={30}
-                />
-                <div
-                  className={` py-2 font-semibold transition-colors duration-500 text-black`}
-                >
-                  {username}
+              <Link href="/profile">
+                <div className="flex flex-row items-center gap-2">
+                  {!isAdmin && (
+                    <>
+                      <Image
+                        src="/icons/cart.svg"
+                        alt="cart-icon"
+                        width={30}
+                        height={30}
+                        className="transition-transform transform hover:scale-110 cursor-pointer"
+                      />
+                      <div className="border-r border-black h-6 mx-4" />
+                    </>
+                  )}
+                  <div className="flex flex-row gap-3 font-semibold transition-transform transform hover:scale-110 cursor-pointer items-center">
+                    <Image
+                      src="/icons/user.svg"
+                      alt="user-icon"
+                      width={30}
+                      height={30}
+                    />
+                    <div
+                      className={`transition-colors duration-500 text-black`}
+                    >
+                      {username}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
