@@ -29,17 +29,19 @@ const Navbar = () => {
   const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
-    getSession().then((session) => {
-      const user: User | undefined = session?.user;
-      const role = user?.role;
-      const name = user?.name;
-      setUsername(name ?? "Username");
-      if (role === "Admin") {
-        setIsAdmin(true);
-      }
-      setLoading(false);
-    });
-  }, []);
+    if (currentPathName !== "/login" && currentPathName !== "/register") {
+      getSession().then((session) => {
+        const user: User | undefined = session?.user;
+        const role = user?.role;
+        const name = user?.name;
+        setUsername(name ?? "Username");
+        if (role === "Admin") {
+          setIsAdmin(true);
+        }
+        setLoading(false);
+      });
+    }
+  }, [currentPathName]);
 
   const handleScroll = () => {
     setIsTop(window.scrollY < 5);
