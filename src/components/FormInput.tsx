@@ -1,6 +1,9 @@
 import { IconContext } from "react-icons";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
+// How to Use
+// <FormInput type="text" id="email" text="Email" placeholder="Email" width="500px/full"/>
+
 const FormInput = ({
     type,
     id,
@@ -19,7 +22,7 @@ const FormInput = ({
     isShowPassword?: boolean;
 }) => {
     return (
-        <div className="flex flex-col gap-y-1 font-raleway">
+        <div className={`flex flex-col gap-y-1 font-raleway`}>
             <label htmlFor={id} className="font-semibold text-body">
                 {text}
             </label>
