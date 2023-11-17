@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Provider>
-        <body className={`${raleway.className} min-h-[1000px]`}>
+        <body className={`${raleway.className}`}>
           <Navbar />
           {children}
         </body>

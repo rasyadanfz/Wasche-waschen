@@ -73,7 +73,7 @@ const Navbar = () => {
   const navbarDataCustomer = [
     {
       label: "Home",
-      link: "/",
+      link: "/catalog",
     },
     {
       label: "Riwayat Transaksi",
