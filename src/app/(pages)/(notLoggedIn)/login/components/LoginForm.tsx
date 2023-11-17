@@ -94,24 +94,14 @@ const LoginForm = () => {
                     isShowPassword={showPassword}
                     onChange={handleInputChange}
                 ></FormInput>
-                <div className="flex justify-between font-raleway text-body mt-2">
-                    <div className="flex items-center justify-center gap-x-2">
-                        <input
-                            type="checkbox"
-                            id="remember"
-                            className="accent-secondary-400"
-                        />
-                        <label htmlFor="remember" className="text-black">
-                            Remember Me
-                        </label>
-                    </div>
+                {/* <div className="flex justify-between font-raleway text-body mt-2">
                     <Link
                         href={"."}
                         className="text-secondary-400 font-semibold"
                     >
                         Forgot Password?
                     </Link>
-                </div>
+                </div> */}
                 <Button text="Login" className="py-2 mt-4" id="submit" />
             </form>
         </div>
