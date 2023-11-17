@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 import { Itim } from "next/font/google";
 import { getSession } from "next-auth/react";
 
-
 interface User {
   name?: string | null | undefined;
   email?: string | null | undefined;
@@ -26,18 +25,20 @@ const Navbar = () => {
   const [isTop, setIsTop] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [currentPathName, setCurrentPathName] = useState("");
-  const [isLogin, setIsLogin] = useState(false);
   const [username, setUsername] = useState("");
-  
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     getSession().then((session) => {
       const user: User | undefined = session?.user;
       const role = user?.role;
+      const name = user?.name;
+      setUsername(name ?? "Username");
       if (role === "Admin") {
         setIsAdmin(true);
       }
-    })
+      setLoading(false);
+    });
   }, []);
 
 
@@ -61,7 +62,6 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
 
   const pathName = usePathname();
 
@@ -98,29 +98,27 @@ const Navbar = () => {
   const navbarData = isAdmin ? navbarDataAdmin : navbarDataCustomer;
 
   return (
-    /* disable navbar */
     <>
-      {disabledNavbar.includes(currentPathName) ? null :
-      <div
-        className={`fixed top-0 left-0 w-full flex items-center duration-500 py-4 shadow-lg ${
-          isTop ? "bg-transparent" : "bg-primary-300"
-        }`}
-      >
-        <div className="container relative z-50 mx-auto">
-          <div className="flex items-center justify-between relative">
-            {/* logo */}
-            <Link href="" className="px-4">
-              <h1
-                className={`font-bold text-[1.5rem] ${itim.className} ${
-                  isTop ? "text-primary-500" : "text-white"
-                }`}
-              >
-                WäscheWaschen
-              </h1>
-            </Link>
-            <div className="flex flex-row gap-8">
-              {navbarData.map((item) => {
-                return (
+      {disabledNavbar.includes(currentPathName) ? null : loading ? null : 
+      (
+        <div
+          className={`fixed top-0 left-0 w-full flex items-center duration-500 py-4 shadow-lg ${
+            isTop ? "bg-transparent" : "bg-primary-300"
+          }`}
+        >
+          <div className="container relative z-50 mx-auto">
+            <div className="flex items-center justify-between relative">
+              <Link href="" className="px-4">
+                <h1
+                  className={`font-bold text-[1.5rem] ${itim.className} ${
+                    isTop ? "text-primary-500" : "text-white"
+                  }`}
+                >
+                  WäscheWaschen
+                </h1>
+              </Link>
+              <div className="flex flex-row gap-8">
+                {navbarData.map((item) => (
                   <Link href={item.link} key={item.label}>
                     <p
                       className={`cursor-pointer hover:underline
@@ -135,26 +133,25 @@ const Navbar = () => {
                       {item.label}
                     </p>
                   </Link>
-                );
-              })}
-            </div>
-            <div className="flex flex-row gap-3">
-              <Image
-                src="/icons/user.svg"
-                alt="user-icon"
-                width={30}
-                height={30}
-              />
-              <div
-                className={` py-2 font-semibold transition-colors duration-500 text-black`}
-              >
-                Username
+                ))}
+              </div>
+              <div className="flex flex-row gap-3">
+                <Image
+                  src="/icons/user.svg"
+                  alt="user-icon"
+                  width={30}
+                  height={30}
+                />
+                <div
+                  className={` py-2 font-semibold transition-colors duration-500 text-black`}
+                >
+                  {username}
+                </div>
               </div>
             </div>
           </div>
-          {/* menu */}
         </div>
-      </div>}
+      )}
     </>
   );
 };
