@@ -1,6 +1,7 @@
 import Button from "@/components/Button"
 import Image from "next/image"
 import { Pakaian } from "@prisma/client";
+import AddButton from "./AddButton";
 
 const PakaianComponent = ({ pakaian }: { pakaian: Pakaian }) => {
     return (
@@ -19,7 +20,8 @@ const PakaianComponent = ({ pakaian }: { pakaian: Pakaian }) => {
             </div>
 
             <div>
-            <Button text="+Tambah" className="p-2" />
+            {/* <Button text="+Tambah" className="p-2" /> */}
+            <AddButton />
             </div>
         </div>
     )
