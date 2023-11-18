@@ -12,12 +12,16 @@ const FormInput = ({
     text,
     onChange,
     placeholder,
+    value,
+    classname,
 }: {
     type: string;
     id: string;
     text: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder: string;
+    value?: string;
+    classname?: string;
 }) => {
     const [showPassword, setShowPassword] = useState(false);
     const handleShowPassword = () => {
@@ -27,16 +31,17 @@ const FormInput = ({
 
     return (
         <div className="flex flex-col gap-y-1 font-raleway">
-            <label htmlFor={id} className="font-semibold text-body">
+            <label htmlFor={id} className="font-bold text-body">
                 {text}
             </label>
             <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md">
                 <input
                     type={showPassword ? "text" : type}
                     id={id}
-                    className="rounded-md grow text-body bg-[#EDEDED] focus:outline-none"
+                    className={`rounded-md grow text-body bg-[#EDEDED] focus:outline-none ${classname}`}
                     onChange={onChange}
                     placeholder={placeholder}
+                    value={value}
                 />
                 {id === "password" && (
                     <IconContext.Provider value={{ size: "1.5em" }}>

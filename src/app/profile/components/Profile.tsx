@@ -1,8 +1,8 @@
 "use client";
 
+import FormInput from "@/components/FormInput";
 import { getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import FormInputProfile from "./FormInputProfile";
 
 interface User {
   name?: string | null | undefined;
@@ -43,10 +43,10 @@ export default function Profile() {
         <div className="flex flex-col items-center justify-center">
           <h1 className="text-h3 font-bold text-center mb-10">{role}</h1>
           <div className="flex flex-col gap-2">
-            <FormInputProfile type="text" id="name" text="Name" placeholder={name} value={name} />
-            <FormInputProfile type="text" id="email" text="Email" placeholder={email} value={email} />
-            <FormInputProfile type="text" id="no_telp" text="Phone Number" placeholder={no_telp} value={no_telp} />
-            <FormInputProfile type="password" id="password" text="Password" placeholder="Password" />
+            <FormInput type="text" id="name" text="Name" placeholder={name} value={name} />
+            <FormInput type="text" id="email" text="Email" placeholder={email} value={email} />
+            <FormInput type="text" id="no_telp" text="Phone Number" placeholder={no_telp} value={no_telp} />
+            <FormInput type="password" id="password" text="Password" placeholder="Password" classname="w-[500px]" />
           </div>
         </div>
       </div>
