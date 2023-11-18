@@ -5,6 +5,7 @@ interface ButtonProps {
     id?: string;
     type?: string;
     children?: React.ReactNode;
+    disabled?: boolean;
 }
 
 const Button = ({
@@ -13,9 +14,10 @@ const Button = ({
     onClick,
     id,
     type = "primary",
+    disabled = false,
 }: ButtonProps) => {
     const baseClassName =
-        "text-button px-4 py-2 rounded-md w-full h-full font-raleway";
+        "text-button px-4 py-2 rounded-md h-full font-raleway";
 
     let buttonColorClass;
     switch (type) {
@@ -50,6 +52,7 @@ const Button = ({
                 className={buttonClassName}
                 onClick={onClick}
                 id={id}
+                disabled={disabled}
             >
                 <div
                     className={type === "warning" ? "text-black" : "text-white"}

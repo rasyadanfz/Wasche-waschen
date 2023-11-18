@@ -13,7 +13,7 @@ const FormInput = ({
     onChange,
     placeholder,
     value,
-    classname,
+    className,
 }: {
     type: string;
     id: string;
@@ -21,7 +21,7 @@ const FormInput = ({
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder: string;
     value?: string;
-    classname?: string;
+    className?: string;
 }) => {
     const [showPassword, setShowPassword] = useState(false);
     const handleShowPassword = () => {
@@ -34,11 +34,11 @@ const FormInput = ({
             <label htmlFor={id} className="font-bold text-body">
                 {text}
             </label>
-            <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md">
+            <div className={`flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md ${className}`}>
                 <input
                     type={showPassword ? "text" : type}
                     id={id}
-                    className={`rounded-md grow text-body bg-[#EDEDED] focus:outline-none ${classname}`}
+                    className={`rounded-md grow text-body bg-[#EDEDED] focus:outline-none `}
                     onChange={onChange}
                     placeholder={placeholder}
                     value={value}
