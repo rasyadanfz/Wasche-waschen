@@ -53,8 +53,18 @@ const config: Config = {
             },
             black: "#000000",
             white: "#FFFFFF",
-            danger: "#E5000E",
-            success: "#0CF023",
+            danger: {
+                300: "#E0434D",
+                400: "#E5000E",
+            },
+            success: {
+                300: "#4Df05D",
+                400: "#0CF023",
+            },
+            warning: {
+                300: "#FFD454",
+                400: "#FFBF00",
+            },
         },
         fontFamily: {
             raleway: ["var(--font-raleway)"],
