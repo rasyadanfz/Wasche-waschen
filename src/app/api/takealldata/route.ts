@@ -5,9 +5,14 @@ const prisma = new PrismaClient();
 
 export async function GET(req:NextRequest){
     // 
-    const user = await prisma.user.findFirst();
+    const user = await prisma.user.findUnique({
+        where:{
+            id: "65560efce9a08702271b954b"
+        }
+    })
+
     const pakaian = await prisma.pakaian.findMany();
-    const keranjang = await prisma.keranjang.findUnique({
+    const keranjang = await prisma.keranjang.findMany({
         where:{
             userId:user?.id
         }
@@ -17,15 +22,22 @@ export async function GET(req:NextRequest){
             keranjangId:keranjang?.id,
         }
     })
+    
+    const transaksi = await prisma.transaksi.findMany({
+        where:{
+            userId:user?.id,
+        }
+    })
         
     return NextResponse.json({
         
-        message:"Berhasil menambah pakaian",
+        messagtrane:"Berhasil menambah pakaian",
         status:200,
         "pakaian":pakaian,
         "user":user,
         "orderline":orderline,
-        "keranjang":keranjang
+        "keranjang":keranjang,
+        "transaksi":transaksi
         
     })
 

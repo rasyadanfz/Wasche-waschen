@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
+
 const prisma = new PrismaClient();
 
 // finished testing
@@ -49,6 +50,14 @@ export async function DELETE(req:NextRequest){
 export async function POST(req:NextRequest){
 
     // i'm still confused in this part. why do we need to separate transaksi and keranjang? 
+    
+    // ------------------ SOME CONFUSION
+    /*
+        1. shouldn't  keranjang is a must for every user?
+        2. shouldn't each keranjang has a foreign key with transaction? 
+            because if it isn't, then how could i attach transaction to each new orderline
+        
+    */
     const {pakaian,user,transaksi} = await req.json();
 
     if(!user){
