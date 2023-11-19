@@ -75,10 +75,9 @@ export default function ChangePassword() {
     }
 
     toast.success("Successfully changed password!");
-
     setTimeout(() => {
       router.push("/profile");
-    }, 2000);
+    }, 1500);
   };
 
   const router = useRouter();
