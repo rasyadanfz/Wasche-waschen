@@ -38,15 +38,13 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body>
-                <Provider>
-                    <body
-                        className={`${raleway.variable} ${poppins.variable} ${itim.variable}`}
-                    >
-                        {children}
-                    </body>
-                </Provider>
-            </body>
+            <Provider>
+                <body
+                    className={`${raleway.variable} ${poppins.variable} ${itim.variable} bg-backgroundcolor`}
+                >
+                    {children}
+                </body>
+            </Provider>
         </html>
     );
 }
