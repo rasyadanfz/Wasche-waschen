@@ -3,34 +3,81 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function POST(req:NextRequest){
-    // 
-    const {pakaian,keranjang,orderline,transaksi} = await req.json();
+// finished testing
+export async function DELETE(req:NextRequest){
 
-    if(!transaksi){
+    const {orderline} = await req.json();
+
+    if(orderline === null){
         return NextResponse.json(
-            {error:"Transaksi tidak boleh kosong"},
+            {message:"Empty Orderline"},
             {status:400},
         )
     }
 
-    if(!pakaian){
+    if(orderline.kuantitas === 1){
+        // we have to delete the orderline
+        const deleteOrderline = await prisma.orderline.delete({
+            where:{
+                id:orderline.id
+            }
+        })
+
         return NextResponse.json(
-            {error:"Pakaian tidak boleh kosong"},
+            {message:"Orderline succesfully deleted"},
+            {status:200}
+        )
+
+    }else{
+        const updateOrderline = await prisma.orderline.update({
+            where:{
+                id:orderline.id
+            },data:{
+                kuantitas:orderline.kuantitas-1
+            }
+        })
+
+        return NextResponse.json(
+            {message:"Deletion successed"},
             {status:400}
         );
+
     }
 
-    if(!keranjang){
+}
+
+export async function POST(req:NextRequest){
+
+    // i'm still confused in this part. why do we need to separate transaksi and keranjang? 
+    const {pakaian,user,transaksi} = await req.json();
+
+    if(!user){
         return NextResponse.json(
-            {error:"Keranjang tidak boleh kosong"},
+            {error:"No user"},
             {status:400}
         )
     }
 
+    const keranjang = user.keranjang;
+
+    if(!keranjang){
+        return NextResponse.json(
+            {error:"No keranjang"},
+            {status:400}
+        )
+    }
+
+    const tempOrderline = await prisma.orderline.findMany({
+        where:{
+            pakaianId: pakaian.id,
+            keranjangId:keranjang.id,
+        }
+    })
+
+    const orderline = tempOrderline[0];
+
 
     // we can do the create or update
-
 
     // make sure whether the orderline has exist or not
     if(orderline.id === null){
@@ -60,7 +107,7 @@ export async function POST(req:NextRequest){
         })
 
         return NextResponse.json({
-            message:"Berhasil menambah pakaian",
+            message:"Succesfully added new cloth",
             status:200,
         })
 
@@ -78,7 +125,7 @@ export async function POST(req:NextRequest){
         })
 
         return NextResponse.json({
-            message:"Berhasil menambah pakaian",
+            message:"Succesfully added the cloth",
             status:200
         })
 
