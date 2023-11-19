@@ -49,7 +49,6 @@ export async function DELETE(req:NextRequest){
 
 export async function POST(req:NextRequest){
 
-    // i'm still confused in this part. why do we need to separate transaksi and keranjang? 
     
     // ------------------ SOME CONFUSION
     /*
