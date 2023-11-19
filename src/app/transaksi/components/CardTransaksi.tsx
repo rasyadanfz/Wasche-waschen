@@ -7,9 +7,10 @@ interface CardTransaksiProps {
   tanggal: string;
   status: string;
   total_harga: Number;
+  nama_customer: string;
 }
 
-export default function CardRiwayat(props: CardTransaksiProps) {
+export default function CardTransaksi(props: CardTransaksiProps) {
   const router = useRouter();
 
   return (
@@ -24,6 +25,7 @@ export default function CardRiwayat(props: CardTransaksiProps) {
         <div className="flex flex-row gap-5">
           <div className="">
             <p>ID Transaksi</p>
+            <p>Nama Pelanggan</p>
             <p>Tanggal Transaksi</p>
             <p>Status</p>
           </div>
@@ -31,9 +33,11 @@ export default function CardRiwayat(props: CardTransaksiProps) {
             <p>:</p>
             <p>:</p>
             <p>:</p>
+            <p>:</p>
           </div>
           <div className="">
             <p>{props.id}</p>
+            <p>{props.nama_customer}</p>
             <p>{props.tanggal}</p>
             <p>{props.status}</p>
           </div>
@@ -42,7 +46,7 @@ export default function CardRiwayat(props: CardTransaksiProps) {
           type="primary"
           text="Detail"
           className="absolute right-4 bottom-4"
-          onClick={() => router.push(`/riwayat-transaksi/${props.id}`)}
+          onClick={() => router.push(`/transaksi/${props.id}`)}
         />
       </div>
     </>

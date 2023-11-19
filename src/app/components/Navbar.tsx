@@ -4,18 +4,47 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { Itim } from "next/font/google";
+import { getSession } from "next-auth/react";
+
+interface User {
+  name?: string | null | undefined;
+  email?: string | null | undefined;
+  role?: string | null | undefined;
+  no_telp?: string | null | undefined;
+}
+
+const itim = Itim({
+  weight: "400", // Specify the weight of the font
+  subsets: ["latin"],
+});
+
+const disabledNavbar = ["/login", "/register"];
 
 const Navbar = () => {
-  const [pathName, setPathName] = useState("");
   const [isTop, setIsTop] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [currentPathName, setCurrentPathName] = useState("");
+  const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(true); // Add loading state
+
+  useEffect(() => {
+    if (currentPathName !== "/login" && currentPathName !== "/register") {
+      getSession().then((session) => {
+        const user: User | undefined = session?.user;
+        const role = user?.role;
+        const name = user?.name;
+        setUsername(name ?? "Username");
+        if (role === "Admin") {
+          setIsAdmin(true);
+        }
+        setLoading(false);
+      });
+    }
+  }, [currentPathName]);
 
   const handleScroll = () => {
     setIsTop(window.scrollY < 5);
-  };
-
-  const handleOpen = () => {
-    setIsOpen((prev) => !prev);
   };
 
   useEffect(() => {
@@ -35,16 +64,16 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const currentPathName = usePathname();
+  const pathName = usePathname();
 
   useEffect(() => {
-    setPathName(currentPathName);
-  }, [currentPathName]);
+    setCurrentPathName(pathName);
+  }, [pathName]); // Run this effect only once after mounting
 
-  const navbarData = [
+  const navbarDataCustomer = [
     {
       label: "Home",
-      link: "/",
+      link: "/catalog",
     },
     {
       label: "Riwayat Transaksi",
@@ -52,57 +81,94 @@ const Navbar = () => {
     },
   ];
 
+  const navbarDataAdmin = [
+    {
+      label: "Home",
+      link: "/catalog",
+    },
+    {
+      label: "Daftar Transaksi",
+      link: "/transaksi",
+    },
+    {
+      label: "Laporan",
+      link: "/laporan",
+    },
+  ];
+
+  const navbarData = isAdmin ? navbarDataAdmin : navbarDataCustomer;
+
   return (
-    <>
-      <div
-        className={`fixed top-0 left-0 w-full flex items-center duration-500 py-4 shadow-md ${
-          isTop ? "bg-transparent" : "bg-primary"
-        }`}
-      >
-        <div className="container relative z-50 mx-auto">
-          <div className="flex items-center justify-between relative">
-            {/* logo */}
-            <Link href="" className="px-4">
-              <div className="flex items-center gap-2">
-                <Image src="/logo/logo.svg" alt="Logo" width={30} height={30} />
-                <p
-                  className={`font-semibold text-lg ${
-                    isTop ? "text-primary" : "text-white"
+    <div>
+      {disabledNavbar.includes(currentPathName) ? null : loading ? null : (
+        <div
+          className={` fixed top-0 left-0 w-full flex items-center duration-500 py-4 shadow-lg z-10 ${
+            isTop ? "bg-transparent" : "bg-primary-300"
+          }`}
+        >
+          <div className="container relative z-50 mx-auto max-w-screen-xl">
+            <div className="flex items-center justify-between relative">
+              <Link href="/" className="px-4">
+                <h1
+                  className={`font-bold text-[1.5rem] ${itim.className} ${
+                    isTop ? "text-primary-500" : "text-white"
                   }`}
                 >
-                  2W Laundry
-                </p>
-              </div>
-            </Link>
-            <div className="hidden md:flex gap-7 items-center">
-              {navbarData.map((item) => {
-                return (
+                  WäscheWaschen
+                </h1>
+              </Link>
+              <div className="flex flex-row gap-8">
+                {navbarData.map((item) => (
                   <Link href={item.link} key={item.label}>
                     <p
-                      className={`cursor-pointer hover:underline 
+                      className={`cursor-pointer hover:underline
                       ${
-                        isTop ? "text-primary" : "text-white"
-                      }
-                      ${
-                        pathName === item.link && "font-semibold underline"
+                        currentPathName === item.link
+                          ? isTop
+                            ? "text-primary-500 font-bold"
+                            : "text-white font-bold"
+                          : "text-black"
                       }`}
                     >
                       {item.label}
                     </p>
                   </Link>
-                );
-              })}
-              <div className={`px-7 py-2 font-bold cursor-pointer transition-colors duration-500 ${
-                isTop ? "bg-primary text-white hover:bg-white hover:text-primary" : "bg-white text-primary hover:bg-primary hover:text-white"
-              }`}>
-                MASUK
+                ))}
               </div>
+              <Link href="/profile">
+                <div className="flex flex-row items-center gap-2">
+                  {!isAdmin && (
+                    <>
+                      <Image
+                        src="/icons/cart.svg"
+                        alt="cart-icon"
+                        width={30}
+                        height={30}
+                        className="transition-transform transform hover:scale-110 cursor-pointer"
+                      />
+                      <div className="border-r border-black h-6 mx-4" />
+                    </>
+                  )}
+                  <div className="flex flex-row gap-3 font-semibold transition-transform transform hover:scale-110 cursor-pointer items-center">
+                    <Image
+                      src="/icons/user.svg"
+                      alt="user-icon"
+                      width={30}
+                      height={30}
+                    />
+                    <div
+                      className={`transition-colors duration-500 text-black`}
+                    >
+                      {username}
+                    </div>
+                  </div>
+                </div>
+              </Link>
             </div>
           </div>
-          {/* menu */}
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 

@@ -2,9 +2,9 @@
 
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import CardTransaksi from "./CardTransaksi";
 import Link from "next/link";
 import FormInput from "@/components/FormInput";
-import CardRiwayat from "./CardRiwayat";
 
 interface Transaksi {
   id: string;
@@ -13,6 +13,7 @@ interface Transaksi {
   status: string;
   total_harga: Number;
   userId: string;
+  nama_customer: string;
 }
 
 async function getDataTransaksi() {
@@ -194,13 +195,14 @@ export default function Transaksi() {
           {dataTransaksi !== null ? (
             currentItems.length > 0 ? (
               currentItems.map((item: Transaksi) => (
-                  <CardRiwayat
+                  <CardTransaksi
                     key={item.id}
                     id={item.id}
                     nama={item.nama}
                     tanggal={item.tanggal}
                     status={item.status}
                     total_harga={item.total_harga}
+                    nama_customer={item.nama_customer}
                   />
               ))
             ) : (
