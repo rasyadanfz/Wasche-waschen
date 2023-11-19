@@ -31,11 +31,13 @@ export default function StatusDetailTransaksi(
 
   return (
     <>
-      <div>
+      <div className="flex flex-col gap-2">
+        <label htmlFor="status" className="font-semibold">Status : </label>
         <select
+          id="status"
           value={selectedStatus}
           onChange={handleStatusChange}
-          className={`border border-black rounded-full py-1 ${color} text-center w-[300px]`}
+          className={`border border-black rounded-md py-1 ${color} text-center w-[300px]`}
         >
           {statusOptions.map((status) => (
             <option key={status} value={status} className="bg-white text-center">

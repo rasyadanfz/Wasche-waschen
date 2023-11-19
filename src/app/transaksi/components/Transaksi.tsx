@@ -4,6 +4,7 @@ import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import CardTransaksi from "./CardTransaksi";
 import Link from "next/link";
+import FormInput from "@/components/FormInput";
 
 interface Transaksi {
   id: string;
@@ -96,10 +97,10 @@ export default function Transaksi() {
       <div className="min-h-screen">
         <div className="w-full mb-[50px]">
           <div className="container mx-auto">
-            <h1 className="font-bold text-3xl mt-[100px]">Daftar Transaksi</h1>
+            <h1 className="font-bold text-h3 mt-[100px]">Daftar Transaksi</h1>
             <div className="">
               <div className="flex flex-row justify-between gap-6 items-end">
-                <div className="flex items-center gap-2 border border-black rounded-md w-full px-4 py-2 mt-4 h-14">
+                <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md w-full">
                   <input
                     type="text"
                     placeholder="Cari Transaksi"
@@ -117,8 +118,10 @@ export default function Transaksi() {
                   </button>
                 </div>
               </div>
+              
+
               <div className="flex flex-col mt-2">
-                <h1 className="font-semibold text-lg mb-2">Filter by:</h1>
+                <h1 className="font-semibold text-h6 mb-2">Filter by:</h1>
                 <div className="flex flex-row gap-10">
                   <div className="flex flex-col">
                     <h2 className="text-lg mb-2">Status Transaksi</h2>
@@ -192,11 +195,6 @@ export default function Transaksi() {
           {dataTransaksi !== null ? (
             currentItems.length > 0 ? (
               currentItems.map((item: Transaksi) => (
-                <Link
-                  href={`/transaksi/${item.id}`}
-                  key={item.id}
-                  passHref={true}
-                >
                   <CardTransaksi
                     key={item.id}
                     id={item.id}
@@ -206,7 +204,6 @@ export default function Transaksi() {
                     total_harga={item.total_harga}
                     nama_customer={item.nama_customer}
                   />
-                </Link>
               ))
             ) : (
               <h2 className="font-semibold text-center">Tidak ada transaksi</h2>
@@ -223,7 +220,7 @@ export default function Transaksi() {
               .map((_, i) => (
                 <button
                   className={`border-black border px-2 ${
-                    currentPage === i + 1 ? "bg-blue-500 text-white" : ""
+                    currentPage === i + 1 ? "bg-primary-400 text-white" : ""
                   }`}
                   key={i}
                   onClick={() => paginate(i + 1)}

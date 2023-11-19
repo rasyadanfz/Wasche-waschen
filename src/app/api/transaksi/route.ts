@@ -43,8 +43,10 @@ export async function GET(req: NextRequest) {
             id: item.id,
             kuantitas: item.kuantitas,
             pakaian: item.pakaianId,
-            nama_pakaian: item.pakaian?.name,
             total_harga: item.total_harga,
+            nama_pakaian: item.pakaian?.name,
+            harga_pakaian: item.pakaian?.price,
+            unit_pakaian: item.pakaian?.unit,
           };
         }),
       };

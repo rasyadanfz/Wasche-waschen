@@ -44,10 +44,10 @@ model Orderline{
   noted String
   pakaian Pakaian @relation(fields: [pakaianId], references: [id])
   pakaianId String @db.ObjectId 
-  keranjang Keranjang? @relation(fields: [keranjangId], references: [id])
-  keranjangId String? @db.ObjectId
   transaksi Transaksi? @relation(fields: [transaksiId], references: [id])
   transaksiId String? @db.ObjectId
+  keranjang Keranjang? @relation(fields: [keranjangId], references: [id])
+  keranjangId String? @db.ObjectId
 }
 
 model Keranjang{
