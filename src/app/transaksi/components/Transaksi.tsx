@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import CardTransaksi from "./CardTransaksi";
 import Link from "next/link";
 import FormInput from "@/components/FormInput";
+import Pagination from "@/components/Pagination";
 
 interface Transaksi {
   id: string;
@@ -118,7 +119,6 @@ export default function Transaksi() {
                   </button>
                 </div>
               </div>
-              
 
               <div className="flex flex-col mt-2">
                 <h1 className="font-semibold text-h6 mb-2">Filter by:</h1>
@@ -195,40 +195,32 @@ export default function Transaksi() {
           {dataTransaksi !== null ? (
             currentItems.length > 0 ? (
               currentItems.map((item: Transaksi) => (
-                  <CardTransaksi
-                    key={item.id}
-                    id={item.id}
-                    nama={item.nama}
-                    tanggal={item.tanggal}
-                    status={item.status}
-                    total_harga={item.total_harga}
-                    nama_customer={item.nama_customer}
-                  />
+                <CardTransaksi
+                  key={item.id}
+                  id={item.id}
+                  nama={item.nama}
+                  tanggal={item.tanggal}
+                  status={item.status}
+                  total_harga={item.total_harga}
+                  nama_customer={item.nama_customer}
+                />
               ))
             ) : (
               <h2 className="font-semibold text-center">Tidak ada transaksi</h2>
             )
           ) : (
-            <h2 className="font-semibold text-center animate-pulse">Loading...</h2>
+            <h2 className="font-semibold text-center animate-pulse">
+              Loading...
+            </h2>
           )}
         </div>
         {/* Pagination Controls */}
-        <div className="flex justify-center mt-5 gap-4 mb-5 ">
-          {filteredData !== null &&
-            Array(Math.ceil(filteredData.length / itemsPerPage))
-              .fill(null)
-              .map((_, i) => (
-                <button
-                  className={`border-black border px-2 ${
-                    currentPage === i + 1 ? "bg-primary-400 text-white" : ""
-                  }`}
-                  key={i}
-                  onClick={() => paginate(i + 1)}
-                >
-                  {i + 1}
-                </button>
-              ))}
-        </div>
+        <Pagination
+          filteredData={filteredData || []}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          paginate={paginate}
+        />
       </div>
     </>
   );

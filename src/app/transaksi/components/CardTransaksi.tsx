@@ -15,13 +15,8 @@ export default function CardTransaksi(props: CardTransaksiProps) {
 
   return (
     <>
-      <div className="border border-black rounded-md p-4 relative duration-100 bg-[#D9E0E8]">
+      <div className="border border-black rounded-md p-4 relative duration-100 bg-[#EDEDED]">
         <h1 className="font-semibold text-h6 mb-2">{props.nama}</h1>
-        {/* add pad colon */}
-        {/* <p className="">ID Transaksi: {props.id}</p>
-        <p className="">Nama Pelanggan: {props.nama_customer}</p>
-        <p className="">Tanggal Transaksi: {props.tanggal}</p>
-        <p className="">Status: {props.status}</p> */}
         <div className="flex flex-row gap-5">
           <div className="">
             <p>ID Transaksi</p>

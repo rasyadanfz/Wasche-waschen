@@ -24,37 +24,31 @@ async function main() {
   const totalHarga = pakaian ? pakaian.price * 3 : 0;
   const totalHarga2 = pakaian2 ? pakaian2.price * 3 : 0;
 
-  const password = "fuckyou"
+  const password = "fuckyou";
   const hashedPassword = await bcrypt.hash(password, 10);
+
+  const transactions= []
+
+  for (let i = 4; i <= 100; i++) {
+    let newTransaction = {
+      nama: `Sample Transaction ${i}`,
+      total_harga: totalHarga + i, // Adjust the total_harga value as needed
+      status: i % 2 === 0 ? "Done" : "On Progress", // Alternate between "Done" and "On Progress"
+      tanggal: "2023-11-11",
+    };
+  
+    transactions.push(newTransaction);
+  }
 
   // upsert user
   const user = await prisma.user.upsert({
     where: {
-      email: "test12345@gmail.com",
+      email: "customer@gmail.com",
     },
     update: {
       Transaksi: {
         createMany: {
-          data: [
-            {
-              nama: "Sample Transaction",
-              total_harga: totalHarga,
-              status: "Done",
-              tanggal: "2023-11-11",
-            },
-            {
-              nama: "Sample Transaction 2",
-              total_harga: totalHarga,
-              status: "On Progress",
-              tanggal: "2023-11-11",
-            },
-            {
-              nama: "Sample Transaction 3",
-              total_harga: totalHarga2,
-              status: "Not Confirmed",
-              tanggal: "2023-11-11",
-            }
-          ]
+          data: transactions,
         },
       },
     },
@@ -80,33 +74,14 @@ async function main() {
                   noted: "Sample Note",
                   pakaianId: idPakaian2,
                 },
-              ]
-            }
+              ],
+            },
           },
         },
       },
       Transaksi: {
         createMany: {
-          data: [
-            {
-              nama: "Sample Transaction",
-              total_harga: totalHarga,
-              status: "Done",
-              tanggal: "2023-11-11",
-            },
-            {
-              nama: "Sample Transaction 2",
-              total_harga: totalHarga,
-              status: "On Progress",
-              tanggal: "2023-11-11",
-            },
-            {
-              nama: "Sample Transaction 3",
-              total_harga: totalHarga2,
-              status: "Not Confirmed",
-              tanggal: "2023-11-11",
-            }
-          ]
+          data: transactions,
         },
       },
     },

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import FormInput from "@/components/FormInput";
 import CardRiwayat from "./CardRiwayat";
+import Pagination from "@/components/Pagination";
 
 interface Transaksi {
   id: string;
@@ -211,22 +212,13 @@ export default function Transaksi() {
           )}
         </div>
         {/* Pagination Controls */}
-        <div className="flex justify-center mt-5 gap-4 mb-5 ">
-          {filteredData !== null &&
-            Array(Math.ceil(filteredData.length / itemsPerPage))
-              .fill(null)
-              .map((_, i) => (
-                <button
-                  className={`border-black border px-2 ${
-                    currentPage === i + 1 ? "bg-primary-400 text-white" : ""
-                  }`}
-                  key={i}
-                  onClick={() => paginate(i + 1)}
-                >
-                  {i + 1}
-                </button>
-              ))}
-        </div>
+        {/* Pagination Controls */}
+        <Pagination
+          filteredData={filteredData || []}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          paginate={paginate}
+        />
       </div>
     </>
   );
