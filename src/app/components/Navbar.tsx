@@ -135,10 +135,10 @@ const Navbar = () => {
                   </Link>
                 ))}
               </div>
-              <Link href="/profile">
-                <div className="flex flex-row items-center gap-2">
-                  {!isAdmin && (
-                    <>
+              <div className="flex flex-row items-center gap-2">
+                {!isAdmin && (
+                  <>
+                    <Link href={`/cart`}>
                       <Image
                         src="/icons/cart.svg"
                         alt="cart-icon"
@@ -146,9 +146,12 @@ const Navbar = () => {
                         height={30}
                         className="transition-transform transform hover:scale-110 cursor-pointer"
                       />
-                      <div className="border-r border-black h-6 mx-4" />
-                    </>
-                  )}
+                    </Link>
+
+                    <div className="border-r border-black h-6 mx-4" />
+                  </>
+                )}
+                <Link href="/profile">
                   <div className="flex flex-row gap-3 font-semibold transition-transform transform hover:scale-110 cursor-pointer items-center">
                     <Image
                       src="/icons/user.svg"
@@ -162,8 +165,8 @@ const Navbar = () => {
                       {username}
                     </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
