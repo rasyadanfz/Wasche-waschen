@@ -50,17 +50,18 @@ const KatalogPakaian = () => {
     setFilteredData(result);
   }
 
-  const updateFilteredData = (startPrice: number | null, endPrice: number | null) => {
-    console.log(startPrice, endPrice);
-    const result = dataPakaian.filter((item: Pakaian) => {
-        if (endPrice === null) {
-          return item.price >= startPrice!;
-        }
-        else {
-          return item.price >= startPrice! && item.price <= endPrice;
-        }
+  const updateFilteredData = (startPrices: number[], endPrices: number[]) => {
+    const filter = startPrices.map((startPrice, index) => {
+      const temp = dataPakaian.filter((item: Pakaian) => {
+        const endPrice = endPrices[index];
+        return item.price >= startPrice && item.price <= endPrice;
       });
-    
+  
+      return temp;
+    });
+
+    const flattened = filter.flat();
+    const result = Array.from(new Set(flattened));
     setFilteredData(result);
   }
 
