@@ -4,46 +4,46 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-// finished testing
-export async function DELETE(req:NextRequest){
 
-    const {orderline} = await req.json();
 
-    if(orderline === null){
+export async function PATCH(req:NextRequest){
+
+    const {ArrayOfOrderline} = await req.json();
+
+    if(!ArrayOfOrderline){
         return NextResponse.json(
-            {message:"Empty Orderline"},
-            {status:400},
-        )
-    }
-
-    if(orderline.kuantitas === 1){
-        // we have to delete the orderline
-        const deleteOrderline = await prisma.orderline.delete({
-            where:{
-                id:orderline.id
-            }
-        })
-
-        return NextResponse.json(
-            {message:"Orderline succesfully deleted"},
+            {message:"There is no array of orderline"},
             {status:200}
-        )
-
-    }else{
-        const updateOrderline = await prisma.orderline.update({
-            where:{
-                id:orderline.id
-            },data:{
-                kuantitas:orderline.kuantitas-1
-            }
-        })
-
-        return NextResponse.json(
-            {message:"Deletion successed"},
-            {status:400}
         );
-
     }
+
+    // delete each element
+    for(let i = 0;i < ArrayOfOrderline.length;i++){
+        const oldOrderline = ArrayOfOrderline[i];
+
+        if(oldOrderline.kuantitas === 0){
+            // delete the orderline
+            const deleteOrderline = await prisma.orderline.delete({
+                where:{
+                    id:oldOrderline.id
+                }
+            })
+        }else{
+            // just edit the orderline
+            const editOrderline = await prisma.orderline.update({
+                where:{
+                    id:oldOrderline.id
+                },data:{
+                    kuantitas:oldOrderline.kuantitas
+                }
+            })
+        }
+    }
+
+    return NextResponse.json(
+        {message:"Finished updating the orderline"},
+        {status:200}
+    );
 
 }
 
