@@ -3,17 +3,20 @@ import { FaMoneyBillWave, FaShoppingCart } from "react-icons/fa";
 import { FaShirt } from "react-icons/fa6";
 
 interface LaporanCardProps {
-    type?: "totalBiaya" | "jumlahTransaksi" | "jenisPakaian";
+    type: "totalPendapatan" | "jumlahTransaksi" | "jenisPakaian";
     width?: string;
     height?: string;
     data?: string | Pakaian[];
     children?: React.ReactNode;
+    onClick: (
+        type: "totalPendapatan" | "jumlahTransaksi" | "jenisPakaian"
+    ) => void;
 }
 
-const LaporanCard = ({ type, data, children }: LaporanCardProps) => {
+const LaporanCard = ({ type, data, children, onClick }: LaporanCardProps) => {
     let iconBG;
     switch (type) {
-        case "totalBiaya":
+        case "totalPendapatan":
             iconBG = "bg-[#BBFF9B]";
             break;
         case "jumlahTransaksi":
@@ -24,15 +27,22 @@ const LaporanCard = ({ type, data, children }: LaporanCardProps) => {
             break;
     }
 
+    const handleClick = () => {
+        onClick(type);
+    };
+
     const iconClassName =
         iconBG +
         " w-[64px] h-[64px] rounded-full flex items-center justify-center";
 
     return (
-        <div className={`border border-black rounded-md min-w-[300px]`}>
+        <div
+            className={`border border-black rounded-md min-w-[250px] grow hover:cursor-pointer hover:bg-gray-200 transition duration-100 ease-in-out`}
+            onClick={handleClick}
+        >
             <div className={`flex flex-col p-5 font-raleway`}>
                 <div className={iconClassName}>
-                    {type === "totalBiaya" && (
+                    {type === "totalPendapatan" && (
                         <FaMoneyBillWave size={32} color="#2EB200" />
                     )}
                     {type === "jumlahTransaksi" && (
@@ -43,12 +53,12 @@ const LaporanCard = ({ type, data, children }: LaporanCardProps) => {
                     )}
                 </div>
                 <div className="mt-3 text-h6 font-semibold">
-                    {type === "totalBiaya" && "Total Pendapatan"}
+                    {type === "totalPendapatan" && "Total Pendapatan"}
                     {type === "jumlahTransaksi" && "Jumlah Transaksi"}
                     {type === "jenisPakaian" && "Jumlah Jenis Pakaian"}
                 </div>
                 <div className="mt-3 text-body">
-                    {type === "totalBiaya" && `Rp ${data}`}
+                    {type === "totalPendapatan" && `Rp ${data}`}
                     {type === "jumlahTransaksi" && `${data}`}
                     {type === "jenisPakaian" && children}
                 </div>

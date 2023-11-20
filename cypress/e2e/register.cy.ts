@@ -48,7 +48,7 @@ describe("Register", () => {
 
     it("should require nomor telepon input", () => {
         cy.get("input[id=email]").type("user123@gmail.com");
-        cy.get("input[id=nama]").type("user123");
+        cy.get("input[id=name]").type("user123");
         cy.get("form").find("button[id=submit]").click();
         cy.get("div.error_toast div div").should("be.visible");
         cy.get("div.error_toast div div div div[role='status']")
@@ -58,7 +58,7 @@ describe("Register", () => {
 
     it("should validate password input", () => {
         cy.get("input[id=email]").type("user123@gmail.com");
-        cy.get("input[id=nama]").type("user123");
+        cy.get("input[id=name]").type("user123");
         cy.get("input[id=no_telp]").type("111122223333");
         cy.get("form").find("button[id=submit]").click();
         cy.get("div.error_toast div div").should("be.visible");
@@ -69,7 +69,7 @@ describe("Register", () => {
 
     it("should validate confirm password input", () => {
         cy.get("input[id=email]").type("user123@gmail.com");
-        cy.get("input[id=nama]").type("user123");
+        cy.get("input[id=name]").type("user123");
         cy.get("input[id=no_telp]").type("111122223333");
         cy.get("input[id=password]").type("thisisapassword");
         cy.get("form").find("button[id=submit]").click();
@@ -81,7 +81,7 @@ describe("Register", () => {
 
     it("should validate password and password confirmation", () => {
         cy.get("input[id=email]").type("user123@gmail.com");
-        cy.get("input[id=nama]").type("user123");
+        cy.get("input[id=name]").type("user123");
         cy.get("input[id=no_telp]").type("111122223333");
         cy.get("input[id=password]").type("thisisapassword");
         cy.get("input[id=confirmpassword]").type("thisisa");
@@ -93,14 +93,14 @@ describe("Register", () => {
     });
 
     it("should redirect user to login page", () => {
-        cy.get("a[href='/login']").click();
+        cy.get("div[id=acclogin] a[href='/login']").click();
         cy.location("pathname").should("eq", "/login");
         cy.go("back");
     });
 
     it("should validate unique email", () => {
         cy.get("input[id=email]").type("testemail@gmail.com");
-        cy.get("input[id=nama]").type("user123");
+        cy.get("input[id=name]").type("user123");
         cy.get("input[id=no_telp]").type("111122223333");
         cy.get("input[id=password]").type("thisisapassword");
         cy.get("input[id=confirmpassword]").type("thisisapassword");

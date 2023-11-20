@@ -32,7 +32,10 @@ const RegisterPage = async () => {
                     <div className="mt-4">
                         <RegisterForm />
                     </div>
-                    <div className="text-center mt-3 text-body flex justify-center gap-x-1">
+                    <div
+                        className="text-center mt-3 text-body flex justify-center gap-x-1"
+                        id="acclogin"
+                    >
                         <p>Already have an account?</p>
                         <Link
                             href={"/login"}

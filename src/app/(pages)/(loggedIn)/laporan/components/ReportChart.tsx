@@ -24,7 +24,7 @@ ChartJS.register(
 interface ChartProps {
     data: LaporanDataProps;
     periodType: string;
-    type: "totalPendapatan" | "totalTransaksi" | "jenisPakaian";
+    type: "totalPendapatan" | "jumlahTransaksi" | "jenisPakaian";
 }
 
 const ReportChart = ({ data, periodType, type }: ChartProps) => {
@@ -49,7 +49,7 @@ const ReportChart = ({ data, periodType, type }: ChartProps) => {
         title =
             type === "totalPendapatan"
                 ? "Total Pendapatan"
-                : type === "totalTransaksi"
+                : type === "jumlahTransaksi"
                 ? "Total Transaksi"
                 : "Jenis Pakaian";
 
@@ -90,7 +90,10 @@ const ReportChart = ({ data, periodType, type }: ChartProps) => {
         };
 
         const options = {
+            maintainAspectRatio: false,
             responsive: true,
+            minWidth: 400,
+            minHeight: 300,
             scales: {
                 y: {
                     beginAtZero: true,
@@ -109,7 +112,7 @@ const ReportChart = ({ data, periodType, type }: ChartProps) => {
 
         return (
             <div>
-                <Line data={data} options={options} />
+                <Line data={data} options={options} width={400} height={400} />
             </div>
         );
     } else {

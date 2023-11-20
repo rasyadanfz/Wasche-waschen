@@ -105,14 +105,15 @@ const getReportData = async (
 
     if (type === "harian") {
         const date = new Date();
-        date.setDate(date.getDate() - backNum - 1);
-        date.setHours(0, 0, 0, 0);
+        date.setDate(date.getDate() - backNum);
+        date.setHours(7, 0, 0, 0);
+        console.log(date);
 
         // Filter based on pastDate
         const transactionData = filteredTransactionData.filter(
             (transaction) => {
                 const transactionDate = new Date(transaction.tanggal);
-                transactionDate.setHours(0, 0, 0, 0);
+                transactionDate.setHours(7, 0, 0, 0);
                 return transactionDate >= date && transactionDate <= date;
             }
         );
@@ -126,14 +127,14 @@ const getReportData = async (
         const currDate = new Date();
         const date = new Date(currDate);
         date.setDate(currDate.getDate() - backNum * 7 - 6);
-        date.setHours(0, 0, 0, 0);
+        date.setHours(7, 0, 0, 0);
         const endDate = new Date(date);
         endDate.setDate(currDate.getDate() + 6);
 
         const transactionData = filteredTransactionData.filter(
             (transaction) => {
                 const transactionDate = new Date(transaction.tanggal);
-                transactionDate.setHours(0, 0, 0, 0);
+                transactionDate.setHours(7, 0, 0, 0);
                 return transactionDate >= date && transactionDate <= endDate;
             }
         );
@@ -147,7 +148,7 @@ const getReportData = async (
         const currDate = new Date();
         const date = new Date(currDate);
         date.setMonth(currDate.getMonth() - backNum);
-        date.setHours(0, 0, 0, 0);
+        date.setHours(7, 0, 0, 0);
         const endDate = new Date(date);
         endDate.setMonth(endDate.getMonth() + 1);
         endDate.setDate(0);
@@ -155,7 +156,7 @@ const getReportData = async (
         const transactionData = filteredTransactionData.filter(
             (transaction) => {
                 const transactionDate = new Date(transaction.tanggal);
-                transactionDate.setHours(0, 0, 0, 0);
+                transactionDate.setHours(7, 0, 0, 0);
                 return (
                     transactionDate.getMonth() === date.getMonth() &&
                     transactionDate.getFullYear() === date.getFullYear()
@@ -186,13 +187,13 @@ export async function GET(req: NextRequest) {
         // Set Starting Date to pastDataCount days
         const startingDate = new Date();
         startingDate.setDate(startingDate.getDate() - pastDays);
-        startingDate.setHours(0, 0, 0, 0);
+        startingDate.setHours(7, 0, 0, 0);
 
         // Filter past data
         const filteredTransactionData = transactionData.filter(
             (transaction) => {
                 const transactionDate = new Date(transaction.tanggal);
-                transactionDate.setHours(0, 0, 0, 0);
+                transactionDate.setHours(7, 0, 0, 0);
                 return transactionDate >= startingDate;
             }
         );
@@ -227,13 +228,13 @@ export async function GET(req: NextRequest) {
         const currDate = new Date();
         const startingDate = new Date(currDate);
         startingDate.setDate(currDate.getDate() - 4 * 7 + 1);
-        startingDate.setHours(0, 0, 0, 0);
+        startingDate.setHours(7, 0, 0, 0);
 
         // Filter past data
         const filteredTransactionData = transactionData.filter(
             (transaction) => {
                 const transactionDate = new Date(transaction.tanggal);
-                transactionDate.setHours(0, 0, 0, 0);
+                transactionDate.setHours(7, 0, 0, 0);
                 return transactionDate >= startingDate;
             }
         );
@@ -267,13 +268,13 @@ export async function GET(req: NextRequest) {
         const currDate = new Date();
         const startingDate = new Date(currDate);
         startingDate.setMonth(currDate.getMonth() - pastMonths);
-        startingDate.setHours(0, 0, 0, 0);
+        startingDate.setHours(7, 0, 0, 0);
 
         // Filter past data
         const filteredTransactionData = transactionData.filter(
             (transaction) => {
                 const transactionDate = new Date(transaction.tanggal);
-                transactionDate.setHours(0, 0, 0, 0);
+                transactionDate.setHours(7, 0, 0, 0);
                 return transactionDate >= startingDate;
             }
         );
