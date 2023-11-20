@@ -104,7 +104,7 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
       </div>
       <div>
         <div className="w-full">
-          <div className="container mx-auto">
+          <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
             <h1 className="font-bold text-h3 mt-[100px] mb-10">
               Detail Transaksi
             </h1>

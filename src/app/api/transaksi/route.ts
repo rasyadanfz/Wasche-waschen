@@ -5,7 +5,41 @@ const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
+  const user = searchParams.get("user");
   const id = searchParams.get("id");
+
+  if (user) {
+    try {
+      const data = await prisma.transaksi.findMany({
+        where: {
+          userId: user as string,
+        },
+        include: {
+          user: true,
+        },
+      });
+
+      const formattedData = data.map((item) => {
+        return {
+          id: item.id,
+          nama: item.nama,
+          total_harga: item.total_harga,
+          status: item.status,
+          tanggal: item.tanggal,
+          userId: item.userId,
+          nama_customer: item.user?.name,
+        };
+      });
+
+      return NextResponse.json(formattedData, { status: 200 });
+    } catch (error) {
+      console.error(error);
+      return NextResponse.json({ error: "Error occured." }, { status: 403 });
+    } finally {
+      await prisma.$disconnect();
+    }
+  }
+
 
   if (id) {
     try {
@@ -23,22 +57,15 @@ export async function GET(req: NextRequest) {
         },
       });
 
-      if (!detailTransaksi) {
-        return NextResponse.json(
-          { error: "Transaksi not found." },
-          { status: 404 }
-        );
-      }
-
       const formattedData = {
-        id: detailTransaksi.id,
-        nama: detailTransaksi.nama,
-        total_harga: detailTransaksi.total_harga,
-        status: detailTransaksi.status,
-        tanggal: detailTransaksi.tanggal,
-        userId: detailTransaksi.userId,
-        nama_customer: detailTransaksi.user?.name,
-        orderlines: detailTransaksi.orderlines.map((item) => {
+        id: detailTransaksi?.id,
+        nama: detailTransaksi?.nama,
+        total_harga: detailTransaksi?.total_harga,
+        status: detailTransaksi?.status,
+        tanggal: detailTransaksi?.tanggal,
+        userId: detailTransaksi?.userId,
+        nama_customer: detailTransaksi?.user?.name,
+        orderlines: detailTransaksi?.orderlines.map((item) => {
           return {
             id: item.id,
             kuantitas: item.kuantitas,
@@ -55,6 +82,8 @@ export async function GET(req: NextRequest) {
     } catch (error) {
       console.error(error);
       return NextResponse.json({ error: "Error occured." }, { status: 403 });
+    } finally {
+      await prisma.$disconnect();
     }
   }
 

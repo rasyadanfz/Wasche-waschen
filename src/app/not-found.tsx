@@ -8,7 +8,7 @@ export default function NotFound() {
 
   return (
     <>
-      <div className="container mx-auto">
+      <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
         <div className="flex flex-col items-center justify-center gap-7 min-h-screen">
           <Image src={"/images/404.svg"} alt="404" width={300} height={300} />
           <h1 className="text-h3 font-bold text-center text-primary-700">

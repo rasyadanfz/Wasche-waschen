@@ -106,7 +106,7 @@ const Navbar = () => {
             isTop ? "bg-transparent" : "bg-primary-300"
           }`}
         >
-          <div className="container relative z-50 mx-auto max-w-screen-xl">
+          <div className="container relative z-50 mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
             <div className="flex items-center justify-between relative">
               <Link href="/" className="px-4">
                 <h1

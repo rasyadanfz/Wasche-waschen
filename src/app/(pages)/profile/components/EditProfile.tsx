@@ -121,7 +121,7 @@ export default function EditProfile() {
       <div className="error_toast">
         <Toaster position="top-right" toastOptions={errorToastOptions} />
       </div>
-      <div className="container mx-auto mt-[100px]">
+      <div className="container mx-auto mt-[100px] xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
         <h1 className="text-h3 font-bold text-center mb-10">Edit Profile</h1>
         <div className="flex flex-col items-center justify-center">
           <form action="" className="flex flex-col gap-2" onSubmit={handleSave}>

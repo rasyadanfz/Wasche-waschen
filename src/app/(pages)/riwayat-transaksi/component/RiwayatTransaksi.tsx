@@ -2,10 +2,10 @@
 
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import CardTransaksi from "./CardTransaksi";
-import Link from "next/link";
-import FormInput from "@/components/FormInput";
+import CardRiwayat from "./CardRiwayat";
 import Pagination from "@/components/Pagination";
+import { getSession } from "next-auth/react";
+
 
 interface Transaksi {
   id: string;
@@ -14,11 +14,18 @@ interface Transaksi {
   status: string;
   total_harga: Number;
   userId: string;
-  nama_customer: string;
+}
+
+interface User {
+  id: string;
 }
 
 async function getDataTransaksi() {
-  const res = await fetch("/api/transaksi", {
+  const session = await getSession();
+  const user = session?.user as User;
+  const userId = user.id;
+
+  const res = await fetch(`/api/transaksi?user=${userId}`, {
     method: "GET",
   });
   const dataTransaksi = await res.json();
@@ -37,7 +44,6 @@ export default function Transaksi() {
       try {
         const data = await getDataTransaksi();
         setDataTransaksi(data);
-        console.log(data);
       } catch (error) {
         console.error("Error fetching data:", error);
         // Handle error if needed
@@ -97,7 +103,7 @@ export default function Transaksi() {
     <>
       <div className="min-h-screen">
         <div className="w-full mb-[50px]">
-          <div className="container mx-auto">
+          <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
             <h1 className="font-bold text-h3 mt-[100px]">Daftar Transaksi</h1>
             <div className="">
               <div className="flex flex-row justify-between gap-6 items-end">
@@ -119,6 +125,7 @@ export default function Transaksi() {
                   </button>
                 </div>
               </div>
+              
 
               <div className="flex flex-col mt-2">
                 <h1 className="font-semibold text-h6 mb-2">Filter by:</h1>
@@ -191,29 +198,27 @@ export default function Transaksi() {
             </div>
           </div>
         </div>
-        <div className="container mx-auto flex flex-col gap-4">
+        <div className="container mx-auto flex flex-col gap-4 xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
           {dataTransaksi !== null ? (
             currentItems.length > 0 ? (
               currentItems.map((item: Transaksi) => (
-                <CardTransaksi
-                  key={item.id}
-                  id={item.id}
-                  nama={item.nama}
-                  tanggal={item.tanggal}
-                  status={item.status}
-                  total_harga={item.total_harga}
-                  nama_customer={item.nama_customer}
-                />
+                  <CardRiwayat
+                    key={item.id}
+                    id={item.id}
+                    nama={item.nama}
+                    tanggal={item.tanggal}
+                    status={item.status}
+                    total_harga={item.total_harga}
+                  />
               ))
             ) : (
               <h2 className="font-semibold text-center">Tidak ada transaksi</h2>
             )
           ) : (
-            <h2 className="font-semibold text-center animate-pulse">
-              Loading...
-            </h2>
+            <h2 className="font-semibold text-center animate-pulse">Loading...</h2>
           )}
         </div>
+        {/* Pagination Controls */}
         {/* Pagination Controls */}
         <Pagination
           filteredData={filteredData || []}
