@@ -8,7 +8,11 @@ const prisma = new PrismaClient();
 
 export async function POST(req:NextRequest){
     const {keranjang} = await req.json()
-    const user = keranjang.user
+    const user = await prisma.user.findUnique({
+        where:{
+            id:keranjang.userId
+        }
+    })
 
 
     if(!keranjang){
@@ -45,8 +49,16 @@ export async function POST(req:NextRequest){
 
 
     for(let i = 0;i < orderLineList.length;i++){
-        orderLineList[i].keranjangId = null;
-        orderLineList[i].transaksiId = newTransaksi.id;
+        // edit keranjangId
+        const editOrderline = await prisma.orderline.update({
+            where:{
+                id:orderLineList[i].id
+            },data:{
+                keranjangId:null,
+                transaksiId:newTransaksi.id,
+            }
+        })
+
     }
 
     return NextResponse.json(
