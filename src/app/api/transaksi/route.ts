@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { totalHarga } from "@/app/utils/totalharga";
 
 
 
@@ -7,6 +8,7 @@ const prisma = new PrismaClient();
 
 export async function POST(req:NextRequest){
     const {keranjang} = await req.json()
+    const user = keranjang.user
 
 
     if(!keranjang){
@@ -26,18 +28,31 @@ export async function POST(req:NextRequest){
 
     // create new transaction
 
-    const newTransaksi = await prisma.orderline.create({
+        // create a new date
+    const newDate = new Date();
+
+
+
+    const newTransaksi = await prisma.transaksi.create({
         data:{
-            nama:"TempNama",
-            
+            nama:String('Testing'),
+            total_harga:totalHarga(orderLineList),
+            tanggal:newDate.toUTCString(),
+            userId:user.id,
         }
     })
 
+
+
     for(let i = 0;i < orderLineList.length;i++){
-
-
+        orderLineList[i].keranjangId = null;
+        orderLineList[i].transaksiId = newTransaksi.id;
     }
 
+    return NextResponse.json(
+        {message:"Succesfully create a new transaction"},
+        {status:200}
+    );
 
 
 
