@@ -66,17 +66,24 @@ export default function Keranjang() {
         </div>
         <div className="container mx-auto flex flex-col gap-4">
             {
-                dataKeranjang?.daftarPakaian !== null ?
-                    dataKeranjang?.daftarPakaian.forEach((item)=>{
+                dataKeranjang?.daftarPakaian !== null ?(
+                    dataKeranjang?.daftarPakaian.length > 0 ? (
+                    dataKeranjang?.daftarPakaian.forEach((item:Pakaian)=>{
+                        return (
                         <CardKeranjang
                             namaPakaian={item.nama}
                             kuantitas={item.count}
                             total_harga={item.harga}
-                        />
+                        />)
                     })
-                 :  <h2 className="font-semibold text-center">Keranjang Kosong</h2>
+                    ) : <h2 className="font-semibold text-center">Keranjang kosong</h2>
+                ):(
+                    <h2>NUL <BITCH></BITCH></h2>
+                )
                 
             }
+            
+
           
         </div>
           
