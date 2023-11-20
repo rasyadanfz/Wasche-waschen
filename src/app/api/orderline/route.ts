@@ -93,10 +93,10 @@ export async function POST(req:NextRequest){
             const checkOrderline = tempOrderline[0];
 
             if(!checkOrderline){
-                // there is no orderline
+                // there is no orderlin
                 const createOrderline = await prisma.orderline.create({
                     data:{
-                        kuantitas:1,
+                        kuantitas:ArrayOfPakaianCnt[i].count,
                         total_harga:pakaian.price,
                         noted:"noted",
                         pakaian:{
