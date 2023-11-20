@@ -49,22 +49,95 @@ export async function PATCH(req:NextRequest){
 
 export async function POST(req:NextRequest){
 
-    
-    // ------------------ SOME CONFUSION
-    /*
-        1. shouldn't  keranjang is a must for every user?
-        2. shouldn't each keranjang has a foreign key with transaction? 
-            because if it isn't, then how could i attach transaction to each new orderline
-        
-    */
-    const {pakaian,user,transaksi} = await req.json();
-
+    const {user,ArrayOfPakaianCnt} = await req.json();
     if(!user){
         return NextResponse.json(
             {error:"No user"},
             {status:400}
         )
     }
+
+    if(!ArrayOfPakaianCnt){
+        return NextResponse.json(
+            {error:"No Array of PakaianCnt"},
+            {status:400}
+        )
+    }
+
+    const keranjang = await prisma.keranjang.findUnique({
+        where:{
+            userId:user.id
+        }
+    })
+
+    if(!keranjang){
+        return NextResponse.json(
+            {error:"No Keranjang"},
+            {status:400}
+        )  
+    }
+
+
+    for(let i = 0;i < ArrayOfPakaianCnt.length;i++){
+        if(ArrayOfPakaianCnt[i].count != 0){
+            // check whether there's already an orderline of that pakaian or not
+            const pakaian = ArrayOfPakaianCnt[i].pakaian;
+            const tempOrderline = await prisma.orderline.findMany({
+                where:{
+                    keranjangId:keranjang.id,
+                    pakaianId:pakaian.id,
+                }
+            })
+
+            
+            const checkOrderline = tempOrderline[0];
+
+            if(!checkOrderline){
+                // there is no orderline
+                const createOrderline = await prisma.orderline.create({
+                    data:{
+                        kuantitas:1,
+                        total_harga:pakaian.price,
+                        noted:"noted",
+                        pakaian:{
+                            connect:{
+                                id:pakaian.id,
+                            }
+                        },
+                        keranjang:{
+                            connect:{
+                                id:keranjang.id,
+                            }
+                        }
+                    }
+                })
+            }else{
+                // update old orderline
+                const updateOrderline = await prisma.orderline.updateMany({
+                    where:{
+                        pakaianId:pakaian.id,
+                        keranjangId:keranjang.id,
+                    },data:{
+                        kuantitas:checkOrderline.kuantitas+ArrayOfPakaianCnt[i].count
+                    }
+                })
+            }
+
+        }
+    }
+
+
+    return NextResponse.json(
+        {message:"Succesfully added pakaian"},
+        {status:200}
+    )
+
+    
+
+    /*
+    const {pakaian,user} = await req.json();
+
+
 
     const keranjang = user.keranjang;
 
@@ -82,6 +155,33 @@ export async function POST(req:NextRequest){
         }
     })
 
+    const orderline = tempOrderline[0];
+
+    if(orderline === null){
+        // create new orderline
+        const createOrderline = await prisma.orderline.create({
+            data:{
+                kuantitas:1,
+                total_harga:pakaian.price,
+                noted:"Noted",
+                pakaian:{
+                    connect:{
+                        id:pakaian.id,
+                    }
+                },
+                keranjang:{
+                    connect:{
+                        id:keranjang.id,
+                    }
+                },
+            }
+        })
+    }else{
+
+    }
+
+
+    
     const orderline = tempOrderline[0];
 
 
@@ -139,6 +239,6 @@ export async function POST(req:NextRequest){
 
     }
 
-    
+    */   
 
 }

@@ -12,7 +12,7 @@ export async function GET(req:NextRequest){
     })
 
     const pakaian = await prisma.pakaian.findMany();
-    const keranjang = await prisma.keranjang.findMany({
+    const keranjang = await prisma.keranjang.findUnique({
         where:{
             userId:user?.id
         }
