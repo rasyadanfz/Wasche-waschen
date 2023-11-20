@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import CartNavbar from "./CartNavbar";
 
 const Navbar = () => {
   const [pathName, setPathName] = useState();
@@ -43,6 +44,7 @@ const Navbar = () => {
       label: "Riwayat Transaksi",
       link: "/explore",
     },
+
   ];
 
   return (
@@ -85,6 +87,7 @@ const Navbar = () => {
                   </Link>
                 );
               })}
+              <CartNavbar/>
               <div className="px-7 py-2 bg-white text-primary font-bold cursor-pointer transition-colors duration-500 hover:bg-primary hover:text-white">
                 MASUK
               </div>
