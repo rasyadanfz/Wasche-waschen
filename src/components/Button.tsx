@@ -19,7 +19,7 @@ const Button = ({
 
     const buttonClassName = baseClassName + " " + className;
     return (
-        <>
+        <div className="">
             <button
                 type="submit"
                 className={`${
@@ -32,7 +32,7 @@ const Button = ({
             >
                 <div className="text-white">{text}</div>
             </button>
-        </>
+        </div>
     );
 };
 

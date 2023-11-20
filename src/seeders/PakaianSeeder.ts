@@ -6,14 +6,14 @@ async function main() {
     await prisma.pakaian.createMany({
         data: [
             {
-                name: "Kaos - kemeja",
-                price: 6500,
-                unit: "kg"
+                name: "Kemeja",
+                price: 500,
+                unit: "satuan"
             },
             {
                 name: "Celana jeans",
-                price: 6500,
-                unit: "kg"
+                price: 1000,
+                unit: "satuan"
             },
             {
                 name: "Handuk",

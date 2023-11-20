@@ -21,7 +21,7 @@ const KatalogPakaian = () => {
   const [query, setQuery] = useState("");
   const [filteredData, setFilteredData] = useState(dataPakaian);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 8;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -65,13 +65,17 @@ const KatalogPakaian = () => {
     setFilteredData(result);
   }
 
+  const updateDataToOriginal = () => {
+    setFilteredData(dataPakaian);
+  }
+
   return (
     <>
       <div className="w-full min-h-screen mb-[50px]">
-        <div className="container mx-auto">
+        <div className="container mx-auto max-w-screen-lg">
           <h1 className="font-bold text-3xl mt-[100px]">Pakaian</h1>
           <div className="flex flex-row justify-between gap-6 items-end">
-            <div className="flex items-center gap-2 border border-black rounded-md w-full px-4 py-2 mt-4 h-14">
+            <div className="flex items-center gap-2 border border-black hover:bg-gray-100 rounded-md w-full px-4 py-2 mt-4 h-14">
               <input
                 type="text"
                 placeholder="Cari Pakaian"
@@ -82,15 +86,15 @@ const KatalogPakaian = () => {
             </div>
             <div className="flex justify-end mt-2">
               <button
-                className="px-4 py-2 bg-transparent rounded-md border text-black border-black font-semibold h-14 active:bg-primary active:text-white"
+                className="px-4 py-2 bg-transparent rounded-md border text-black border-black hover:bg-gray-100 font-semibold h-14 active:bg-primary active:text-white"
                 onClick={handleSearch}
               >
                 <FaSearch size={18} />
               </button>
             </div>
-            <Dropdown updateFilteredData={updateFilteredData} />
+            <Dropdown updateFilteredData={updateFilteredData} updateDataToOriginal={updateDataToOriginal} />
           </div>
-          <div>
+          <div className="grid grid-cols-4 gap-4">
             {currentItems.map((pakaian: Pakaian) => (
               <PakaianComponent pakaian={pakaian} key={pakaian.id} />
               ))}
