@@ -26,7 +26,7 @@ const AddButton = () => {
   }
 
   return (
-    <div>
+    <div className="w-full">
       {showTambahButton ? (
           <Button onClick={handleTambah} text="+Tambah" className="p-2" />
         )
