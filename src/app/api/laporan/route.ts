@@ -107,7 +107,6 @@ const getReportData = async (
         const date = new Date();
         date.setDate(date.getDate() - backNum);
         date.setHours(7, 0, 0, 0);
-        console.log(date);
 
         // Filter based on pastDate
         const transactionData = filteredTransactionData.filter(
@@ -129,7 +128,7 @@ const getReportData = async (
         date.setDate(currDate.getDate() - backNum * 7 - 6);
         date.setHours(7, 0, 0, 0);
         const endDate = new Date(date);
-        endDate.setDate(currDate.getDate() + 6);
+        endDate.setDate(date.getDate() + 6);
 
         const transactionData = filteredTransactionData.filter(
             (transaction) => {

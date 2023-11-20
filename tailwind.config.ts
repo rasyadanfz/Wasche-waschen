@@ -54,7 +54,7 @@ const config: Config = {
                 white: "#FFFFFF",
                 danger: "#E5000E",
                 success: "#0CF023",
-                backgroundcolor: "#F9F9FB",
+                backgroundcolor: "#F6F6FB",
             },
         },
         fontFamily: {

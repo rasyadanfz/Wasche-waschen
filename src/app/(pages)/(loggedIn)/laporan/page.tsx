@@ -24,14 +24,7 @@ const LaporanPage = () => {
     const [totalBiaya, setTotalBiaya] = useState(0);
     const [jumlahTransaksi, setJumlahTransaksi] = useState(0);
     const [reportType, setReportType] = useState("harian");
-    const [chartType, setChartType] = useState("totalPendapatan");
     const [isLoading, setIsLoading] = useState(true);
-
-    const handleCardClick = (
-        type: "totalPendapatan" | "jumlahTransaksi" | "jenisPakaian"
-    ) => {
-        setChartType(type);
-    };
 
     useEffect(() => {
         const queryParams = { type: reportType };
@@ -58,54 +51,50 @@ const LaporanPage = () => {
     } else {
         return (
             <div className="mx-5 my-1">
+                <div className="text-h2 font-raleway font-bold mt-2 mb-5">
+                    Laporan
+                </div>
                 <div className="max-w-[300px]">
-                    <PeriodSelector onChange={() => {}} />
+                    <PeriodSelector onChange={setReportType} />
                 </div>
                 <div className="grid grid-cols-6 mt-2 gap-x-5">
                     <div className="col-span-3 flex flex-col">
-                        <div className="flex justify-between gap-x-5 pb-2">
+                        <div className="flex flex-col border border-black rounded-md p-3 shadow-md">
                             <LaporanCard
                                 type="totalPendapatan"
                                 data={totalBiaya.toLocaleString("en-US")}
-                                onClick={handleCardClick}
                             />
+                            <ReportChart
+                                data={originalData}
+                                periodType={reportType}
+                                type="totalPendapatan"
+                            />
+                        </div>
+                    </div>
+                    <div className="col-span-3">
+                        <div className="flex flex-col border border-black rounded-md p-3 shadow-md">
                             <LaporanCard
                                 type="jumlahTransaksi"
                                 data={jumlahTransaksi.toLocaleString("en-US")}
-                                onClick={handleCardClick}
+                            />
+                            <ReportChart
+                                data={originalData}
+                                periodType={reportType}
+                                type="jumlahTransaksi"
                             />
                         </div>
-                        {originalData && (
-                            <div className="min-w-full min-h-[300px] border border-black">
-                                {chartType === "totalPendapatan" && (
-                                    <ReportChart
-                                        data={originalData}
-                                        periodType={reportType}
-                                        type="totalPendapatan"
-                                    />
-                                )}
-                                {chartType === "jumlahTransaksi" && (
-                                    <ReportChart
-                                        data={originalData}
-                                        periodType={reportType}
-                                        type="jumlahTransaksi"
-                                    />
-                                )}
-                                {chartType === "jenisPakaian" && (
-                                    <ReportChart
-                                        data={originalData}
-                                        periodType={reportType}
-                                        type="jenisPakaian"
-                                    />
-                                )}
-                            </div>
-                        )}
                     </div>
-                    <div className="col-span-3">
-                        <LaporanCard
+                </div>
+                <div className="grid grid-cols-2 border border-black rounded-md p-3 mt-3 shadow-md gap-x-5">
+                    <div className="col-span-1 self-center">
+                        <ReportChart
+                            data={originalData}
+                            periodType={reportType}
                             type="jenisPakaian"
-                            onClick={handleCardClick}
-                        >
+                        />
+                    </div>
+                    <div className="col-span-1 ">
+                        <LaporanCard type="jenisPakaian">
                             {reportClothesData && (
                                 <JenisPakaianTable
                                     clothesData={reportClothesData}
@@ -113,9 +102,6 @@ const LaporanPage = () => {
                             )}
                         </LaporanCard>
                     </div>
-                </div>
-                <div className="ml-10">
-                    <div className="m-10 flex gap-x-4"></div>
                 </div>
             </div>
         );

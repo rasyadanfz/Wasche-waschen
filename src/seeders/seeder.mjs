@@ -57,33 +57,7 @@ const main = async () => {
         "081234567890"
     );
 
-    const pakaian1 = await prisma.pakaian.findFirst({
-        where: {
-            name: "Kaos - kemeja",
-        },
-    });
-    const pakaian2 = await prisma.pakaian.findFirst({
-        where: {
-            name: "Celana jeans",
-        },
-    });
-    const pakaian3 = await prisma.pakaian.findFirst({
-        where: {
-            name: "Handuk",
-        },
-    });
-    const pakaian4 = await prisma.pakaian.findFirst({
-        where: {
-            name: "Jaket",
-        },
-    });
-    const pakaian5 = await prisma.pakaian.findFirst({
-        where: {
-            name: "Sepatu",
-        },
-    });
-
-    const pakaianArray = [pakaian1, pakaian2, pakaian3, pakaian4, pakaian5];
+    const pakaianArray = await prisma.pakaian.findMany();
 
     // Seed Transaction Data
     let transactionList = [];

@@ -1,9 +1,7 @@
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 import { useState } from "react";
 
-const PeriodSelector = ({ onChange }: { onChange: () => void }) => {
-    const handleChange = () => {};
-
+const PeriodSelector = ({ onChange }: { onChange: (type: string) => void }) => {
     const [choice, setChoice] = useState("Harian");
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -24,6 +22,7 @@ const PeriodSelector = ({ onChange }: { onChange: () => void }) => {
                             onClick={() => {
                                 setChoice("Harian");
                                 setShowDropdown(!showDropdown);
+                                onChange("harian");
                             }}
                         >
                             Harian
@@ -33,6 +32,7 @@ const PeriodSelector = ({ onChange }: { onChange: () => void }) => {
                             onClick={() => {
                                 setChoice("Mingguan");
                                 setShowDropdown(!showDropdown);
+                                onChange("mingguan");
                             }}
                         >
                             Mingguan
@@ -42,6 +42,7 @@ const PeriodSelector = ({ onChange }: { onChange: () => void }) => {
                             onClick={() => {
                                 setChoice("Bulanan");
                                 setShowDropdown(!showDropdown);
+                                onChange("bulanan");
                             }}
                         >
                             Bulanan

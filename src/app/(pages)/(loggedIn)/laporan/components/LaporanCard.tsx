@@ -8,12 +8,9 @@ interface LaporanCardProps {
     height?: string;
     data?: string | Pakaian[];
     children?: React.ReactNode;
-    onClick: (
-        type: "totalPendapatan" | "jumlahTransaksi" | "jenisPakaian"
-    ) => void;
 }
 
-const LaporanCard = ({ type, data, children, onClick }: LaporanCardProps) => {
+const LaporanCard = ({ type, data, children }: LaporanCardProps) => {
     let iconBG;
     switch (type) {
         case "totalPendapatan":
@@ -27,19 +24,12 @@ const LaporanCard = ({ type, data, children, onClick }: LaporanCardProps) => {
             break;
     }
 
-    const handleClick = () => {
-        onClick(type);
-    };
-
     const iconClassName =
         iconBG +
         " w-[64px] h-[64px] rounded-full flex items-center justify-center";
 
     return (
-        <div
-            className={`border border-black rounded-md min-w-[250px] grow hover:cursor-pointer hover:bg-gray-200 transition duration-100 ease-in-out`}
-            onClick={handleClick}
-        >
+        <div className={` rounded-md min-w-[250px] grow `}>
             <div className={`flex flex-col p-5 font-raleway`}>
                 <div className={iconClassName}>
                     {type === "totalPendapatan" && (
