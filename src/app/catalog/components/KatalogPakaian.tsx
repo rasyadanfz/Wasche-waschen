@@ -57,6 +57,15 @@ const KatalogPakaian = () => {
     { value: "harga4", label: "Lebih dari Rp10.000"},
   ]
 
+  const handleFilterHarga = (start: number | null, end: number | null) => {   
+    const result = dataPakaian.filter((item: Pakaian) => {
+      const priceMatch = (start === null || item.price >= start) && (end === null || item.price <= end);
+      return priceMatch;
+    });
+
+    setFilteredData(result);
+  }
+
   return (
     <>
       <div className="w-full min-h-screen mb-[50px]">
