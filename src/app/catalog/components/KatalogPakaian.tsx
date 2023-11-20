@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import PakaianComponent from "./PakaianComponent";
 import { Pakaian } from "@prisma/client";
 import Pagination from "../../../components/Pagination";
-import Dropdown from "@/components/Dropdown";
+import Dropdown from "@/app/catalog/components/Dropdown";
 
 async function getDataPakaian() {
   const res = await fetch("/api/pakaian", {
@@ -50,19 +50,17 @@ const KatalogPakaian = () => {
     setFilteredData(result);
   }
 
-  const options = [
-    { value: "harga1", label: "Kurang dari Rp4.000"},
-    { value: "harga2", label: "Rp4.000 - Rp6.500"},
-    { value: "harga3", label: "Rp6.500 - Rp10.000"},
-    { value: "harga4", label: "Lebih dari Rp10.000"},
-  ]
-
-  const handleFilterHarga = (start: number | null, end: number | null) => {   
+  const updateFilteredData = (startPrice: number | null, endPrice: number | null) => {
+    console.log(startPrice, endPrice);
     const result = dataPakaian.filter((item: Pakaian) => {
-      const priceMatch = (start === null || item.price >= start) && (end === null || item.price <= end);
-      return priceMatch;
-    });
-
+        if (endPrice === null) {
+          return item.price >= startPrice!;
+        }
+        else {
+          return item.price >= startPrice! && item.price <= endPrice;
+        }
+      });
+    
     setFilteredData(result);
   }
 
@@ -89,7 +87,7 @@ const KatalogPakaian = () => {
                 <FaSearch size={18} />
               </button>
             </div>
-            <Dropdown options={options} />
+            <Dropdown updateFilteredData={updateFilteredData} />
           </div>
           <div>
             {currentItems.map((pakaian: Pakaian) => (
