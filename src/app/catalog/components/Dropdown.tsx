@@ -7,15 +7,15 @@ interface Option {
     isChecked: boolean,
 }
 
-const Dropdown = ({ updateFilteredData }: { updateFilteredData: (startPrice: number | null, endPrice: number | null) => void }) => {
+const Dropdown = ({ updateFilteredData }: { updateFilteredData: (startPrice: number[], endPrice: number[]) => void }) => {
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const [options, setOptions] = useState([
-        { value: "harga1", label: "Kurang dari Rp4.000", isChecked: false },
-        { value: "harga2", label: "Rp4.000 - Rp6.500", isChecked: false },
-        { value: "harga3", label: "Rp6.500 - Rp10.000", isChecked: false },
-        { value: "harga4", label: "Lebih dari Rp10.000", isChecked: false },
+        { value: "harga1", label: "Kurang dari Rp4.000", isChecked: false, startPrice: 0, endPrice: 3999 },
+        { value: "harga2", label: "Rp4.000 - Rp6.500", isChecked: false, startPrice: 4000, endPrice: 6500 },
+        { value: "harga3", label: "Rp6.500 - Rp10.000", isChecked: false, startPrice: 6500, endPrice: 10000 },
+        { value: "harga4", label: "Lebih dari Rp10.000", isChecked: false, startPrice: 10001, endPrice: 99999 },
     ]);
 
     const updateOptionIsChecked = (valueToggle: string) => {
@@ -32,33 +32,28 @@ const Dropdown = ({ updateFilteredData }: { updateFilteredData: (startPrice: num
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     }
-    
+
+    // const handleApplyFilter = () => {
+    //     let start = null;
+    //     let end = null;
+    //     for (const option of options) {
+    //         if (option.isChecked) {
+    //             start = start === null ? option.startPrice : Math.min(start, option.startPrice);
+    //             end = end === null ? option.endPrice : Math.max(end, option.endPrice);
+    //         }
+    //     }
+    //     updateFilteredData(start, end);
+    // }
+
     const handleApplyFilter = () => {
-        let start = null;
-        let end = null;
+        let start = [];
+        let end = [];
         for (const option of options) {
             if (option.isChecked) {
-                switch (option.value) {
-                    case "harga1":
-                        start = 0;
-                        end = 3999;
-                        break;
-                    case "harga2":
-                        start = start === null ? 4000 : Math.min(start, 4000);
-                        end = end === null ? 6500 : Math.max(end, 6500);
-                        break;
-                    case "harga3":
-                        start = start === null ? 6500 : Math.min(start, 6500);
-                        end = end === null ? 10000 : Math.max(end, 10000);
-                        break;
-                    case "harga4":
-                        start = start === null ? 10001 : Math.min(start, 10001);
-                        end = null;
-                        break;
-                }
+                start.push(option.startPrice);
+                end.push(option.endPrice);
             }
         }
-        // console.log(start, end);
         updateFilteredData(start, end);
     }
 
