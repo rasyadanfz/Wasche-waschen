@@ -7,7 +7,7 @@ interface Option {
     isChecked: boolean,
 }
 
-const Dropdown = ({ updateFilteredData }: { updateFilteredData: (startPrice: number[], endPrice: number[]) => void }) => {
+const Dropdown = ({ updateFilteredData, updateDataToOriginal }: { updateFilteredData: (startPrice: number[], endPrice: number[]) => void, updateDataToOriginal: () => void }) => {
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -33,18 +33,6 @@ const Dropdown = ({ updateFilteredData }: { updateFilteredData: (startPrice: num
         setIsDropdownOpen(!isDropdownOpen);
     }
 
-    // const handleApplyFilter = () => {
-    //     let start = null;
-    //     let end = null;
-    //     for (const option of options) {
-    //         if (option.isChecked) {
-    //             start = start === null ? option.startPrice : Math.min(start, option.startPrice);
-    //             end = end === null ? option.endPrice : Math.max(end, option.endPrice);
-    //         }
-    //     }
-    //     updateFilteredData(start, end);
-    // }
-
     const handleApplyFilter = () => {
         let start = [];
         let end = [];
@@ -54,7 +42,13 @@ const Dropdown = ({ updateFilteredData }: { updateFilteredData: (startPrice: num
                 end.push(option.endPrice);
             }
         }
-        updateFilteredData(start, end);
+
+        if (start.length === 0 && end.length === 0) {
+            updateDataToOriginal();
+        }
+        else {
+            updateFilteredData(start, end);
+        }
     }
 
     const handleClearFilter = () => {
@@ -63,12 +57,13 @@ const Dropdown = ({ updateFilteredData }: { updateFilteredData: (startPrice: num
                 updateOptionIsChecked(option.value);
             }
         }
+        updateDataToOriginal();
     }
 
     return (
         <div className="relative">
-            <div onClick={toggleDropdown} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 h-14">
-                Harga
+            <div onClick={toggleDropdown} className="font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center h-14 border border-black hover:bg-gray-100">
+                Filter
                 <svg
                     className="w-2.5 h-2.5 ms-3"
                     aria-hidden="true"
