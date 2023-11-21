@@ -26,7 +26,7 @@ const LoginPage = async () => {
                 </Link>
             </div>
             <div className="lg:grid lg:grid-cols-2 lg:gap-x-12 lg:items-center lg:pb-6 lg:mt-14">
-                <div className="flex flex-col px-10 py-4 mt-3 mr-2 font-raleway lg:border-2 lg:border-black  rounded-lg">
+                <div className="flex flex-col px-10 py-4 mt-3 mr-2 font-raleway lg:border-2 lg:border-black rounded-lg lg:bg-[#FBFBFB]">
                     <div className="flex lg:hidden justify-center mb-5">
                         <Image
                             alt="Wasche Waschen Logo"
