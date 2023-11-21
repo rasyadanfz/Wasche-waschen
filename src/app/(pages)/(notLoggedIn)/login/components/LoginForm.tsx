@@ -88,7 +88,11 @@ const LoginForm = () => {
                     placeholder="Enter Password"
                     onChange={handleInputChange}
                 ></FormInput>
-                <Button text="Login" className="py-2 mt-4" id="submit" />
+                <Button
+                    text="Login"
+                    className="py-2 mt-4 w-full h-full"
+                    id="submit"
+                />
             </form>
         </div>
     );
