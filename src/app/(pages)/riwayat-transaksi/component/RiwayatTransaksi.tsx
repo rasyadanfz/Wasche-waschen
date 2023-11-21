@@ -129,7 +129,7 @@ export default function Transaksi() {
 
               <div className="flex flex-col mt-2">
                 <h1 className="font-semibold text-h6 mb-4">Filter :</h1>
-                <div className="flex flex-row gap-16">
+                <div className="flex flex-row gap-16 item justify-center md:justify-start">
                   <div className="flex flex-col">
                     <h2 className="mb-2 font-semibold">Status Transaksi</h2>
                     <label>
@@ -177,7 +177,7 @@ export default function Transaksi() {
                   </div>
                   <div className="">
                     <h2 className="font-semibold mb-2">Tanggal Transaksi</h2>
-                    <div className="flex flex-row gap-2 items-center">
+                    <div className="flex flex-col md:flex-row gap-2 items-center">
                       <input
                         type="date"
                         className="border border-black rounded-md px-2 py-1"

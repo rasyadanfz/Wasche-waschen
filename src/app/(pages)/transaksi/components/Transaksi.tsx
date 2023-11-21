@@ -121,7 +121,7 @@ export default function Transaksi() {
 
               <div className="flex flex-col mt-2">
                 <h1 className="font-semibold text-h6 mb-4">Filter :</h1>
-                <div className="flex flex-row gap-16">
+                <div className="flex flex-row gap-16 item justify-center md:justify-start">
                   <div className="flex flex-col">
                     <h2 className="font-semibold mb-2">Status Transaksi</h2>
                     <label>

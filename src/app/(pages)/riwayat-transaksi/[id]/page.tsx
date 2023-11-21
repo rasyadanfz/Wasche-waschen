@@ -104,7 +104,7 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
       </div>
       <div>
         <div className="w-full">
-          <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
+          <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md sm:max-w-screen-sm">
             <h1 className="font-bold text-h3 mt-[100px] mb-10">
               Detail Transaksi
             </h1>
@@ -119,7 +119,7 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
                     {data?.orderlines && data.orderlines.length > 0 ? (
                       <>
                         {/* Display the list of items here */}
-                        <div className="flex flex-row justify-between">
+                        <div className="flex flex-col gap-2 lg:flex-row justify-between">
                           <div className="flex flex-row gap-4">
                             <div className="flex flex-col font-semibold gap-2">
                               <p>ID Transasksi</p>

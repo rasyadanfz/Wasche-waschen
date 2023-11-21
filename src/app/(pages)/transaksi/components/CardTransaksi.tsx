@@ -40,7 +40,7 @@ export default function CardTransaksi(props: CardTransaksiProps) {
         <Button
           type="primary"
           text="Detail"
-          className="absolute right-4 bottom-4"
+          className="md:absolute mt-6 w-full md:w-fit md:mt-0 right-4 bottom-4"
           onClick={() => router.push(`/transaksi/${props.id}`)}
         />
       </div>

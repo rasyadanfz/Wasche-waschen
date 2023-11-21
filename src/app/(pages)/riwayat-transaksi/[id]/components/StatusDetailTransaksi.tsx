@@ -25,7 +25,7 @@ export default function StatusDetailTransaksi(
         <label htmlFor="status" className="font-semibold">Status : </label>
         <div
           id="status"
-          className={`border border-black rounded-md py-1 ${color} text-center w-[300px]`}
+          className={`border border-black rounded-md py-1 ${color} text-center md:w-[300px] w-full`}
         >
           {status}
         </div>
