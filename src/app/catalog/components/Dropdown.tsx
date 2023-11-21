@@ -62,7 +62,7 @@ const Dropdown = ({ updateFilteredData, updateDataToOriginal }: { updateFiltered
 
     return (
         <div className="relative">
-            <div onClick={toggleDropdown} className="font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center h-14 border border-black hover:bg-gray-100">
+            <div onClick={toggleDropdown} className="font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center h-14 border border-black hover:bg-white">
                 Filter
                 <svg
                     className="w-2.5 h-2.5 ms-3"

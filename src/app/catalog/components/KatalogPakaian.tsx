@@ -71,26 +71,24 @@ const KatalogPakaian = () => {
 
   return (
     <>
-      <div className="w-full min-h-screen mb-[50px]">
+      <div className="w-full min-h-screen mb-[50px] bg-backgroundcolor">
         <div className="container mx-auto max-w-screen-lg">
-          <h1 className="font-bold text-3xl mt-[100px]">Pakaian</h1>
+          <h1 className="font-bold text-3xl mt-[100px] font-raleway text-h2">Pakaian</h1>
           <div className="flex flex-row justify-between gap-6 items-end">
-            <div className="flex items-center gap-2 border border-black hover:bg-gray-100 rounded-md w-full px-4 py-2 mt-4 h-14">
+            <div className="flex items-center border border-black hover:bg-white rounded-md w-full px-4 mt-4 h-14">
+              <FaSearch size={18} />
               <input
                 type="text"
                 placeholder="Cari Pakaian"
                 className="px-4 py-2 outline-none bg-transparent w-full focus:ring-1"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSearch();
+                  }
+                }}
               />
-            </div>
-            <div className="flex justify-end mt-2">
-              <button
-                className="px-4 py-2 bg-transparent rounded-md border text-black border-black hover:bg-gray-100 font-semibold h-14 active:bg-primary active:text-white"
-                onClick={handleSearch}
-              >
-                <FaSearch size={18} />
-              </button>
             </div>
             <Dropdown updateFilteredData={updateFilteredData} updateDataToOriginal={updateDataToOriginal} />
           </div>
