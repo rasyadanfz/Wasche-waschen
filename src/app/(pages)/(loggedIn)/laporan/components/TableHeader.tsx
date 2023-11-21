@@ -1,9 +1,9 @@
 const TableHeader = () => {
     return (
-        <div className="grid grid-cols-3 border-b-2 text-center gap-y-1 pb-1">
-            <div>Nama</div>
-            <div>Harga</div>
-            <div>Jumlah</div>
+        <div className="grid grid-cols-3 py-2 text-center bg-primary-300">
+            <div className="font-bold font-raleway">Nama</div>
+            <div className="font-bold font-raleway">Harga</div>
+            <div className="font-bold font-raleway">Jumlah</div>
         </div>
     );
 };
