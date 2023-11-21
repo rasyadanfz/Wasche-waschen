@@ -11,7 +11,7 @@ const Button = ({
         <div className="">
             <button
                 type="submit"
-                className={`w-full border border-black justify-center rounded-md bg-blue1 hover:bg-[#69ccf5] duration-300 ${className}`}
+                className={`w-full border bg-primary-200 border-black justify-center rounded-md hover:bg-primary-500 duration-300 ${className}`}
                 onClick={onClick}
             >
                 <div>{text}</div>
