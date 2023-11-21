@@ -46,7 +46,7 @@ const Button = ({
     const buttonClassName =
         baseClassName + " " + buttonColorClass + " " + className;
     return (
-        <>
+        <div className="">
             <button
                 type="submit"
                 className={buttonClassName}
@@ -60,7 +60,7 @@ const Button = ({
                     {text}
                 </div>
             </button>
-        </>
+        </div>
     );
 };
 
