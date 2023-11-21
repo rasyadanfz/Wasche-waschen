@@ -43,6 +43,7 @@ const LoginPage = async () => {
                     <div className="text-center mt-3 text-body flex justify-center gap-x-1">
                         <p>Not registered yet?</p>
                         <Link
+                            id="mainregister"
                             href={"/register"}
                             className="text-secondary-400 font-medium"
                         >

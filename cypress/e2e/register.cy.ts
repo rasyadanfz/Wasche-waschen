@@ -13,21 +13,21 @@ describe("Register", () => {
 
     it("should toggle password visibility correctly", () => {
         cy.get("input[id=password]").type("testpassword");
-        cy.get("input[id=confirmPassword]").type("testpassword");
+        cy.get("input[id=confirmpassword]").type("testpassword");
         cy.get("input[id=password]").should("have.attr", "type", "password");
-        cy.get("input[id=confirmPassword]").should(
+        cy.get("input[id=confirmpassword]").should(
             "have.attr",
             "type",
             "password"
         );
-        cy.get("input[id=password]").click();
-        cy.get("input[id=confirmPassword]").click();
+        cy.get("button[id=showPassword]").click();
+        cy.get("button[id=showConfirmPassword]").click();
         cy.get("input[id=password]").should("have.attr", "type", "text");
-        cy.get("input[id=confirmPassword]").should("have.attr", "type", "text");
-        cy.get("input[id=password]").click();
-        cy.get("input[id=confirmPassword]").click();
+        cy.get("input[id=confirmpassword]").should("have.attr", "type", "text");
+        cy.get("button[id=showPassword]").click();
+        cy.get("button[id=showConfirmPassword]").click();
         cy.get("input[id=password]").should("have.attr", "type", "password");
-        cy.get("input[id=confirmPassword]").should(
+        cy.get("input[id=confirmpassword]").should(
             "have.attr",
             "type",
             "password"
