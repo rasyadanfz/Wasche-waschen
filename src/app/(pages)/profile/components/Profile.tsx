@@ -1,10 +1,10 @@
 "use client";
 
 import Button from "@/components/Button";
-import FormInput from "@/components/FormInput";
 import { getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 interface User {
   name?: string | null | undefined;
@@ -22,6 +22,16 @@ export default function Profile() {
 
 
   const router = useRouter();
+
+  const handleLogout = async () => {
+    const data = await signOut({ redirect: false, callbackUrl: "/login" });
+
+    if (data?.url) {
+      router.push(data.url);
+    } else {
+      console.error("Failed to sign out");
+    }
+  };
 
   useEffect(() => {
     getSession().then((session) => {
@@ -93,7 +103,7 @@ export default function Profile() {
                 text="Logout"
                 className="w-[24rem]"
                 type="danger"
-                onClick={() => router.push("/api/auth/signout")}
+                onClick={handleLogout}
               />
             </div>
           </div>

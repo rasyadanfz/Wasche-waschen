@@ -104,7 +104,7 @@ export default function Transaksi() {
       <div className="min-h-screen">
         <div className="w-full mb-[50px]">
           <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
-            <h1 className="font-bold text-h3 mt-[100px]">Daftar Transaksi</h1>
+            <h1 className="font-bold text-h3 mt-[100px]">Riwayat Transaksi</h1>
             <div className="">
               <div className="flex flex-row justify-between gap-6 items-end">
                 <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md w-full">
@@ -128,10 +128,10 @@ export default function Transaksi() {
               
 
               <div className="flex flex-col mt-2">
-                <h1 className="font-semibold text-h6 mb-2">Filter by:</h1>
-                <div className="flex flex-row gap-10">
+                <h1 className="font-semibold text-h6 mb-4">Filter :</h1>
+                <div className="flex flex-row gap-16">
                   <div className="flex flex-col">
-                    <h2 className="text-lg mb-2">Status Transaksi</h2>
+                    <h2 className="mb-2 font-semibold">Status Transaksi</h2>
                     <label>
                       <input
                         type="checkbox"
@@ -176,7 +176,7 @@ export default function Transaksi() {
                     </label>
                   </div>
                   <div className="">
-                    <h2 className="text-lg mb-2">Tanggal Transaksi</h2>
+                    <h2 className="font-semibold mb-2">Tanggal Transaksi</h2>
                     <div className="flex flex-row gap-2 items-center">
                       <input
                         type="date"
