@@ -4,7 +4,6 @@ import Provider from "@/context/Provider";
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
-import Navbar2 from "@/components/Navbar2";
 
 const raleway = Raleway({ subsets: ["latin"] });
 
@@ -28,7 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <Provider>
         <body className={`${raleway.className}`}>
-          <Navbar2 />
+          <Navbar />
           {children}
         </body>
       </Provider>
