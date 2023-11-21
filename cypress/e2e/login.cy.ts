@@ -45,9 +45,9 @@ describe("Login", () => {
     it("should toggle password visibility correctly", () => {
         cy.get("input[id=password]").type("testpassword");
         cy.get("input[id=password]").should("have.attr", "type", "password");
-        cy.get("input[id=password]").click();
+        cy.get("button[id=showPassword]").click();
         cy.get("input[id=password]").should("have.attr", "type", "text");
-        cy.get("input[id=password]").click();
+        cy.get("button[id=showPassword]").click();
         cy.get("input[id=password]").should("have.attr", "type", "password");
     });
 
@@ -72,14 +72,14 @@ describe("Login", () => {
     });
 
     it("link should redirect to register page", () => {
-        cy.get("a[href='/register']").click();
+        cy.get("a#mainregister[href='/register']").click();
         cy.location("pathname").should("eq", "/register");
         cy.go("back");
     });
 
     it("should successfully login", () => {
-        cy.get("input[id=email]").type("developer@gmail.com");
-        cy.get("input[id=password]").type("developer123");
+        cy.get("input[id=email]").type("testingaccount@gmail.com");
+        cy.get("input[id=password]").type("testaccount13579");
         cy.get("form").find("button[id=submit]").click();
         cy.wait(3000);
         cy.location("pathname").should("eq", "/catalog");
