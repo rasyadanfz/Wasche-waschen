@@ -29,9 +29,11 @@ const LaporanCard = ({ type, data, children }: LaporanCardProps) => {
         " w-[64px] h-[64px] rounded-full flex items-center justify-center";
 
     return (
-        <div className={` rounded-md min-w-[250px] grow `}>
-            <div className={`flex flex-col p-5 font-raleway`}>
-                <div className={iconClassName}>
+        <div id="card" className={`rounded-md min-w-[250px] grow`}>
+            <div
+                className={`flex flex-col md:flex-row md:p-5 font-raleway items-center gap-x-4 mb-2`}
+            >
+                <div id="icon" className={iconClassName}>
                     {type === "totalPendapatan" && (
                         <FaMoneyBillWave size={32} color="#2EB200" />
                     )}
@@ -42,16 +44,20 @@ const LaporanCard = ({ type, data, children }: LaporanCardProps) => {
                         <FaShirt size={32} color="#000000" />
                     )}
                 </div>
-                <div className="mt-3 text-h6 font-semibold">
-                    {type === "totalPendapatan" && "Total Pendapatan"}
-                    {type === "jumlahTransaksi" && "Jumlah Transaksi"}
-                    {type === "jenisPakaian" && "Jumlah Jenis Pakaian"}
+                <div className="flex flex-col">
+                    <div id="cardtitle" className="text-h6 font-semibold">
+                        {type === "totalPendapatan" && "Total Pendapatan"}
+                        {type === "jumlahTransaksi" && "Jumlah Transaksi"}
+                        {type === "jenisPakaian" && "Jumlah Jenis Pakaian"}
+                    </div>
+                    <div id="numdata" className=" text-body">
+                        {type === "totalPendapatan" && `Rp ${data}`}
+                        {type === "jumlahTransaksi" && `${data}`}
+                    </div>
                 </div>
-                <div className="mt-3 text-body">
-                    {type === "totalPendapatan" && `Rp ${data}`}
-                    {type === "jumlahTransaksi" && `${data}`}
-                    {type === "jenisPakaian" && children}
-                </div>
+            </div>
+            <div id="cardjenispakaian">
+                {type === "jenisPakaian" && children}
             </div>
         </div>
     );

@@ -67,6 +67,23 @@ export async function POST(req: NextRequest) {
             { status: 500 }
         );
     }
+    const userKeranjang = await prisma.keranjang.create({
+        data: {
+            userId: newUser.id,
+        },
+    });
+
+    if (!userKeranjang) {
+        await prisma.user.delete({
+            where: {
+                id: newUser.id,
+            },
+        });
+        return NextResponse.json(
+            { error: "Gagal membuat akun!" },
+            { status: 500 }
+        );
+    }
 
     return NextResponse.json(newUser);
 }

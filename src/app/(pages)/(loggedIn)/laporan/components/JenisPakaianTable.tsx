@@ -20,7 +20,10 @@ const JenisPakaianTable = ({
             <div className="flex flex-col">
                 <TableHeader />
                 {clothesData.length === 0 && (
-                    <div className="self-center mt-6 font-raleway font-bold">
+                    <div
+                        id="nodata"
+                        className="self-center mt-6 font-raleway font-bold"
+                    >
                         No Data for Today
                     </div>
                 )}
