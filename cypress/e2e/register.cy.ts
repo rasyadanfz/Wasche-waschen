@@ -11,6 +11,29 @@ describe("Register", () => {
         cy.wait(500);
     });
 
+    it("should toggle password visibility correctly", () => {
+        cy.get("input[id=password]").type("testpassword");
+        cy.get("input[id=confirmPassword]").type("testpassword");
+        cy.get("input[id=password]").should("have.attr", "type", "password");
+        cy.get("input[id=confirmPassword]").should(
+            "have.attr",
+            "type",
+            "password"
+        );
+        cy.get("input[id=password]").click();
+        cy.get("input[id=confirmPassword]").click();
+        cy.get("input[id=password]").should("have.attr", "type", "text");
+        cy.get("input[id=confirmPassword]").should("have.attr", "type", "text");
+        cy.get("input[id=password]").click();
+        cy.get("input[id=confirmPassword]").click();
+        cy.get("input[id=password]").should("have.attr", "type", "password");
+        cy.get("input[id=confirmPassword]").should(
+            "have.attr",
+            "type",
+            "password"
+        );
+    });
+
     it("should display the register form", () => {
         cy.get("form").should("exist");
         cy.get("form")
@@ -92,12 +115,6 @@ describe("Register", () => {
             .should("eq", "Passwords do not match!");
     });
 
-    it("should redirect user to login page", () => {
-        cy.get("div[id=acclogin] a[href='/login']").click();
-        cy.location("pathname").should("eq", "/login");
-        cy.go("back");
-    });
-
     it("should validate unique email", () => {
         cy.get("input[id=email]").type("testemail@gmail.com");
         cy.get("input[id=name]").type("user123");
@@ -109,5 +126,11 @@ describe("Register", () => {
         cy.get("div.error_toast div div div div[role='status']")
             .invoke("text")
             .should("eq", "Email sudah terdaftar!");
+    });
+
+    it("should redirect user to login page", () => {
+        cy.get("div[id=acclogin] a[href='/login']").click();
+        cy.location("pathname").should("eq", "/login");
+        cy.go("back");
     });
 });
