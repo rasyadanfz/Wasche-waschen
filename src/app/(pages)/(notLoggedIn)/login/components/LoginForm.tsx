@@ -13,7 +13,6 @@ const LoginForm = () => {
     const router = useRouter();
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -61,10 +60,7 @@ const LoginForm = () => {
             setPasswordInput(e.target.value);
         }
     };
-    const handleShowPassword = () => {
-        const show = showPassword;
-        setShowPassword(!show);
-    };
+
     return (
         <div className="">
             <div className="error_toast">
@@ -86,12 +82,10 @@ const LoginForm = () => {
                     onChange={handleInputChange}
                 ></FormInput>
                 <FormInput
-                    type={showPassword ? "text" : "password"}
+                    type="password"
                     id="password"
                     text="Password"
                     placeholder="Enter Password"
-                    setShowPassword={handleShowPassword}
-                    isShowPassword={showPassword}
                     onChange={handleInputChange}
                 ></FormInput>
                 <Button text="Login" className="py-2 mt-4" id="submit" />

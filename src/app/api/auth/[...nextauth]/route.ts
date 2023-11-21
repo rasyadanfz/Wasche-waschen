@@ -83,6 +83,7 @@ export const authOptions: NextAuthOptions = {
                     id: token.id as string,
                 },
                 select: {
+                    id: true,
                     email: true,
                     name: true,
                     no_telp: true,
