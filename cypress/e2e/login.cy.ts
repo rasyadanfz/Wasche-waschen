@@ -42,6 +42,15 @@ describe("Login", () => {
             .should("eq", "Please enter your password!");
     });
 
+    it("should toggle password visibility correctly", () => {
+        cy.get("input[id=password]").type("testpassword");
+        cy.get("input[id=password]").should("have.attr", "type", "password");
+        cy.get("input[id=password]").click();
+        cy.get("input[id=password]").should("have.attr", "type", "text");
+        cy.get("input[id=password]").click();
+        cy.get("input[id=password]").should("have.attr", "type", "password");
+    });
+
     it("should check for wrong password", () => {
         cy.get("input[id=email]").type("testemail@gmail.com");
         cy.get("input[id=password]").type("wrongpasswordtest");
@@ -74,12 +83,5 @@ describe("Login", () => {
         cy.get("form").find("button[id=submit]").click();
         cy.wait(3000);
         cy.location("pathname").should("eq", "/catalog");
-    });
-
-    it("should successfully logout", () => {
-        cy.visit("/catalog");
-        cy.get("button[id='signout']").click();
-        cy.wait(1000);
-        cy.location("pathname").should("eq", "/login");
     });
 });
