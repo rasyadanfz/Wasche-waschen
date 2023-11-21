@@ -1,8 +1,10 @@
+"use client";
+
+import { useState } from "react";
 import { IconContext } from "react-icons";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
-// How to Use
-// <FormInput type="text" id="email" text="Email" placeholder="Email" width="500px/full"/>
+// How to use: <FormInput type="password" id="password" text="Password" onChange={handleInputChange} placeholder="Enter password" />
 
 const FormInput = ({
     type,
@@ -10,39 +12,46 @@ const FormInput = ({
     text,
     onChange,
     placeholder,
-    setShowPassword,
-    isShowPassword,
+    value,
+    className,
 }: {
     type: string;
     id: string;
     text: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder: string;
-    setShowPassword?: () => void;
-    isShowPassword?: boolean;
+    value?: string;
+    className?: string;
 }) => {
+    const [showPassword, setShowPassword] = useState(false);
+    const handleShowPassword = () => {
+        const show = showPassword;
+        setShowPassword(!show);
+    };
+
     return (
-        <div className={`flex flex-col gap-y-1 font-raleway`}>
-            <label htmlFor={id} className="font-semibold text-body">
+        <div className="flex flex-col gap-y-1 font-raleway">
+            <label htmlFor={id} className="font-bold text-body">
                 {text}
             </label>
-            <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md">
+            <div className={`flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md ${className}`}>
                 <input
-                    type={type}
+                    type={showPassword ? "text" : type}
                     id={id}
-                    className="rounded-md grow text-body bg-[#EDEDED] focus:outline-none"
+                    className={`rounded-md grow text-body bg-[#EDEDED] focus:outline-none `}
                     onChange={onChange}
                     placeholder={placeholder}
+                    value={value}
                 />
                 {id === "password" && (
                     <IconContext.Provider value={{ size: "1.5em" }}>
                         <button
                             id="showPassword"
                             className="ml-5 text-body"
-                            onClick={setShowPassword}
+                            onClick={handleShowPassword}
                             type="button"
                         >
-                            {isShowPassword ? (
+                            {showPassword ? (
                                 <AiOutlineEye />
                             ) : (
                                 <AiOutlineEyeInvisible />
@@ -55,10 +64,10 @@ const FormInput = ({
                         <button
                             id="showConfirmPassword"
                             className="ml-5 text-body"
-                            onClick={setShowPassword}
+                            onClick={handleShowPassword}
                             type="button"
                         >
-                            {isShowPassword ? (
+                            {showPassword ? (
                                 <AiOutlineEye />
                             ) : (
                                 <AiOutlineEyeInvisible />
