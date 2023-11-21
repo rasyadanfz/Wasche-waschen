@@ -94,14 +94,6 @@ const LoginForm = () => {
                     isShowPassword={showPassword}
                     onChange={handleInputChange}
                 ></FormInput>
-                {/* <div className="flex justify-between font-raleway text-body mt-2">
-                    <Link
-                        href={"."}
-                        className="text-secondary-400 font-semibold"
-                    >
-                        Forgot Password?
-                    </Link>
-                </div> */}
                 <Button text="Login" className="py-2 mt-4" id="submit" />
             </form>
         </div>

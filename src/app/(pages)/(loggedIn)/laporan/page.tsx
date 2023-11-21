@@ -47,7 +47,11 @@ const LaporanPage = () => {
     }, [reportType]);
 
     if (isLoading) {
-        return <div className="">Loading...</div>;
+        return (
+            <div className="absolute translate-x-[-50%] translate-y-[-50%] animate-pulse top-[50%] left-[50%] text-h2  font-raleway font-bold">
+                <div>Loading...</div>
+            </div>
+        );
     } else {
         return (
             <div className="mx-5 my-1">
@@ -57,12 +61,12 @@ const LaporanPage = () => {
                 <div className="max-w-[300px]">
                     <PeriodSelector onChange={setReportType} />
                 </div>
-                <div className="grid grid-cols-6 mt-2 gap-x-5">
-                    <div className="col-span-3 flex flex-col">
+                <div className="md:grid md:grid-cols-6 mt-2 md:gap-x-5 flex flex-col gap-y-5">
+                    <div className="md:col-span-3">
                         <div className="flex flex-col border border-black rounded-md p-3 shadow-md">
                             <LaporanCard
                                 type="totalPendapatan"
-                                data={totalBiaya.toLocaleString("en-US")}
+                                data={totalBiaya.toLocaleString("id-ID")}
                             />
                             <ReportChart
                                 data={originalData}
@@ -75,7 +79,7 @@ const LaporanPage = () => {
                         <div className="flex flex-col border border-black rounded-md p-3 shadow-md">
                             <LaporanCard
                                 type="jumlahTransaksi"
-                                data={jumlahTransaksi.toLocaleString("en-US")}
+                                data={jumlahTransaksi.toLocaleString("id-ID")}
                             />
                             <ReportChart
                                 data={originalData}
@@ -85,22 +89,25 @@ const LaporanPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="grid grid-cols-2 border border-black rounded-md p-3 mt-3 shadow-md gap-x-5">
-                    <div className="col-span-1 self-center">
-                        <ReportChart
-                            data={originalData}
-                            periodType={reportType}
-                            type="jenisPakaian"
-                        />
-                    </div>
-                    <div className="col-span-1 ">
-                        <LaporanCard type="jenisPakaian">
+                <div className="md:grid md:grid-cols-2 border border-black rounded-md p-3 my-3 shadow-md gap-x-5 items-center">
+                    <div className="md:col-span-1 ">
+                        <LaporanCard type="jenisPakaian"></LaporanCard>
+                        <div className="mt-3">
                             {reportClothesData && (
                                 <JenisPakaianTable
                                     clothesData={reportClothesData}
                                 />
                             )}
-                        </LaporanCard>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="md:col-span-1 self-center">
+                            <ReportChart
+                                data={originalData}
+                                periodType={reportType}
+                                type="jenisPakaian"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

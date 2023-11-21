@@ -8,6 +8,8 @@ export interface LineDataset {
     tension?: number;
     pointBackgroundColor: string[];
     pointBorderColor?: string;
+    color?: string;
+    fillColor?: string;
 }
 
 const LineChart = ({
@@ -19,9 +21,11 @@ const LineChart = ({
     datasets: LineDataset[];
     labelsData: string[];
 }) => {
-    const data = {
-        labels: labelsData,
-        datasets: datasets,
+    const data = () => {
+        return {
+            labels: labelsData,
+            datasets: datasets,
+        };
     };
 
     const options = {
@@ -45,7 +49,7 @@ const LineChart = ({
         },
     };
 
-    return <Line data={data} options={options} width={400} height={300} />;
+    return <Line data={data()} options={options} width={400} height={300} />;
 };
 
 export default LineChart;

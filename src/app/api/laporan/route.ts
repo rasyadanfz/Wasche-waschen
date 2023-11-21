@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 const pastDays = 7;
-const pastWeeks = 4;
+const pastWeeks = 5;
 const pastMonths = 6;
 
 export interface ReportData {
@@ -226,7 +226,7 @@ export async function GET(req: NextRequest) {
         // Calculate starting date
         const currDate = new Date();
         const startingDate = new Date(currDate);
-        startingDate.setDate(currDate.getDate() - 4 * 7 + 1);
+        startingDate.setDate(currDate.getDate() - pastWeeks * 7 + 1);
         startingDate.setHours(7, 0, 0, 0);
 
         // Filter past data
