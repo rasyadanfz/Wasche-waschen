@@ -6,6 +6,10 @@ import PakaianComponent from "./PakaianComponent";
 import { Pakaian } from "@prisma/client";
 import Pagination from "../../../components/Pagination";
 import Dropdown from "@/app/catalog/components/Dropdown";
+import Button from "@/components/Button";
+import Image from "next/image"
+import { useSession } from "next-auth/react";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 async function getDataPakaian() {
   const res = await fetch("/api/pakaian", {
@@ -17,6 +21,13 @@ async function getDataPakaian() {
 }
 
 const KatalogPakaian = () => {
+  const session = useSession();
+  console.log(session);
+  let disabledButton = true;
+  if (session.status === "authenticated") {
+    disabledButton = false;
+  }
+
   const [dataPakaian, setDataPakaian] = useState([]);
   const [query, setQuery] = useState("");
   const [filteredData, setFilteredData] = useState(dataPakaian);
@@ -69,8 +80,28 @@ const KatalogPakaian = () => {
     setFilteredData(dataPakaian);
   }
 
+  const [cartCount, setCartCount] = useState(0);
+  const [showAddToCartButton, setShowAddToCartButton] = useState(false);
+  
+  const updateCartCount = (count: number) => {
+    setCartCount((prevCount) => prevCount + count);
+  }
+
+  useEffect(() => {
+    handleAddToCart();
+  }, [cartCount]);
+
+  const handleAddToCart = () => {
+    if (cartCount > 0) {
+      setShowAddToCartButton(true);
+    }
+    else {
+      setShowAddToCartButton(false);
+    }
+  }
+
   return (
-    <>
+    <div className="">
       <div className="w-full min-h-screen mb-[50px] bg-backgroundcolor">
         <div className="container mx-auto max-w-screen-lg">
           <h1 className="font-bold text-3xl mt-[100px] font-raleway text-h2">Pakaian</h1>
@@ -94,7 +125,7 @@ const KatalogPakaian = () => {
           </div>
           <div className="grid grid-cols-4 gap-4">
             {currentItems.map((pakaian: Pakaian) => (
-              <PakaianComponent pakaian={pakaian} key={pakaian.id} />
+              <PakaianComponent pakaian={pakaian} key={pakaian.id} updateCartCount={updateCartCount}  disabledButton={disabledButton} />
               ))}
           </div>
         </div>
@@ -106,7 +137,22 @@ const KatalogPakaian = () => {
        itemsPerPage={itemsPerPage}
        onHandlePage={onHandlePage}
        />
-    </>
+
+      {showAddToCartButton ? (
+        <div className="fixed flex items-center bottom-8 left-[50%] translate-x-[-50%]">
+          <Button text="Add to Cart" className="shadow-lg w-[300px] h-[40px]" type="secondary" />
+          {/* Cart icon */}
+          <Image
+            src="/icons/cart-white.svg"
+            width={20}
+            height={21}
+            alt={"Cart"}
+            className="translate-x-[-200%]"
+          />
+        </div>
+      ) : null}
+
+    </div>
   )
 }
 
