@@ -4,7 +4,7 @@ import { ClothesCartData } from "@/app/api/forCartPage/[id]/route";
 
 
 
-export default function CartCard({{pakaianNama, kuantitas, total_harga}:ClothesCartData,subtract}) {
+export default function CartCard({pakaianNama, kuantitas, total_harga,subtract}:ClothesCartData) {
   return (
     <>
       <div className="border border-black rounded-md p-4 relative duration-100 bg-[#EDEDED] mx-[100px]">

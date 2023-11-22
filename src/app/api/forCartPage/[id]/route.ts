@@ -9,6 +9,7 @@ export interface ClothesCartData{
     kuantitas:number;
     total_harga:number;
     pakaianNama:string|undefined;
+    subtract?:()=>void;
 }
 
 
