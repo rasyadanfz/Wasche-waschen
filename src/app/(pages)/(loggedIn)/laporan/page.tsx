@@ -54,7 +54,7 @@ const LaporanPage = () => {
         );
     } else {
         return (
-            <div className="mx-5 my-1">
+            <div className="mx-16 mb-2 mt-[100px]">
                 <div className="text-h2 font-raleway font-bold mt-2 mb-5">
                     Laporan
                 </div>
@@ -90,15 +90,16 @@ const LaporanPage = () => {
                     </div>
                 </div>
                 <div className="md:grid md:grid-cols-2 border border-black rounded-md p-3 my-3 shadow-md gap-x-5 items-center">
-                    <div className="md:col-span-1 ">
-                        <LaporanCard type="jenisPakaian"></LaporanCard>
-                        <div className="mt-3">
-                            {reportClothesData && (
-                                <JenisPakaianTable
-                                    clothesData={reportClothesData}
-                                />
-                            )}
-                        </div>
+                    <div className="md:col-span-1 md:self-start">
+                        <LaporanCard type="jenisPakaian">
+                            <div className="mt-3">
+                                {reportClothesData && (
+                                    <JenisPakaianTable
+                                        clothesData={reportClothesData}
+                                    />
+                                )}
+                            </div>
+                        </LaporanCard>
                     </div>
                     <div>
                         <div className="md:col-span-1 self-center">
