@@ -7,10 +7,21 @@ import { totalHarga } from "@/app/utils/totalharga";
 const prisma = new PrismaClient();
 
 export async function POST(req:NextRequest){
-    const {keranjang} = await req.json()
-    const user = await prisma.user.findUnique({
+
+    const userId = await req.json();
+
+    if(!userId){
+        return NextResponse.json(
+            {message:"There is no userId"},
+            {status:400}
+        )
+    }
+
+    // find the keranjang first
+
+    const keranjang = await prisma.keranjang.findUnique({
         where:{
-            id:keranjang.userId
+            userId
         }
     })
 
@@ -42,7 +53,7 @@ export async function POST(req:NextRequest){
             nama:String('Testing'),
             total_harga:totalHarga(orderLineList),
             tanggal:newDate.toUTCString(),
-            userId:user.id,
+            userId
         }
     })
 
@@ -65,7 +76,20 @@ export async function POST(req:NextRequest){
         {message:"Succesfully create a new transaction"},
         {status:200}
     );
+    
 
+
+    /*
+    const {keranjang} = await req.json()
+    const user = await prisma.user.findUnique({
+        where:{
+            id:keranjang.userId
+        }
+    })
+
+
+ 
+        */
 
 
 }
