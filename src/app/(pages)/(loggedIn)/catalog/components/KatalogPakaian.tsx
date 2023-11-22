@@ -6,6 +6,8 @@ import PakaianComponent from "./PakaianComponent";
 import { Pakaian } from "@prisma/client";
 import Pagination from "@/components/Pagination";
 import Dropdown from "./Dropdown";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 async function getDataPakaian() {
     const res = await fetch("/api/pakaian", {
@@ -17,6 +19,11 @@ async function getDataPakaian() {
 }
 
 const KatalogPakaian = () => {
+    const session = useSession();
+    if (!session) {
+        redirect("/login");
+    }
+
     const [dataPakaian, setDataPakaian] = useState([]);
     const [query, setQuery] = useState("");
     const [filteredData, setFilteredData] = useState(dataPakaian);
@@ -114,7 +121,7 @@ const KatalogPakaian = () => {
                 filteredData={filteredData}
                 currentPage={currentPage}
                 itemsPerPage={itemsPerPage}
-                onHandlePage={onHandlePage}
+                paginate={onHandlePage}
             />
         </>
     );
