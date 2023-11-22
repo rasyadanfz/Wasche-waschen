@@ -80,7 +80,7 @@ const Navbar = () => {
                       }
                       ${
                         pathName === item.link && "font-semibold"
-                      }`}
+                      }`} 
                     >
                       {item.label}
                     </p>

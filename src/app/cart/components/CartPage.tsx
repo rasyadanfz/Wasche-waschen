@@ -1,93 +1,94 @@
 "use client";
-
 import { useEffect, useState } from "react";
-import CardKeranjang from "./CartCard";
-import Link from "next/link";
-
-interface FullKeranjang {
-  id: string;
-  userId:string
-  daftarPakaian:Pakaian[]
+ 
+interface Orderline{
+  id:string;
+  kuantitas:number;
+  total_harga:number;
+  noted:string;
+  pakaianId:string;
+  transaksiId:string;
+  keranjangId:string;
 }
-interface Pakaian {
-    nama:String;
-    count:number;
-    harga:number
+
+interface User{
+  id:string;
+  email:string;
+  name:string;
+  no_telp:string;
+  hashedPassword:string;
+  role:string;
 }
 
 
 
 async function getDataKeranjang() {
-  const res = await fetch("/api/FullKeranjang", {
-    method: "GET",
-  });
-  const dataKeranjang = await res.json();
-  return dataKeranjang;
+
+
+  // don't forget to change this variable
+  const temp =  {
+    //"id": "655b3c904a05e60bdfe5318d",
+    "id": "655b3c904a05e60bdfe5318d",
+    "email": "18221071@std.stei.itb.ac.id",
+    "name": "Ahmad Rizki",
+    "no_telp": "+6282343765854",
+    "hashedPassword": "$2b$10$Xd0mu3Sd6xlaFrGXWgMZRusMJPsFyr/QFueSU0cTmplpMX0h4W6Lm",
+    "role": "Customer"
 }
 
-export default function Keranjang() {
-  const [dataKeranjang, setDataKeranjang] = useState<FullKeranjang | null>(null);
+  const res = await fetch("/api/forCartPage", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user: temp,
+    }),
+  });
+  
+  let dataKeranjang;
+  if(res !== undefined)  dataKeranjang = await res.json();
+  else dataKeranjang = [];
+  return dataKeranjang.orderline;
+}
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getDataKeranjang();
-        setDataKeranjang(data);
-        console.log(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        // Handle error if needed
+
+export default function CartPage() {
+
+  const [dataKeranjang,setDataKeranjang] = useState([]);
+  
+  useEffect(()=>{
+    const fetchData = async() =>{
+      try{
+        const res = await getDataKeranjang();
+        setDataKeranjang(res);
+        console.log(res);
+      }catch(error){
+        console.error('Error fetching data : ',error);
       }
-    };
+    }
 
     fetchData();
-  }, []);
+  },[])
+
+
 
 
 
   return (
     <>
-      <div className="min-h-screen">
-        <div className="w-full mb-[50px]">
-          <div className="container mx-auto">
-            <h1 className="font-bold text-h3 mt-[100px]">Keranjang</h1>
-            <div className="">
-              <div className="flex flex-row justify-between gap-6 items-end">
-                <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md w-full">
-
-                </div>
-                <div className="flex justify-end mt-2">
-
-                </div>
-              </div>
-
-            </div>
-          </div>
+      <div className="flex flex-col mt-[80px]">
+        <div className="flex items-baseline">
+          <p className="font-black text-2xl" >Keranjang</p>
         </div>
-        <div className="container mx-auto flex flex-col gap-4">
-            {
-                dataKeranjang?.daftarPakaian !== null ?(
-                    dataKeranjang?.daftarPakaian.length > 0 ? (
-                    dataKeranjang?.daftarPakaian.forEach((item:Pakaian)=>{
-                        return (
-                        <CardKeranjang
-                            namaPakaian={item.nama}
-                            kuantitas={item.count}
-                            total_harga={item.harga}
-                        />)
-                    })
-                    ) : <h2 className="font-semibold text-center">Keranjang kosong</h2>
-                ):(
-                    <h2>NUL <BITCH></BITCH></h2>
-                )
-                
-            }
-            
-
-          
+        <div> 
+        {
+              (dataKeranjang.length === 0) ? 
+              (<div className="text-center absolute top-[50%] left-[50%] translate-x-[-50%] items-center justify-center"><p className="font-black text-2xl">Keranjang Kosong</p></div>) : 
+              (<p className="font-black text-2xl" >it isnt</p>)
+           }
         </div>
-          
-    </div>
+      </div>
     </>
   );
 }
