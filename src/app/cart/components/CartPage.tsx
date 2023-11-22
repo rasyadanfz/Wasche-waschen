@@ -3,19 +3,15 @@ import { useEffect, useState } from "react";
 import { ClothesCartData } from "@/app/api/forCartPage/[id]/route";
 import CartCard from "./CartCard";
 import CreateOrderButton from "./CreateOrderButton";
+import { useSession } from "next-auth/react";
+
+const session = useSession();
 
 
 async function getDataKeranjang() {
 
   // don't forget to change this variable
-  const temp =  {
-    "id": "655debb944400e55eed08569",
-    "email": "18221071@std.stei.itb.ac.id",
-    "name": "Ahmad Rizki",
-    "no_telp": "+6282343765854",
-    "hashedPassword": "$2b$10$Xd0mu3Sd6xlaFrGXWgMZRusMJPsFyr/QFueSU0cTmplpMX0h4W6Lm",
-    "role": "Customer"
-  }
+  const temp =  session.data?.user;
 
   const res = await fetch(`/api/forCartPage/${temp.id}`, {
     method: "GET",
@@ -27,6 +23,7 @@ async function getDataKeranjang() {
 
   return dataKeranjang.cartClothesData;
 }
+
 
 export default function CartPage() {
 
@@ -61,12 +58,13 @@ export default function CartPage() {
       try{
         const res = await fetch('api/keranjang',{
           method:"POST",
-          body:{
-            id:
-          }
+          headers: {
+            'Content-Type': 'application/json', // Specify the content type as JSON
+          },
+          body: JSON.stringify({
+            id: session.data?.user.id,
+          }),
         })
-
-
       }
     }
   }
@@ -92,7 +90,7 @@ export default function CartPage() {
         </div>
         <div>
           {
-          (dataKeranjang.length !== 0) ? <CreateOrderButton makeOrder={} className="mt-[20px] ml-[1250px] items-center justify-center px-4 py-2"/> : (<div></div>)
+          (dataKeranjang.length !== 0) ? <CreateOrderButton makeOrder={()=>makeNewTransaction} className="mt-[20px] ml-[1250px] items-center justify-center px-4 py-2"/> : (<div></div>)
           }
         </div>
     </>
