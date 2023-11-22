@@ -1,12 +1,13 @@
 import Button from "@/components/Button";
 import { useState } from "react"
 
-const AddButton = () => {
+const AddButton = ({ updateCartCount, disabledButton }: { updateCartCount: (count: number) => void, disabledButton: boolean }) => {
   const [count, setCount] = useState(0);
   const [showTambahButton, setShowTambahButton] = useState(true);
 
   const handleAdd = () => {
     setCount((prevCount) => prevCount + 1);
+    updateCartCount(1);
   }
 
   const handleSubstract = () => {
@@ -18,17 +19,18 @@ const AddButton = () => {
         return prevCount - 1
       });
     }
+    updateCartCount(-1);
   }
 
   const handleTambah = () => {
     setShowTambahButton(false);
-    setCount((prevCount) => prevCount + 1);
+    handleAdd();
   }
 
   return (
     <div className="w-full">
       {showTambahButton ? (
-          <Button onClick={handleTambah} text="+Tambah" className="p-2" />
+          <Button onClick={handleTambah} text="+Tambah" className="p-2 w-full" disabled={disabledButton} />
         )
         : (
           <div className="flex items-center justify-center gap-x-5">
