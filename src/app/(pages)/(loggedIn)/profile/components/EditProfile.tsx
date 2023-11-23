@@ -32,6 +32,7 @@ export default function EditProfile() {
   });
 
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getSession().then((session) => {
@@ -56,6 +57,7 @@ export default function EditProfile() {
         no_telp: no_telp ?? "",
       });
     });
+    setIsLoading(false);
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,53 +125,64 @@ export default function EditProfile() {
       </div>
       <div className="container mx-auto mt-[100px] xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
         <h1 className="text-h3 font-bold text-center mb-10">Edit Profile</h1>
-        <div className="flex flex-col items-center justify-center">
-          <form action="" className="flex flex-col gap-2" onSubmit={handleSave}>
-            {!isAdmin && (
+
+        {!isLoading ? (
+          <div className="flex flex-col items-center justify-center">
+            <form
+              action=""
+              className="flex flex-col gap-2"
+              onSubmit={handleSave}
+            >
+              {!isAdmin && (
+                <FormInput
+                  className="w-96"
+                  type="text"
+                  id="name"
+                  placeholder="Masukkan Nama"
+                  text="Nama"
+                  value={currData.name}
+                  onChange={handleInputChange}
+                />
+              )}
               <FormInput
                 className="w-96"
                 type="text"
-                id="name"
-                placeholder="Masukkan Nama"
-                text="Nama"
-                value={currData.name}
+                id="email"
+                placeholder="Masukkan Email"
+                text="Email"
+                value={currData.email}
                 onChange={handleInputChange}
               />
-            )}
-            <FormInput
-              className="w-96"
-              type="text"
-              id="email"
-              placeholder="Masukkan Email"
-              text="Email"
-              value={currData.email}
-              onChange={handleInputChange}
-            />
-            <FormInput
-              className="w-96"
-              type="text"
-              id="no_telp"
-              placeholder="Masukkan Nomor Telepon"
-              text="Nomor Telepon"
-              value={currData.no_telp}
-              onChange={handleInputChange}
-            />
+              <FormInput
+                className="w-96"
+                type="text"
+                id="no_telp"
+                placeholder="Masukkan Nomor Telepon"
+                text="Nomor Telepon"
+                value={currData.no_telp}
+                onChange={handleInputChange}
+              />
+              <Button
+                text="Save"
+                id="submit"
+                disabled={disabledSave()}
+                className={`w-[24rem] mt-10 ${
+                  disabledSave() ? "cursor-not-allowed" : ""
+                }`}
+              />
+            </form>
             <Button
-              text="Save"
-              id="submit"
-              disabled={disabledSave()}
-              className={`w-[24rem] mt-10 ${
-                disabledSave() ? "cursor-not-allowed" : ""
-              }`}
+              type="danger"
+              text="Cancel"
+              onClick={() => router.push("/profile")}
+              className={`w-[24rem] mt-2`}
             />
-          </form>
-          <Button
-            type="danger"
-            text="Cancel"
-            onClick={() => router.push("/profile")}
-            className={`w-[24rem] mt-2`}
-          />
-        </div>
+          </div>
+        ) : (
+          <div className="absolute translate-x-[-50%] translate-y-[-50%] animate-pulse top-[50%] left-[50%] text-h2 font-raleway font-bold">
+            <div>Loading...</div>
+          </div>
+        )}
       </div>
     </>
   );
