@@ -8,7 +8,7 @@ interface ButtonProps {
     disabled?: boolean;
 }
 
-const MinusButton = ({
+const BackButton = ({
     text = "Go Back",
     className,
     onClick,
@@ -64,4 +64,4 @@ const MinusButton = ({
     );
 };
 
-export default MinusButton;
+export default BackButton;

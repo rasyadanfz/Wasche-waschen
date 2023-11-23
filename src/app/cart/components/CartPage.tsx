@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { ClothesCartData } from "@/app/api/forCartPage/[id]/route";
 import CartCard from "./CartCard";
 import CreateOrderButton from "./CreateOrderButton";
-import { useSession } from "next-auth/react";
-import { create } from "domain";
+import BackButton from "./BackButton";
 
 //const session = useSession();
 
@@ -109,6 +108,7 @@ export default function CartPage() {
     <>
         <div className="flex flex-col mt-[80px]">
           <div className="flex items-baseline">
+            <BackButton className="mx-[50px]"/>
             <p className="font-black text-2xl mb-[20px]" >Keranjang</p>
           </div>
           <div> 
@@ -125,7 +125,9 @@ export default function CartPage() {
         </div>
         <div>
           {
-          (dataKeranjang.length !== 0) ? <CreateOrderButton onClick={async ()=> {await createNewTransaction();setCountChange(countChange+1)}} className="mt-[20px] ml-[1250px] mb-[50px] items-center justify-center px-4 py-2"/> : (<div></div>)
+          (dataKeranjang.length !== 0) ? 
+          <div className="flex flex-row">
+          <CreateOrderButton className="mt-[20px] ml-[1050px] mb-[50px] items-center justify-center px-4 py-2" text="Update Keranjang"/><CreateOrderButton onClick={async ()=> {await createNewTransaction();setCountChange(countChange+1)}} className="mt-[20px] ml-[50px] mb-[50px] items-center justify-center px-4 py-2"/> </div> : (<div></div>)
           }
         </div>
     </>
