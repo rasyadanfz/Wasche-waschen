@@ -20,7 +20,7 @@ async function createNewTransaction(){
   
   // const temp = session.data?user
   const temp =         {
-    "id": "655debb944400e55eed08569",
+    "id": "655d66483a5c671dd42f707d",
     "email": "test12345@gmail.com",
     "name": "test12345",
     "no_telp": "081234567890",
@@ -34,7 +34,7 @@ async function createNewTransaction(){
       'Content-Type': 'application/json', // Specify the content type as JSON
     },
     body: JSON.stringify({
-      id: "655debb944400e55eed08569"
+      "user":temp
     }),
   }) 
 
@@ -47,7 +47,7 @@ async function getDataKeranjang() {
   // don't forget to change this variable
   // const temp =  session.data?.user;
   const temp =         {
-    "id": "655debb944400e55eed08569",
+    "id": "655d66483a5c671dd42f707d",
     "email": "test12345@gmail.com",
     "name": "test12345",
     "no_telp": "081234567890",

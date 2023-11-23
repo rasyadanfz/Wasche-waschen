@@ -14,9 +14,9 @@ interface User{
 }
 
 
-export async function GET(req:NextRequest,{params}:{params:{user:User}}){
+export async function GET(req:NextRequest,{params}:{params:{id:string}}){
 
-    const {user} = params
+    const {id} = params
 
     /*
         we want to take 
@@ -28,13 +28,13 @@ export async function GET(req:NextRequest,{params}:{params:{user:User}}){
     const pakaian = await prisma.pakaian.findMany()
     const transaction = await prisma.transaksi.findMany({
         where:{
-            userId:user.id
+            userId:id
         }
     })
 
     const keranjang = await prisma.keranjang.findMany({
         where:{
-            userId:user.id
+            userId:id
         }
     })
     console.log(keranjang)
@@ -43,7 +43,7 @@ export async function GET(req:NextRequest,{params}:{params:{user:User}}){
         
     })
     return NextResponse.json({
-        user,
+        id,
         pakaian,
         transaction,
         orderline
