@@ -3,6 +3,13 @@ import { Pakaian } from "@prisma/client";
 import AddButton from "./AddButton";
 import Button from "@/components/Button";
 
+function imageExists(imageUrl: string) {
+    var http = new XMLHttpRequest();
+    http.open('HEAD', imageUrl, false);
+    http.send();
+    return http.status !== 404;
+}
+  
 const PakaianComponent = ({
     pakaian,
     updateCartCount,
@@ -13,7 +20,6 @@ const PakaianComponent = ({
     disabledButton: boolean;
 }) => {
     const handleDelete = async (id: string) => {
-        console.log(`DELETE: ${id}`);
         await fetch(`/api/pakaian?id=${id}`, {
             method: "DELETE",
         });
@@ -23,7 +29,7 @@ const PakaianComponent = ({
         <div className="border flex flex-col justify-between my-5 items-start gap-4 shadow-md">
             <div className="">
                 <Image
-                    src={`/assets/${pakaian.name}.jpg`}
+                    src={imageExists(`/assets/${pakaian.name}.jpg`) ? `/assets/${pakaian.name}.jpg` : `/assets/no_picture.jpg`}
                     alt={pakaian.name}
                     width={144}
                     height={144}
@@ -40,6 +46,11 @@ const PakaianComponent = ({
                 <AddButton
                     updateCartCount={updateCartCount}
                     disabledButton={disabledButton}
+                />
+                <Button
+                    text="Edit"
+                    type="warning"
+                    // onClick={() => handleUpdate(pakaian.id)}
                 />
                 <Button
                     text="Delete"
