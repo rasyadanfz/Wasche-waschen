@@ -37,10 +37,14 @@ const LaporanPage = () => {
             });
             const data = await response.json();
             setOriginalData(data["data"]);
-            setReportClothesData(data["data"]["current"]["clothesReport"]);
+            const reportClothesData: ReportClothesData[] =
+                data["data"]["current"]["clothesReport"];
+            reportClothesData.reverse();
+            setReportClothesData(reportClothesData);
             setJumlahTransaksi(data["data"]["current"]["totalTransactions"]);
             setTotalBiaya(data["data"]["current"]["totalPendapatan"]);
             setIsLoading(false);
+            console.log(data);
         };
 
         fetchData();
