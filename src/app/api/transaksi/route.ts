@@ -8,9 +8,9 @@ const prisma = new PrismaClient();
 
 export async function POST(req:NextRequest){
 
-    const userId = await req.json();
+    const {id} = await req.json();
 
-    if(!userId){
+    if(!id){
         return NextResponse.json(
             {message:"There is no userId"},
             {status:400}
@@ -21,7 +21,7 @@ export async function POST(req:NextRequest){
 
     const keranjang = await prisma.keranjang.findUnique({
         where:{
-            userId
+            userId:id
         }
     })
 
@@ -53,7 +53,7 @@ export async function POST(req:NextRequest){
             nama:String('Testing'),
             total_harga:totalHarga(orderLineList),
             tanggal:newDate.toUTCString(),
-            userId
+            userId:id
         }
     })
 
