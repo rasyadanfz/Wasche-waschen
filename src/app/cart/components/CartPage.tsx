@@ -5,13 +5,55 @@ import CartCard from "./CartCard";
 import CreateOrderButton from "./CreateOrderButton";
 import { useSession } from "next-auth/react";
 
-const session = useSession();
+//const session = useSession();
 
+
+/*
+  TO DO LIST
+  -- FIX THE CREATE NEW ORDER
+  -- ATLEAST MAKE THE CODE READABLE
+  -- ADD BACK BUTTON
+
+*/
+
+async function createNewTransaction(){
+  
+  // const temp = session.data?user
+  const temp =         {
+    "id": "655debb944400e55eed08569",
+    "email": "test12345@gmail.com",
+    "name": "test12345",
+    "no_telp": "081234567890",
+    "hashedPassword": "$2b$10$lLWKXunE2NujG0EymmmOde0BXur2yYaO2LdLZIWAA8Cs3GHTxjbTa",
+    "role": "Customer"
+  }
+
+  const res = await fetch('api/transaksi',{
+    method:"POST",
+    headers: {
+      'Content-Type': 'application/json', // Specify the content type as JSON
+    },
+    body: JSON.stringify({
+      id: "655debb944400e55eed08569"
+    }),
+  }) 
+
+  return res;
+
+}
 
 async function getDataKeranjang() {
 
   // don't forget to change this variable
-  const temp =  session.data?.user;
+  // const temp =  session.data?.user;
+  const temp =         {
+    "id": "655debb944400e55eed08569",
+    "email": "test12345@gmail.com",
+    "name": "test12345",
+    "no_telp": "081234567890",
+    "hashedPassword": "$2b$10$lLWKXunE2NujG0EymmmOde0BXur2yYaO2LdLZIWAA8Cs3GHTxjbTa",
+    "role": "Customer"
+  }
 
   const res = await fetch(`/api/forCartPage/${temp.id}`, {
     method: "GET",
@@ -52,22 +94,6 @@ export default function CartPage() {
 
   }
 
-  const makeNewTransaction = ()=>{
-    // we can just take the dataKeranjang values
-    const addTransaction =  async() =>{
-      try{
-        const res = await fetch('api/keranjang',{
-          method:"POST",
-          headers: {
-            'Content-Type': 'application/json', // Specify the content type as JSON
-          },
-          body: JSON.stringify({
-            id: session.data?.user.id,
-          }),
-        })
-      }
-    }
-  }
 
 
   return (
@@ -90,7 +116,7 @@ export default function CartPage() {
         </div>
         <div>
           {
-          (dataKeranjang.length !== 0) ? <CreateOrderButton makeOrder={()=>makeNewTransaction} className="mt-[20px] ml-[1250px] items-center justify-center px-4 py-2"/> : (<div></div>)
+          (dataKeranjang.length !== 0) ? <CreateOrderButton onClick={createNewTransaction} className="mt-[20px] ml-[1250px] items-center justify-center px-4 py-2"/> : (<div></div>)
           }
         </div>
     </>
