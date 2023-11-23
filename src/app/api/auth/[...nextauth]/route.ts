@@ -83,6 +83,7 @@ export const authOptions: NextAuthOptions = {
                     id: token.id as string,
                 },
                 select: {
+                    id: true,
                     email: true,
                     name: true,
                     no_telp: true,
@@ -91,7 +92,13 @@ export const authOptions: NextAuthOptions = {
             });
 
             if (userData) {
-                session.user = userData;
+                session.user = {
+                    id: userData.id,
+                    email: userData.email,
+                    name: userData.name,
+                    no_telp: userData.no_telp,
+                    role: userData.role,
+                };
             }
 
             return session;

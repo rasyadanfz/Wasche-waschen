@@ -11,13 +11,14 @@ const PeriodSelector = ({ onChange }: { onChange: (type: string) => void }) => {
                 className="relative flex justify-between px-4 py-1 border border-black rounded-md hover:bg-gray-200 hover:cursor-pointer"
                 onClick={() => setShowDropdown(!showDropdown)}
             >
-                <p>{choice}</p>
-                <div className="flex items-center">
+                <p id="choice">{choice}</p>
+                <div className="flex items-center" id="arrow">
                     {showDropdown ? <IoChevronUp /> : <IoChevronDown />}
                 </div>
                 {showDropdown && (
                     <div className="absolute left-0 right-0 top-9 flex flex-col gap-y-1 bg-white border border-black rounded-md mt-1">
                         <p
+                            id="harian"
                             className="py-1 px-4 hover:rounded-t-md hover:bg-gray-300 hover:cursor-pointer transition duration-100 ease-in-out"
                             onClick={() => {
                                 setChoice("Harian");
@@ -28,6 +29,7 @@ const PeriodSelector = ({ onChange }: { onChange: (type: string) => void }) => {
                             Harian
                         </p>
                         <p
+                            id="mingguan"
                             className="py-1 px-4 hover:bg-gray-300 hover:cursor-pointer transition duration-100 ease-in-out"
                             onClick={() => {
                                 setChoice("Mingguan");
@@ -38,6 +40,7 @@ const PeriodSelector = ({ onChange }: { onChange: (type: string) => void }) => {
                             Mingguan
                         </p>
                         <p
+                            id="bulanan"
                             className="py-1 px-4 hover:rounded-b-md hover:bg-gray-300 hover:cursor-pointer transition duration-100 ease-in-out"
                             onClick={() => {
                                 setChoice("Bulanan");
