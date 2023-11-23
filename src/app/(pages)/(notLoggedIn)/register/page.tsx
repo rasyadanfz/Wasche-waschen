@@ -26,10 +26,10 @@ const RegisterPage = async () => {
                 </Link>
             </div>
             <div className="lg:grid lg:grid-cols-2 lg:gap-x-12 lg:items-center lg:pb-6">
-                <div className="flex flex-col px-10 py-4 mt-4 lg:mr-2 font-raleway lg:border-2 lg:border-black rounded-lg">
+                <div className="flex flex-col px-10 py-4 mt-4 lg:mr-2 font-raleway lg:border-2 lg:border-black rounded-lg bg-[#FBFBFB]">
                     <div className="text-h3 font-bold">Register</div>
                     <p className="text-h6 mt-2">Hi, Welcome👋</p>
-                    <div className="mt-4">
+                    <div className="mt-4 ">
                         <RegisterForm />
                     </div>
                     <div

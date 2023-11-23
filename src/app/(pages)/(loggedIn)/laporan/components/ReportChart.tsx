@@ -8,8 +8,10 @@ import {
     Title,
     Tooltip,
     Legend,
+    Filler,
+    ChartArea,
+    ScriptableContext,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
 import { LaporanDataProps } from "../page";
 import LineChart, { LineDataset } from "./LineChart";
 import BarChart from "./BarChart";
@@ -23,7 +25,8 @@ ChartJS.register(
     Title,
     Tooltip,
     Legend,
-    BarElement
+    BarElement,
+    Filler
 );
 
 interface ChartProps {
@@ -36,16 +39,21 @@ const getLineDatasets = ({
     label,
     data,
     pointBackgroundColor,
+    fillColor,
+    color,
 }: LineDataset) => {
     const datasets = [
         {
             label: label,
             data: data,
-            fill: false,
-            borderColor: "rgb(75, 192, 192)",
+            fill: true,
+            borderColor: color,
             tension: 0.1,
             pointBackgroundColor: pointBackgroundColor,
-            pointBorderColor: "rgba(133, 79, 249, 1)",
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            backgroundColor: fillColor,
+            pointBorderWidth: 0,
         },
     ];
 
@@ -106,34 +114,40 @@ const ReportChart = ({ data, periodType, type }: ChartProps) => {
             labelsData.unshift(
                 new Date(item.startDate).toISOString().split("T")[0]
             );
-            pointColors.unshift("blue");
         });
         labelsData.push(
             new Date(current.startDate).toISOString().split("T")[0]
         );
-        pointColors.push("red");
 
         switch (title) {
             case "Total Pendapatan":
                 past?.forEach((item) => {
                     dataToShow.unshift(item.totalPendapatan);
+                    pointColors.unshift("#35b608");
                 });
                 dataToShow.push(current?.totalPendapatan);
+                pointColors.push("#35b608");
                 datasets = getLineDatasets({
                     label: title,
                     data: dataToShow,
                     pointBackgroundColor: pointColors,
+                    color: "#35b608",
+                    fillColor: "rgba(187,255,155, 0.3)",
                 });
                 break;
             case "Total Transaksi":
-                past?.forEach((item) => {
+                past.forEach((item) => {
                     dataToShow.unshift(item.totalTransactions);
+                    pointColors.unshift("#854ff9");
                 });
                 dataToShow.push(current?.totalTransactions);
-                getLineDatasets({
+                pointColors.push("#854ff9");
+                datasets = getLineDatasets({
                     label: title,
                     data: dataToShow,
                     pointBackgroundColor: pointColors,
+                    color: "#854ff9",
+                    fillColor: "rgba(208,186,255, 0.3)",
                 });
                 break;
             case "Jenis Pakaian":
@@ -158,7 +172,6 @@ const ReportChart = ({ data, periodType, type }: ChartProps) => {
                 new Date(item.endDate).getMonth() + 1
             }`;
             labelsData.unshift(dayLabel);
-            pointColors.push("blue");
         });
         labelsData.push(
             `${new Date(current.startDate).getDate()}/${
@@ -167,29 +180,36 @@ const ReportChart = ({ data, periodType, type }: ChartProps) => {
                 new Date(current.endDate).getMonth() + 1
             }`
         );
-        pointColors.push("red");
 
         switch (title) {
             case "Total Pendapatan":
                 past?.forEach((item) => {
                     dataToShow.unshift(item.totalPendapatan);
+                    pointColors.unshift("#35b608");
                 });
                 dataToShow.push(current?.totalPendapatan);
+                pointColors.push("#35b608");
                 datasets = getLineDatasets({
                     label: title,
                     data: dataToShow,
                     pointBackgroundColor: pointColors,
+                    color: "#35b608",
+                    fillColor: "rgba(187,255,155, 0.3)",
                 });
                 break;
             case "Total Transaksi":
-                past?.forEach((item) => {
+                past.forEach((item) => {
                     dataToShow.unshift(item.totalTransactions);
+                    pointColors.unshift("#854ff9");
                 });
                 dataToShow.push(current?.totalTransactions);
+                pointColors.push("#854ff9");
                 datasets = getLineDatasets({
                     label: title,
                     data: dataToShow,
                     pointBackgroundColor: pointColors,
+                    color: "#854ff9",
+                    fillColor: "rgba(208,186,255, 0.3)",
                 });
                 break;
             case "Jenis Pakaian":
@@ -214,36 +234,42 @@ const ReportChart = ({ data, periodType, type }: ChartProps) => {
                 { month: "long" }
             )} ${new Date(item.startDate).getFullYear()}`;
             labelsData.unshift(monthLabel);
-            pointColors.push("blue");
         });
         labelsData.push(
             `${new Date(current.startDate).toLocaleDateString("en-US", {
                 month: "long",
             })} ${new Date(current.startDate).getFullYear()}`
         );
-        pointColors.push("red");
 
         switch (title) {
             case "Total Pendapatan":
                 past?.forEach((item) => {
                     dataToShow.unshift(item.totalPendapatan);
+                    pointColors.unshift("#35b608");
                 });
                 dataToShow.push(current?.totalPendapatan);
+                pointColors.push("#35b608");
                 datasets = getLineDatasets({
                     label: title,
                     data: dataToShow,
                     pointBackgroundColor: pointColors,
+                    color: "#35b608",
+                    fillColor: "rgba(187,255,155, 0.3)",
                 });
                 break;
             case "Total Transaksi":
-                past?.forEach((item) => {
+                past.forEach((item) => {
                     dataToShow.unshift(item.totalTransactions);
+                    pointColors.unshift("#854ff9");
                 });
                 dataToShow.push(current?.totalTransactions);
+                pointColors.push("#854ff9");
                 datasets = getLineDatasets({
                     label: title,
                     data: dataToShow,
                     pointBackgroundColor: pointColors,
+                    color: "#854ff9",
+                    fillColor: "rgba(208,186,255, 0.3)",
                 });
                 break;
             case "Jenis Pakaian":
