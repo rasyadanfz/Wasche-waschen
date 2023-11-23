@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export async function GET() {
     try {
-        const data = await prisma.pakaian.findMany();
+        const data = await prisma.existingPakaian.findMany();
         return NextResponse.json(data, { status: 200 })
     }
     catch (err) {
@@ -17,7 +17,7 @@ export async function GET() {
     }
 }
 
-export async function PUT( req: NextRequest) {
+export async function PUT( req: NextRequest ) {
     const params = new URLSearchParams(req.nextUrl.search);
     const id = params.get("id");
     const body = await req.json();
