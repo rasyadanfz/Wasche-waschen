@@ -2,12 +2,13 @@
 
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import PakaianComponent from "./PakaianComponent";
+import PakaianComponent from "@/app/(pages)/(loggedIn)/catalog/components/PakaianComponent";
 import { Pakaian } from "@prisma/client";
 import Pagination from "@/components/Pagination";
-import Dropdown from "./Dropdown";
+import Dropdown from "@/app/(pages)/(loggedIn)/catalog/components/Dropdown";
+import Button from "@/components/Button";
+import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 
 async function getDataPakaian() {
     const res = await fetch("/api/pakaian", {
@@ -20,8 +21,10 @@ async function getDataPakaian() {
 
 const KatalogPakaian = () => {
     const session = useSession();
-    if (!session) {
-        redirect("/login");
+
+    let disabledButton = true;
+    if (session.status === "authenticated") {
+        disabledButton = false;
     }
 
     const [dataPakaian, setDataPakaian] = useState([]);
@@ -78,8 +81,27 @@ const KatalogPakaian = () => {
         setFilteredData(dataPakaian);
     };
 
+    const [cartCount, setCartCount] = useState(0);
+    const [showAddToCartButton, setShowAddToCartButton] = useState(false);
+
+    const updateCartCount = (count: number) => {
+        setCartCount((prevCount) => prevCount + count);
+    };
+
+    useEffect(() => {
+        handleAddToCart();
+    }, [cartCount]);
+
+    const handleAddToCart = () => {
+        if (cartCount > 0) {
+            setShowAddToCartButton(true);
+        } else {
+            setShowAddToCartButton(false);
+        }
+    };
+
     return (
-        <>
+        <div className="">
             <div className="w-full min-h-screen mb-[50px] bg-backgroundcolor">
                 <div className="container mx-auto max-w-screen-lg">
                     <h1 className="font-bold text-3xl mt-[100px] font-raleway text-h2">
@@ -91,7 +113,7 @@ const KatalogPakaian = () => {
                             <input
                                 type="text"
                                 placeholder="Cari Pakaian"
-                                className="px-4 py-2 outline-none bg-transparent w-full active:outline-none"
+                                className="px-4 py-2 outline-none bg-transparent w-full focus:ring-1"
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
                                 onKeyDown={(e) => {
@@ -111,6 +133,8 @@ const KatalogPakaian = () => {
                             <PakaianComponent
                                 pakaian={pakaian}
                                 key={pakaian.id}
+                                updateCartCount={updateCartCount}
+                                disabledButton={disabledButton}
                             />
                         ))}
                     </div>
@@ -123,7 +147,25 @@ const KatalogPakaian = () => {
                 itemsPerPage={itemsPerPage}
                 paginate={onHandlePage}
             />
-        </>
+
+            {showAddToCartButton ? (
+                <div className="fixed flex items-center bottom-8 left-[50%] translate-x-[-50%]">
+                    <Button
+                        text="Add to Cart"
+                        className="shadow-lg w-[300px] h-[40px]"
+                        type="secondary"
+                    />
+                    {/* Cart icon */}
+                    <Image
+                        src="/icons/cart-white.svg"
+                        width={20}
+                        height={21}
+                        alt={"Cart"}
+                        className="translate-x-[-200%]"
+                    />
+                </div>
+            ) : null}
+        </div>
     );
 };
 
