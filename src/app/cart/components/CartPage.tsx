@@ -6,8 +6,6 @@ import CreateOrderButton from "./CreateOrderButton";
 import { useSession } from "next-auth/react";
 import { create } from "domain";
 
-var countChange = 0;
-
 //const session = useSession();
 
 
@@ -41,8 +39,9 @@ async function createNewTransaction(){
     }),
   }) 
 
-  countChange++;
-
+  const data = await res.json();
+  console.log(data)
+  
   return res;
 
 }
@@ -75,6 +74,7 @@ async function getDataKeranjang() {
 export default function CartPage() {
 
   const [dataKeranjang,setDataKeranjang] = useState<ClothesCartData[]>([]);
+  const [countChange,setCountChange] = useState(0);
   
   useEffect(()=>{
     const fetchData = async() =>{
@@ -125,7 +125,7 @@ export default function CartPage() {
         </div>
         <div>
           {
-          (dataKeranjang.length !== 0) ? <CreateOrderButton onClick={async ()=> {await createNewTransaction();}} className="mt-[20px] ml-[1250px] mb-[50px] items-center justify-center px-4 py-2"/> : (<div></div>)
+          (dataKeranjang.length !== 0) ? <CreateOrderButton onClick={async ()=> {await createNewTransaction();setCountChange(countChange+1)}} className="mt-[20px] ml-[1250px] mb-[50px] items-center justify-center px-4 py-2"/> : (<div></div>)
           }
         </div>
     </>

@@ -4,7 +4,6 @@ import { Orderline, PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
-
 export interface ClothesCartData{
     kuantitas:number;
     total_harga:number;

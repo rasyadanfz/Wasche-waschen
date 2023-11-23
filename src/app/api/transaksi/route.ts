@@ -57,9 +57,6 @@ export async function POST(req:NextRequest){
         }
     })
     
-    console.log("new transaksiID")
-    console.log(newTransaksi.id)
-
 
 
     for(let i = 0;i < orderLineList.length;i++){
@@ -75,24 +72,14 @@ export async function POST(req:NextRequest){
     }
 
 
-
     return NextResponse.json(
-        {message:"Succesfully create a new transaction"},
-        {status:200}
+        {message:"Succesfully create a new transaction",newTransaksi},
+        {status:200},
+        
+        
     );
     
 
-
-    /*
-    const {keranjang} = await req.json()
-    const user = await prisma.user.findUnique({
-        where:{
-            id:keranjang.userId
-        }
-    })
-
-
- 
-        */
-
 }
+
+
