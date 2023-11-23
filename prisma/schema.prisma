@@ -13,7 +13,7 @@ model User{
   name String
   no_telp String
   hashedPassword String
-  role String @default("Customer")
+  role String @default("Customer")  
   keranjang Keranjang?
   Transaksi Transaksi[]
 }
