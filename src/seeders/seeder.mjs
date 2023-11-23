@@ -5,6 +5,7 @@ import { randomInt } from "crypto";
 const prisma = new PrismaClient();
 
 const main = async () => {
+    const pakaianArray = await prisma.pakaian.findMany();
     const isUserExist = async (email) => {
         const user = await prisma.user.findUnique({
             where: {
@@ -17,6 +18,11 @@ const main = async () => {
     const createUser = async (name, email, password, no_telp) => {
         const user = await isUserExist(email);
         if (user) {
+            await prisma.keranjang.delete({
+                where: {
+                    userId: user.id,
+                },
+            });
             await prisma.user.delete({
                 where: {
                     email: email,
@@ -25,7 +31,8 @@ const main = async () => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-
+        const randomClothes =
+            pakaianArray[Math.floor(Math.random() * pakaianArray.length)];
         const createdUser = await prisma.user.create({
             data: {
                 name: name,
@@ -36,10 +43,10 @@ const main = async () => {
                     create: {
                         orderlines: {
                             create: {
-                                kuantitas: 2,
-                                total_harga: 8000,
+                                kuantitas: 3,
+                                total_harga: randomClothes.price,
                                 noted: "Sample Note",
-                                pakaianId: "654de5dc9d45a43705756bd1",
+                                pakaianId: randomClothes.id,
                             },
                         },
                     },
@@ -56,8 +63,6 @@ const main = async () => {
         "fuckyou",
         "081234567890"
     );
-
-    const pakaianArray = await prisma.pakaian.findMany();
 
     // Seed Transaction Data
     let transactionList = [];
