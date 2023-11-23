@@ -10,7 +10,6 @@ export async function POST(req:NextRequest){
 
     const all = await req.json();
     const id = all.user.id;
-
     if(!id){
         return NextResponse.json(
             {message:"There is no userId"},

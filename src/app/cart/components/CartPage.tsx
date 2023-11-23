@@ -4,6 +4,9 @@ import { ClothesCartData } from "@/app/api/forCartPage/[id]/route";
 import CartCard from "./CartCard";
 import CreateOrderButton from "./CreateOrderButton";
 import { useSession } from "next-auth/react";
+import { create } from "domain";
+
+var countChange = 0;
 
 //const session = useSession();
 
@@ -20,7 +23,7 @@ async function createNewTransaction(){
   
   // const temp = session.data?user
   const temp =         {
-    "id": "655d66483a5c671dd42f707d",
+    "id": "65543009490065f9d1ba6441",
     "email": "test12345@gmail.com",
     "name": "test12345",
     "no_telp": "081234567890",
@@ -28,7 +31,7 @@ async function createNewTransaction(){
     "role": "Customer"
   }
 
-  const res = await fetch('api/transaksi',{
+  const res = await fetch('/api/transaksi/',{
     method:"POST",
     headers: {
       'Content-Type': 'application/json', // Specify the content type as JSON
@@ -37,6 +40,8 @@ async function createNewTransaction(){
       "user":temp
     }),
   }) 
+
+  countChange++;
 
   return res;
 
@@ -81,7 +86,7 @@ export default function CartPage() {
       }
     }
     fetchData();
-  },[])
+  },[countChange])
 
   const handleSubtract = (index:number) =>{
     const newValues:ClothesCartData[] = [...dataKeranjang];
@@ -91,8 +96,12 @@ export default function CartPage() {
       newValues[index].total_harga-= eachValue;
       setDataKeranjang(newValues);
     }
-
   }
+
+
+
+
+
 
 
 
@@ -116,7 +125,7 @@ export default function CartPage() {
         </div>
         <div>
           {
-          (dataKeranjang.length !== 0) ? <CreateOrderButton onClick={createNewTransaction} className="mt-[20px] ml-[1250px] items-center justify-center px-4 py-2"/> : (<div></div>)
+          (dataKeranjang.length !== 0) ? <CreateOrderButton onClick={async ()=> {await createNewTransaction();}} className="mt-[20px] ml-[1250px] mb-[50px] items-center justify-center px-4 py-2"/> : (<div></div>)
           }
         </div>
     </>
