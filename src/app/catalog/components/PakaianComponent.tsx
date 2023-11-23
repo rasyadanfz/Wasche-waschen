@@ -19,7 +19,7 @@ const PakaianComponent = ({ pakaian, updateCartCount, disabledButton }: { pakaia
                 <p>Rp{pakaian.price}/{pakaian.unit}</p>
             </div>
             <div className="p-4 w-full flex">
-                <AddButton updateCartCount={updateCartCount} disabledButton={disabledButton} />    
+                <AddButton updateCartCount={updateCartCount} disabledButton={disabledButton} />  
             </div>
         </div>
     )
