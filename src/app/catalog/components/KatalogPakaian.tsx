@@ -22,7 +22,7 @@ async function getDataPakaian() {
 
 const KatalogPakaian = () => {
   const session = useSession();
-  console.log(session);
+  
   let disabledButton = true;
   if (session.status === "authenticated") {
     disabledButton = false;
