@@ -107,7 +107,11 @@ const RegisterForm = () => {
                     onChange={handleConfirmPasswordChange}
                     placeholder="Confirm Password"
                 ></FormInput>
-                <Button text="Register" className="py-2 mt-4" id="submit" />
+                <Button
+                    text="Register"
+                    className="py-2 mt-4 w-full h-full"
+                    id="submit"
+                />
             </form>
         </div>
     );

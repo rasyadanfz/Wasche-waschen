@@ -37,7 +37,7 @@ export default function StatusDetailTransaksi(
           id="status"
           value={selectedStatus}
           onChange={handleStatusChange}
-          className={`border border-black rounded-md py-1 ${color} text-center w-[300px]`}
+          className={`border border-black rounded-md py-1 ${color} text-center w-[300px] hover:bg-opacity-80 hover:cursor-pointer`}
         >
           {statusOptions.map((status) => (
             <option key={status} value={status} className="bg-white text-center">

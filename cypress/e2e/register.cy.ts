@@ -7,10 +7,6 @@ describe("Register", () => {
         cy.visit("/register");
     });
 
-    afterEach(() => {
-        cy.wait(500);
-    });
-
     it("should toggle password visibility correctly", () => {
         cy.get("input[id=password]").type("testpassword");
         cy.get("input[id=confirmpassword]").type("testpassword");

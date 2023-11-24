@@ -21,7 +21,7 @@ const itim = Itim({
 
 const disabledNavbar = ["/login", "/register"];
 
-const Navbar2 = () => {
+const Navbar = () => {
   const [isTop, setIsTop] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [currentPathName, setCurrentPathName] = useState("");
@@ -110,7 +110,7 @@ const Navbar2 = () => {
             <div className="flex items-center justify-between relative">
               {/* Logo */}
               <div>
-                <Link href="/">
+                <Link id="companylogo" href="/">
                   <h1
                     className={`font-bold text-[1.5rem] ${itim.className} ${
                       isTop ? "text-primary-500" : "text-white"
@@ -178,7 +178,7 @@ const Navbar2 = () => {
                       <div className="flex flex-row items-center gap-2">
                         {!isAdmin && (
                           <>
-                            <Link href={`/cart`}>
+                            <Link id="cart" href={`/cart`}>
                               <Image
                                 src="/icons/cart.svg"
                                 alt="cart-icon"
@@ -195,7 +195,7 @@ const Navbar2 = () => {
                             <div className="border-r border-black h-6 mx-4" />
                           </>
                         )}
-                        <Link href="/profile">
+                        <Link href="/profile" id="profile">
                           <div
                             className={`flex flex-row gap-3 font-semibold transition-transform transform hover:scale-110 cursor-pointer items-center 
                             ${
@@ -231,4 +231,4 @@ const Navbar2 = () => {
   );
 };
 
-export default Navbar2;
+export default Navbar;
