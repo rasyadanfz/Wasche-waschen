@@ -9,6 +9,7 @@ import Dropdown from "@/app/(pages)/(loggedIn)/catalog/components/Dropdown";
 import Button from "@/components/Button";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import CreateForm from "./CreateForm";
 
 async function getDataPakaian() {
     const res = await fetch("/api/pakaian", {
@@ -105,6 +106,12 @@ const KatalogPakaian = () => {
         }
     };
 
+    const [isCreateFormVisible, setIsCreateFormVisible] = useState(false);
+
+    const closeCreateForm = () => {
+        setIsCreateFormVisible(false);
+    }
+
     return (
         <div className="">
             <div className="w-full min-h-screen mb-[50px] bg-backgroundcolor">
@@ -132,6 +139,12 @@ const KatalogPakaian = () => {
                             updateFilteredData={updateFilteredData}
                             updateDataToOriginal={updateDataToOriginal}
                         />
+                        <button
+                            className="font-semibold hover:cursor-pointer rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center h-14 border border-black hover:bg-secondary-300 bg-secondary-400"
+                            onClick={() => setIsCreateFormVisible(true)}
+                        >
+                            Create
+                        </button>
                     </div>
                     <div className="grid grid-cols-4 gap-4">
                         {currentItems.map((pakaian: ExistingPakaian) => (
@@ -146,6 +159,12 @@ const KatalogPakaian = () => {
                     </div>
                 </div>
             </div>
+
+            {isCreateFormVisible && (
+                    <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+                    <CreateForm closeCreateForm={closeCreateForm}/>
+                </div>
+            )}
 
             <Pagination
                 filteredData={filteredData}
