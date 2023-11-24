@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import { Pakaian } from "@prisma/client";
+import { ExistingPakaian } from "@prisma/client";
 import AddButton from "./AddButton";
 import Button from "@/components/Button";
 import UpdateForm from "./UpdateForm";
@@ -20,7 +20,7 @@ const PakaianComponent = ({
     disabledButton,
     admin,
 }: {
-    pakaian: Pakaian;
+    pakaian: ExistingPakaian;
     updateCartCount: (count: number) => void;
     disabledButton: boolean;
     admin: boolean;
@@ -85,7 +85,7 @@ const PakaianComponent = ({
 
             {isUpdateFormVisible && (
                 <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                    <UpdateForm id={pakaian.id} />
+                    <UpdateForm id={pakaian.pakaianId} closeUpdateForm={closeUpdateForm}/>
                 </div>
             )}
         </div>

@@ -3,7 +3,7 @@
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import PakaianComponent from "@/app/(pages)/(loggedIn)/catalog/components/PakaianComponent";
-import { Pakaian } from "@prisma/client";
+import { ExistingPakaian } from "@prisma/client";
 import Pagination from "@/components/Pagination";
 import Dropdown from "@/app/(pages)/(loggedIn)/catalog/components/Dropdown";
 import Button from "@/components/Button";
@@ -57,7 +57,7 @@ const KatalogPakaian = () => {
     }, []);
 
     const handleSearch = () => {
-        const result = dataPakaian.filter((item: Pakaian) => {
+        const result = dataPakaian.filter((item: ExistingPakaian) => {
             const nameMatch = item.name
                 .toLowerCase()
                 .includes(query.toLowerCase());
@@ -69,7 +69,7 @@ const KatalogPakaian = () => {
 
     const updateFilteredData = (startPrices: number[], endPrices: number[]) => {
         const filter = startPrices.map((startPrice, index) => {
-            const temp = dataPakaian.filter((item: Pakaian) => {
+            const temp = dataPakaian.filter((item: ExistingPakaian) => {
                 const endPrice = endPrices[index];
                 return item.price >= startPrice && item.price <= endPrice;
             });
@@ -134,7 +134,7 @@ const KatalogPakaian = () => {
                         />
                     </div>
                     <div className="grid grid-cols-4 gap-4">
-                        {currentItems.map((pakaian: Pakaian) => (
+                        {currentItems.map((pakaian: ExistingPakaian) => (
                             <PakaianComponent
                                 pakaian={pakaian}
                                 key={pakaian.id}
