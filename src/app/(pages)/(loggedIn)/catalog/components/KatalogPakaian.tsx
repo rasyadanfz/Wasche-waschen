@@ -113,7 +113,7 @@ const KatalogPakaian = () => {
     }
 
     return (
-        <div className="">
+        <div id="katalog_pakaian">
             <div className="w-full min-h-screen mb-[50px] bg-backgroundcolor">
                 <div className="container mx-auto max-w-screen-lg">
                     <h1 className="font-bold text-3xl mt-[100px] font-raleway text-h2">
@@ -123,6 +123,7 @@ const KatalogPakaian = () => {
                         <div className="flex items-center border border-black hover:bg-white rounded-md w-full px-4 mt-4 h-14">
                             <FaSearch size={18} />
                             <input
+                                id="search_bar"
                                 type="text"
                                 placeholder="Cari Pakaian"
                                 className="px-4 py-2 outline-none bg-transparent w-full focus:ring-1"
@@ -135,18 +136,22 @@ const KatalogPakaian = () => {
                                 }}
                             />
                         </div>
-                        <Dropdown
-                            updateFilteredData={updateFilteredData}
-                            updateDataToOriginal={updateDataToOriginal}
-                        />
-                        <button
-                            className="font-semibold hover:cursor-pointer rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center h-14 border border-black hover:bg-secondary-300 bg-secondary-400"
-                            onClick={() => setIsCreateFormVisible(true)}
-                        >
-                            Create
-                        </button>
+                        <div id="filter_dropdown">
+                            <Dropdown
+                                updateFilteredData={updateFilteredData}
+                                updateDataToOriginal={updateDataToOriginal}
+                            />
+                        </div>
+                        {admin && (
+                            <button
+                                className="font-semibold hover:cursor-pointer rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center h-14 border border-black hover:bg-secondary-300 bg-secondary-400"
+                                onClick={() => setIsCreateFormVisible(true)}
+                            >
+                                Create
+                            </button>
+                        )}
                     </div>
-                    <div className="grid grid-cols-4 gap-4">
+                    <div id="pakaian_card" className="grid grid-cols-4 gap-4">
                         {currentItems.map((pakaian: ExistingPakaian) => (
                             <PakaianComponent
                                 pakaian={pakaian}
@@ -173,8 +178,8 @@ const KatalogPakaian = () => {
                 paginate={onHandlePage}
             />
 
-            {showAddToCartButton ? (
-                <div className="fixed flex items-center bottom-8 left-[50%] translate-x-[-50%]">
+            {showAddToCartButton && (
+                <div id="add_to_cart" className="fixed flex items-center bottom-8 left-[50%] translate-x-[-50%]">
                     <Button
                         text="Add to Cart"
                         className="shadow-lg w-[300px] h-[40px]"
@@ -189,7 +194,7 @@ const KatalogPakaian = () => {
                         className="translate-x-[-200%]"
                     />
                 </div>
-            ) : null}
+            )}
         </div>
     );
 };

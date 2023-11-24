@@ -30,13 +30,13 @@ const AddButton = ({ updateCartCount, disabledButton }: { updateCartCount: (coun
   return (
     <div className="w-full">
       {showTambahButton ? (
-          <Button onClick={handleTambah} text="+Tambah" className="p-2 w-full" disabled={disabledButton} />
+          <Button id="tambah_button" onClick={handleTambah} text="+Tambah" className="p-2 w-full" disabled={disabledButton} />
         )
         : (
           <div className="flex items-center justify-center gap-x-5">
-            <button onClick={handleAdd} className="rounded-full flex relative px-[10px] font-poppins text-h5 bg-primary-200">+</button>
-            <h1 className="font-poppins text-body">{count}</h1>
-            <button onClick={handleSubstract} className="rounded-full flex relative px-[12px] font-poppins text-h5 bg-primary-200">-</button>
+            <button id="add_button" onClick={handleAdd} className="rounded-full flex relative px-[10px] font-poppins text-h5 bg-primary-200">+</button>
+            <h1 id="item_count" className="font-poppins text-body">{count}</h1>
+            <button id="substract_button" onClick={handleSubstract} className="rounded-full flex relative px-[12px] font-poppins text-h5 bg-primary-200">-</button>
           </div>
       )}
     </div>

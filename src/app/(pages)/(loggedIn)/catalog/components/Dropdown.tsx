@@ -90,7 +90,7 @@ const Dropdown = ({
     };
 
     return (
-        <div className="relative">
+        <div id="dropdown" className="relative">
             <div
                 onClick={toggleDropdown}
                 className="font-semibold hover:cursor-pointer rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center h-14 border border-black hover:bg-primary-300 bg-primary-400"
@@ -133,6 +133,7 @@ const Dropdown = ({
                     ))}
                     <div className="py-2">
                         <Button
+                            id="apply"
                             onClick={handleApplyFilter}
                             text="Apply Filter(s)"
                             className="p-2 flex"
@@ -140,6 +141,7 @@ const Dropdown = ({
                     </div>
                     <div className="py-2">
                         <Button
+                            id="clear"
                             onClick={handleClearFilter}
                             text="Clear Filter(s)"
                             className="p-2 flex"
