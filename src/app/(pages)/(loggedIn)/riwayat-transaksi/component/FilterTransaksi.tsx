@@ -20,6 +20,7 @@ interface FilterTransaksiProps {
   setStartDate: React.Dispatch<React.SetStateAction<string>>;
   setEndDate: React.Dispatch<React.SetStateAction<string>>;
   handleSearch: () => void;
+  handleClearFilter: () => void;
 }
 
 const FilterTransaksi: React.FC<FilterTransaksiProps> = ({
@@ -30,6 +31,7 @@ const FilterTransaksi: React.FC<FilterTransaksiProps> = ({
   setStartDate,
   setEndDate,
   handleSearch,
+  handleClearFilter,
 }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -43,16 +45,8 @@ const FilterTransaksi: React.FC<FilterTransaksiProps> = ({
     toggleFilter();
   };
 
-  const handleClearFilter = () => {
-    // Logic for clearing filter
-    setStatusFilters({
-      done: false,
-      onProgress: false,
-      notConfirmed: false,
-    });
-    setStartDate("");
-    setEndDate("");
-    handleSearch();
+  const handleResetFilter = () => {
+    handleClearFilter();
     toggleFilter();
   };
 
@@ -170,7 +164,7 @@ const FilterTransaksi: React.FC<FilterTransaksiProps> = ({
             <div>
               <Button
                 id="clearFilterBtn"
-                onClick={handleClearFilter}
+                onClick={handleResetFilter}
                 text="Clear Filter(s)"
                 className="w-[150px] inline-flex items-center justify-center px-4 py-2 border rounded-md"
               />
