@@ -66,26 +66,30 @@ describe("<FormInput />", () => {
     });
 
     it("toggle show password correctly", () => {
-        let status = false;
-        const simulateSetPassword = () => {
-            status = !status;
-        };
         cy.mount(
             <FormInput
                 type="password"
                 id="password"
                 text="Password"
                 placeholder="Password"
-                setShowPassword={simulateSetPassword}
             />
         );
-        const button = cy.get("button#showPassword");
-        button.should("be.visible");
-        button.click().then(() => {
-            expect(status).to.eq(true);
-            button.click().then(() => {
-                expect(status).to.eq(false);
+        cy.get("button#showPassword").should("be.visible");
+        cy.get("button#showPassword")
+            .click()
+            .then(() => {
+                cy.get("input#password").should("be.visible");
+                cy.get("input#password").should("have.attr", "type", "text");
+                cy.get("button#showPassword")
+                    .click()
+                    .then(() => {
+                        cy.get("input#password").should("be.visible");
+                        cy.get("input#password").should(
+                            "have.attr",
+                            "type",
+                            "password"
+                        );
+                    });
             });
-        });
     });
 });

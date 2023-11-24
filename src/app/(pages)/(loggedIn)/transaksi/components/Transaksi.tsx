@@ -3,9 +3,8 @@
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import CardTransaksi from "./CardTransaksi";
-import Link from "next/link";
-import FormInput from "@/components/FormInput";
 import Pagination from "@/components/Pagination";
+import FilterTransaksi from "../../riwayat-transaksi/component/FilterTransaksi";
 
 interface Transaksi {
   id: string;
@@ -39,7 +38,6 @@ export default function Transaksi() {
         setDataTransaksi(data);
       } catch (error) {
         console.error("Error fetching data:", error);
-        // Handle error if needed
       }
     };
 
@@ -78,7 +76,6 @@ export default function Transaksi() {
     setCurrentPage(1);
   };
 
-  // Logika untuk mengatur data yang ditampilkan pada setiap halaman
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems =
@@ -93,7 +90,7 @@ export default function Transaksi() {
   }, [dataTransaksi]);
 
   return (
-    <>
+    <div id="transaksi">
       <div className="min-h-screen">
         <div className="w-full mb-[50px]">
           <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
@@ -102,89 +99,29 @@ export default function Transaksi() {
               <div className="flex flex-row justify-between gap-6 items-end">
                 <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md w-full">
                   <input
+                    id="searchTransaksi"
                     type="text"
                     placeholder="Cari Transaksi"
                     className="px-4 py-2 outline-none bg-transparent w-full focus:ring-1"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleSearch();
+                      }
+                    }}
                   />
                 </div>
                 <div className="flex justify-end mt-2">
-                  <button
-                    className="px-4 py-2 bg-transparant rounded-md border text-black border-black font-semibold h-14 active:bg-primary active:text-white"
-                    onClick={handleSearch}
-                  >
-                    <FaSearch size={18} />
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex flex-col mt-2">
-                <h1 className="font-semibold text-h6 mb-4">Filter :</h1>
-                <div className="flex flex-row gap-16 item justify-center md:justify-start">
-                  <div className="flex flex-col">
-                    <h2 className="font-semibold mb-2">Status Transaksi</h2>
-                    <label>
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        checked={statusFilters.done}
-                        onChange={() =>
-                          setStatusFilters((prevFilters) => ({
-                            ...prevFilters,
-                            done: !prevFilters.done,
-                          }))
-                        }
-                      />
-                      Done
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        checked={statusFilters.onProgress}
-                        onChange={() =>
-                          setStatusFilters((prevFilters) => ({
-                            ...prevFilters,
-                            onProgress: !prevFilters.onProgress,
-                          }))
-                        }
-                      />
-                      On Progress
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        checked={statusFilters.notConfirmed}
-                        onChange={() =>
-                          setStatusFilters((prevFilters) => ({
-                            ...prevFilters,
-                            notConfirmed: !prevFilters.notConfirmed,
-                          }))
-                        }
-                      />
-                      Not Confirmed
-                    </label>
-                  </div>
-                  <div className="">
-                    <h2 className="font-semibold mb-2">Tanggal Transaksi</h2>
-                    <div className="flex flex-row gap-2 items-center">
-                      <input
-                        type="date"
-                        className="border border-black rounded-md px-2 py-1"
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                      />
-                      <p>to</p>
-                      <input
-                        type="date"
-                        className="border border-black rounded-md px-2 py-1"
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                      />
-                    </div>
-                  </div>
+                  <FilterTransaksi
+                    statusFilters={statusFilters}
+                    startDate={startDate}
+                    endDate={endDate}
+                    setStatusFilters={setStatusFilters}
+                    setStartDate={setStartDate}
+                    setEndDate={setEndDate}
+                    handleSearch={handleSearch}
+                  />
                 </div>
               </div>
             </div>
@@ -221,6 +158,6 @@ export default function Transaksi() {
           paginate={paginate}
         />
       </div>
-    </>
+    </div>
   );
 }
