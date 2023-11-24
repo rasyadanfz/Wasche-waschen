@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { ClothesCartData } from "../forCartPage/[id]/route";
-import { totalHarga } from "@/app/utils/totalharga";
 const prisma = new PrismaClient();
 
 
@@ -28,7 +26,6 @@ export async function POST(req:NextRequest){
             }
         })
     }
-
 
     return NextResponse.json(
         {message:"Success"},
