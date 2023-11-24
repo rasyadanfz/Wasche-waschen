@@ -95,13 +95,7 @@ export async function DELETE( req: NextRequest) {
     const id = params.get("id");
     
     try {
-        await prisma.orderline.deleteMany({
-            where: {
-                pakaianId: id as string
-            }
-        })
-
-        const deletedData = await prisma.pakaian.delete({
+        const deletedData = await prisma.existingPakaian.delete({
             where: {
                 id: id as string
             }

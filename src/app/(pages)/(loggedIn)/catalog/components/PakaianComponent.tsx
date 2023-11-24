@@ -1,7 +1,11 @@
+"use client"
+
 import Image from "next/image";
 import { Pakaian } from "@prisma/client";
 import AddButton from "./AddButton";
 import Button from "@/components/Button";
+import UpdateForm from "./UpdateForm";
+import { useState } from "react";
 
 function imageExists(imageUrl: string) {
     var http = new XMLHttpRequest();
@@ -21,6 +25,16 @@ const PakaianComponent = ({
     disabledButton: boolean;
     admin: boolean;
 }) => {
+    const [isUpdateFormVisible, setIsUpdateFormVisible] = useState(false);
+
+    const handleUpdate = () => {
+        setIsUpdateFormVisible(true);
+    }
+
+    const closeUpdateForm = () => {
+        setIsUpdateFormVisible(false);
+    }
+
     const handleDelete = async (id: string) => {
         await fetch(`/api/pakaian?id=${id}`, {
             method: "DELETE",
@@ -52,15 +66,26 @@ const PakaianComponent = ({
             ) : (
                 <div className="p-4 w-full flex gap-2">
                     <Button
+                        text="Create"
+                        type="primary"
+                        // onClick={() => handleCreate()}
+                    />
+                    <Button
                         text="Edit"
                         type="warning"
-                        // onClick={() => handleUpdate(pakaian.id)}
+                        onClick={() => handleUpdate()}
                     />
                     <Button
                         text="Delete"
                         type="danger"
                         onClick={() => handleDelete(pakaian.id)}
                     />
+                </div>
+            )}
+
+            {isUpdateFormVisible && (
+                <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+                    <UpdateForm id={pakaian.id} />
                 </div>
             )}
         </div>
