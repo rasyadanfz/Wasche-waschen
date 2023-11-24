@@ -13,7 +13,7 @@ export async function GET( req: NextRequest ) {
         if (id) {
             data = await prisma.existingPakaian.findUnique({
                 where: {
-                    id: id
+                    pakaianId: id
                 }
             });
         }
@@ -79,6 +79,16 @@ export async function PUT( req: NextRequest ) {
                 price: price
             }
         });
+
+        await prisma.existingPakaian.update({
+            where: {
+                pakaianId: id as string
+            },
+            data: {
+                price: price
+            }
+        });
+
         return NextResponse.json(updateData, { status: 200 });
     }
     catch (err) {
