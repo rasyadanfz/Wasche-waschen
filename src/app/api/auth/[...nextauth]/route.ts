@@ -4,8 +4,7 @@ import bcrypt from "bcrypt";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import { NextAuthOptions } from "next-auth";
-
-const prisma = new PrismaClient();
+import prisma from "../../../../../prismaSingleton/prismaSingleClient";
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
