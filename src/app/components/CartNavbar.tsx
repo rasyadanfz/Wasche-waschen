@@ -1,11 +1,8 @@
-import { useContext, useEffect, useState } from "react";
-
-
-
-
 
 
 const CartNavbar = () => {
+
+
 
     return (
     <div className="relative">
