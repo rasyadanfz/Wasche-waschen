@@ -86,6 +86,19 @@ export default function Transaksi() {
     setCurrentPage(1);
   };
 
+  const handleResetFilter = () => {
+    setStatusFilters({
+      done: false,
+      onProgress: false,
+      notConfirmed: false,
+    });
+    setStartDate("");
+    setEndDate("");
+    setQuery("");
+    setFilteredData(dataTransaksi);
+    setCurrentPage(1);
+  }
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems =
@@ -132,6 +145,7 @@ export default function Transaksi() {
                     setStartDate={setStartDate}
                     setEndDate={setEndDate}
                     handleSearch={handleSearch}
+                    handleClearFilter={handleResetFilter}
                   />
                 </div>
               </div>
