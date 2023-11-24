@@ -8,15 +8,16 @@ interface ButtonProps {
     disabled?: boolean;
 }
 
-const Button = ({
-    text = "Button",
+const MinusButton = ({
+    text = "- (subtract)",
     className,
     onClick,
     id,
     type = "primary",
     disabled = false,
 }: ButtonProps) => {
-    const baseClassName = "text-button px-4 py-2 rounded-md font-raleway";
+    const baseClassName =
+        "text-button px-4 py-2 rounded-md font-raleway border-2 border-black";
 
     let buttonColorClass;
     switch (type) {
@@ -46,7 +47,7 @@ const Button = ({
         baseClassName + " " + buttonColorClass + " " + className;
     return (
         <div className="">
-            <button
+            <button 
                 type="submit"
                 className={buttonClassName}
                 onClick={onClick}
@@ -54,7 +55,7 @@ const Button = ({
                 disabled={disabled}
             >
                 <div
-                    className={type === "warning" ? "text-black" : "text-white"}
+                    className={"text-red-600"}
                 >
                     {text}
                 </div>
@@ -63,4 +64,4 @@ const Button = ({
     );
 };
 
-export default Button;
+export default MinusButton;

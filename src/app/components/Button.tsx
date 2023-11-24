@@ -16,7 +16,8 @@ const Button = ({
     type = "primary",
     disabled = false,
 }: ButtonProps) => {
-    const baseClassName = "text-button px-4 py-2 rounded-md font-raleway";
+    const baseClassName =
+        "text-button px-4 py-2 rounded-md font-raleway";
 
     let buttonColorClass;
     switch (type) {
