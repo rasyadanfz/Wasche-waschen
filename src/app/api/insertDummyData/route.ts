@@ -20,8 +20,8 @@ export async function POST(req:NextRequest){
         // insert
         const insertIt = await prisma.orderline.create({
             data:{
-                kuantitas:999999,
-                total_harga:pakaian[i].price*999999,
+                kuantitas:1,
+                total_harga:pakaian[i].price*1,
                 noted:"YES",
                 pakaianId:pakaian[i].id,
                 keranjangId:keranjang?.id

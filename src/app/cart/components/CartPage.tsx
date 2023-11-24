@@ -3,18 +3,7 @@ import { useEffect, useState } from "react";
 import { ClothesCartData } from "@/app/api/forCartPage/[id]/route";
 import CartCard from "./CartCard";
 import CreateOrderButton from "./CreateOrderButton";
-import BackButton from "./BackButton";
 
-//const session = useSession();
-
-
-/*
-  TO DO LIST
-  -- FIX THE CREATE NEW ORDER
-  -- ATLEAST MAKE THE CODE READABLE
-  -- ADD BACK BUTTON
-
-*/
 
 async function updateCart(newCart:ClothesCartData[]){
   // const temp = session.data?.user
@@ -64,7 +53,7 @@ async function createNewTransaction(){
       'Content-Type': 'application/json', // Specify the content type as JSON
     },
     body: JSON.stringify({
-      "user":temp
+        "user":temp
     }),
   }) 
 
@@ -78,14 +67,14 @@ async function getDataKeranjang() {
 
   // don't forget to change this variable
   // const temp =  session.data?.user;
-  const temp =         {
+  const temp =        {
     "id": "65543009490065f9d1ba6441",
-    "email": "test12345@gmail.com",
-    "name": "test12345",
-    "no_telp": "081234567890",
-    "hashedPassword": "$2b$10$lLWKXunE2NujG0EymmmOde0BXur2yYaO2LdLZIWAA8Cs3GHTxjbTa",
+    "email": "18221071@std.stei.itb.ac.id",
+    "name": "Ahmad Rizki",
+    "no_telp": "+6282343765854",
+    "hashedPassword": "$2b$10$Xd0mu3Sd6xlaFrGXWgMZRusMJPsFyr/QFueSU0cTmplpMX0h4W6Lm",
     "role": "Customer"
-  }
+}
 
   const res = await fetch(`/api/forCartPage/${temp.id}`, {
     method: "GET",
@@ -137,8 +126,7 @@ export default function CartPage() {
     <>
         <div className="flex flex-col mt-[80px]">
           <div className="flex items-baseline">
-            <BackButton className="mx-[50px]"/>
-            <p className="font-black text-2xl mb-[20px]" >Keranjang</p>
+            <p className="font-black text-2xl mb-[20px] ml-[100px]" >Keranjang</p>
           </div>
           <div> 
           {
