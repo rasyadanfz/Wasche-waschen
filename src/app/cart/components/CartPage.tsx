@@ -28,8 +28,8 @@ async function updateCart(newCart:ClothesCartData[]){
     "role": "Customer"
   }
 
-  const res = await fetch('/api/updateCart',{
-    method:"POST",
+  const res = await fetch('/api/keranjang',{
+    method:"PUT",
     headers: {
       'Content-Type': 'application/json', // Specify the content type as JSON
     },
