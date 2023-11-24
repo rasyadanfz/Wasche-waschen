@@ -59,6 +59,7 @@ const FilterTransaksi: React.FC<FilterTransaksiProps> = ({
   return (
     <div className="relative">
       <div
+        id="filterBtn"
         onClick={toggleFilter}
         className="font-semibold hover:cursor-pointer rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center h-14 border border-black hover:bg-primary-300 bg-primary-400"
       >
@@ -80,7 +81,10 @@ const FilterTransaksi: React.FC<FilterTransaksiProps> = ({
         </svg>
       </div>
       {isFilterOpen && (
-        <div className="absolute bg-white border rounded-md shadow-md mt-3 flex flex-col pt-1 z-[5] -translate-x-[50%] px-2">
+        <div
+          id="filterPopUp"
+          className="absolute bg-white border rounded-md shadow-md mt-3 flex flex-col pt-1 z-[5] -translate-x-[50%] px-2"
+        >
           <div className="m-3">
             <h2 className="font-semibold mb-2">Status Transaksi</h2>
             <div className="flex flex-col gap-1">
@@ -134,6 +138,7 @@ const FilterTransaksi: React.FC<FilterTransaksiProps> = ({
               <div>
                 <p>Start Date</p>
                 <input
+                  id="startDate"
                   type="date"
                   className="border border-black rounded-md px-2 py-1"
                   value={startDate}
@@ -143,6 +148,7 @@ const FilterTransaksi: React.FC<FilterTransaksiProps> = ({
               <div>
                 <p>End Date</p>
                 <input
+                  id="endDate"
                   type="date"
                   className="border border-black rounded-md px-2 py-1"
                   value={endDate}
@@ -155,6 +161,7 @@ const FilterTransaksi: React.FC<FilterTransaksiProps> = ({
           <div className="m-3 flex flex-col items-center gap-1">
             <div className="">
               <Button
+                id="applyFilterBtn"
                 onClick={handleApplyFilter}
                 text="Apply Filter(s)"
                 className="w-[150px] inline-flex items-center justify-center px-4 py-2 bg-primary-400 text-white rounded-md"

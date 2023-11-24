@@ -98,7 +98,7 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
   };
 
   return (
-    <>
+    <div id="detail-transaksi">
       <div className="error_toast">
         <Toaster position="top-right" toastOptions={errorToastOptions} />
       </div>
@@ -197,6 +197,6 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

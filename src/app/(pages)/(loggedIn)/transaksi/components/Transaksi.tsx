@@ -90,7 +90,7 @@ export default function Transaksi() {
   }, [dataTransaksi]);
 
   return (
-    <>
+    <div id="transaksi">
       <div className="min-h-screen">
         <div className="w-full mb-[50px]">
           <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
@@ -99,11 +99,17 @@ export default function Transaksi() {
               <div className="flex flex-row justify-between gap-6 items-end">
                 <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md w-full">
                   <input
+                    id="searchTransaksi"
                     type="text"
                     placeholder="Cari Transaksi"
                     className="px-4 py-2 outline-none bg-transparent w-full focus:ring-1"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleSearch();
+                      }
+                    }}
                   />
                 </div>
                 <div className="flex justify-end mt-2">
@@ -152,6 +158,6 @@ export default function Transaksi() {
           paginate={paginate}
         />
       </div>
-    </>
+    </div>
   );
 }

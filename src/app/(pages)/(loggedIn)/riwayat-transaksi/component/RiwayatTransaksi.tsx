@@ -100,7 +100,7 @@ export default function Transaksi() {
   }, [dataTransaksi]);
 
   return (
-    <>
+    <div id="riwayat-transaksi">
       <div className="min-h-screen">
         <div className="w-full mb-[50px]">
           <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
@@ -110,6 +110,7 @@ export default function Transaksi() {
                 <div className="flex border items-center border-black bg-[#EDEDED] justify-between py-1.5 px-5 rounded-md w-full">
                   <FaSearch size={18} />
                   <input
+                    id="searchRiwayatTransaksi"
                     type="text"
                     placeholder="Cari Transaksi"
                     className="px-4 py-2 outline-none bg-transparent w-full active:outline-none"
@@ -167,6 +168,6 @@ export default function Transaksi() {
           paginate={paginate}
         />
       </div>
-    </>
+    </div>
   );
 }
