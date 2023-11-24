@@ -16,6 +16,36 @@ import BackButton from "./BackButton";
 
 */
 
+async function updateCart(newCart:ClothesCartData[]){
+  // const temp = session.data?.user
+
+  const temp =         {
+    "id": "65543009490065f9d1ba6441",
+    "email": "test12345@gmail.com",
+    "name": "test12345",
+    "no_telp": "081234567890",
+    "hashedPassword": "$2b$10$lLWKXunE2NujG0EymmmOde0BXur2yYaO2LdLZIWAA8Cs3GHTxjbTa",
+    "role": "Customer"
+  }
+
+  const res = await fetch('/api/updateCart',{
+    method:"POST",
+    headers: {
+      'Content-Type': 'application/json', // Specify the content type as JSON
+    },
+    body: JSON.stringify({
+      "user":temp,
+      "ClothesCartData":newCart
+    }),
+  }) 
+
+
+  const data = await res.json();
+  
+  return res;
+
+}
+
 async function createNewTransaction(){
   
   // const temp = session.data?user
@@ -39,7 +69,6 @@ async function createNewTransaction(){
   }) 
 
   const data = await res.json();
-  console.log(data)
   
   return res;
 
@@ -62,7 +91,7 @@ async function getDataKeranjang() {
     method: "GET",
   });
 
-  let dataKeranjang;
+  let dataKeranjang; 
   if(res !== undefined)  dataKeranjang = await res.json();
   else dataKeranjang = [];
 
@@ -127,7 +156,9 @@ export default function CartPage() {
           {
           (dataKeranjang.length !== 0) ? 
           <div className="flex flex-row">
-          <CreateOrderButton className="mt-[20px] ml-[1050px] mb-[50px] items-center justify-center px-4 py-2" text="Update Keranjang"/><CreateOrderButton onClick={async ()=> {await createNewTransaction();setCountChange(countChange+1)}} className="mt-[20px] ml-[50px] mb-[50px] items-center justify-center px-4 py-2"/> </div> : (<div></div>)
+          <CreateOrderButton onClick={async ()=> {await updateCart(dataKeranjang);setCountChange(countChange+1)}} className="mt-[20px] ml-[1050px] mb-[50px] items-center justify-center px-4 py-2" text="Update Keranjang"/>
+          <CreateOrderButton onClick={async ()=> {await createNewTransaction();setCountChange(countChange+1)}} className="mt-[20px] ml-[50px] mb-[50px] items-center justify-center px-4 py-2"/> 
+          </div> : (<div></div>)
           }
         </div>
     </>

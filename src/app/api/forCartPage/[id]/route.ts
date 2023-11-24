@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 export interface ClothesCartData{
+    pakaianId?:string;
     kuantitas:number;
     total_harga:number;
     pakaianNama:string|undefined;
@@ -53,7 +54,7 @@ export async function GET(req:NextRequest,{params}:{params:{id:string}}){
             }
         })
 
-        const temp:ClothesCartData = {kuantitas:item.kuantitas,total_harga: item.total_harga,pakaianNama:pakaian?.name}
+        const temp:ClothesCartData = {pakaianId:item.pakaianId,kuantitas:item.kuantitas,total_harga: item.total_harga,pakaianNama:pakaian?.name}
         return temp;
     }))
 

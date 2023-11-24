@@ -12,14 +12,14 @@ const prisma = new PrismaClient();
 export async function GET(req:NextRequest,{params}:{params:{id:string}}){
     const {id} = params
 
-    const pakaian = await prisma.orderline.findMany({
+    const transaksi = await prisma.transaksi.findMany({
         where:{
-            transaksiId:id
+            userId:id    
         }
     })
 
     return NextResponse.json(
-        {messagge:"Success",pakaian},
+        {messagge:"Success",transaksi},
         {status:200}
     )
 
