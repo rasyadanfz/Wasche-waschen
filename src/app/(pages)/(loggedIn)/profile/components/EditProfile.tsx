@@ -76,12 +76,13 @@ export default function EditProfile() {
     if (currData.name === "") {
       toast.error("Please enter your name!");
       return;
-    }
-    if (currData.email === "") {
+    } else if (currData.email === "") {
       toast.error("Please enter your email!");
       return;
-    }
-    if (currData.no_telp === "") {
+    } else if (!currData.email.includes("@")) {
+      toast.error("Email not valid!");
+      return;
+    } else if (currData.no_telp === "") {
       toast.error("Please enter your phone number!");
       return;
     }
@@ -119,7 +120,7 @@ export default function EditProfile() {
   };
 
   return (
-    <>
+    <div id="profile">
       <div className="error_toast">
         <Toaster position="top-right" toastOptions={errorToastOptions} />
       </div>
@@ -172,6 +173,7 @@ export default function EditProfile() {
               />
             </form>
             <Button
+              id="cancelBtn"
               type="danger"
               text="Cancel"
               onClick={() => router.push("/profile")}
@@ -184,6 +186,6 @@ export default function EditProfile() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
