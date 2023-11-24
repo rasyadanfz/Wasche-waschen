@@ -27,6 +27,11 @@ const KatalogPakaian = () => {
         disabledButton = false;
     }
 
+    let admin = false;
+    if (session.data?.user.role == "Admin") {
+        admin = true;
+    }
+
     const [dataPakaian, setDataPakaian] = useState([]);
     const [query, setQuery] = useState("");
     const [filteredData, setFilteredData] = useState(dataPakaian);
@@ -135,6 +140,7 @@ const KatalogPakaian = () => {
                                 key={pakaian.id}
                                 updateCartCount={updateCartCount}
                                 disabledButton={disabledButton}
+                                admin={admin}
                             />
                         ))}
                     </div>

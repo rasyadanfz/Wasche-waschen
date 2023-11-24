@@ -14,10 +14,12 @@ const PakaianComponent = ({
     pakaian,
     updateCartCount,
     disabledButton,
+    admin,
 }: {
     pakaian: Pakaian;
     updateCartCount: (count: number) => void;
     disabledButton: boolean;
+    admin: boolean;
 }) => {
     const handleDelete = async (id: string) => {
         await fetch(`/api/pakaian?id=${id}`, {
@@ -42,22 +44,25 @@ const PakaianComponent = ({
                     Rp{pakaian.price}/{pakaian.unit}
                 </p>
             </div>
-            <div className="p-4 w-full flex">
+            {!admin ? (
                 <AddButton
                     updateCartCount={updateCartCount}
                     disabledButton={disabledButton}
                 />
-                <Button
-                    text="Edit"
-                    type="warning"
-                    // onClick={() => handleUpdate(pakaian.id)}
-                />
-                <Button
-                    text="Delete"
-                    type="danger"
-                    onClick={() => handleDelete(pakaian.id)}
-                />
-            </div>
+            ) : (
+                <div className="p-4 w-full flex gap-2">
+                    <Button
+                        text="Edit"
+                        type="warning"
+                        // onClick={() => handleUpdate(pakaian.id)}
+                    />
+                    <Button
+                        text="Delete"
+                        type="danger"
+                        onClick={() => handleDelete(pakaian.id)}
+                    />
+                </div>
+            )}
         </div>
     );
 };
