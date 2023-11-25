@@ -55,7 +55,7 @@ const Button = ({
                 id={id}
                 disabled={disabled}
             >
-                <div className="flex items-center">
+                <div className="flex justify-center items-center">
                     {icon}
                     <div
                         className={

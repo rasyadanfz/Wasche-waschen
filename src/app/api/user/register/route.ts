@@ -67,7 +67,11 @@ export async function POST(req: NextRequest) {
     }
     const userKeranjang = await prisma.keranjang.create({
         data: {
-            userId: newUser.id,
+            user: {
+                connect: {
+                    id: newUser.id,
+                },
+            },
         },
     });
 
