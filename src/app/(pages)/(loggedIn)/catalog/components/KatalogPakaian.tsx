@@ -110,18 +110,18 @@ const KatalogPakaian = () => {
         setIsCreateFormVisible(false);
     };
 
-    const addToCart = async () => {
-        const sendData = await fetch("/api/orderline", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                pakaianId: currentItems[0].id,
-                quantity: cartCount,
-            }),
-        });
-    };
+    // const addToCart = async () => {
+    //     const sendData = await fetch("/api/orderline", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             pakaianId: currentItems[0].id,
+    //             quantity: cartCount,
+    //         }),
+    //     });
+    // };
 
     return (
         <div id="katalog_pakaian">
@@ -198,7 +198,6 @@ const KatalogPakaian = () => {
                         text="Add to Cart"
                         className="shadow-lg w-[300px] h-[40px]"
                         type="secondary"
-                        onClick={}
                     />
                     {/* Cart icon */}
                     <Image
