@@ -33,6 +33,9 @@ const KatalogPakaian = () => {
         admin = true;
     }
 
+    const [cartCount, setCartCount] = useState(0);
+    const [showAddToCartButton, setShowAddToCartButton] = useState(false);
+    const [isCreateFormVisible, setIsCreateFormVisible] = useState(false);
     const [dataPakaian, setDataPakaian] = useState([]);
     const [query, setQuery] = useState("");
     const [filteredData, setFilteredData] = useState(dataPakaian);
@@ -87,9 +90,6 @@ const KatalogPakaian = () => {
         setFilteredData(dataPakaian);
     };
 
-    const [cartCount, setCartCount] = useState(0);
-    const [showAddToCartButton, setShowAddToCartButton] = useState(false);
-
     const updateCartCount = (count: number) => {
         setCartCount((prevCount) => prevCount + count);
     };
@@ -106,11 +106,22 @@ const KatalogPakaian = () => {
         }
     };
 
-    const [isCreateFormVisible, setIsCreateFormVisible] = useState(false);
-
     const closeCreateForm = () => {
         setIsCreateFormVisible(false);
-    }
+    };
+
+    const addToCart = async () => {
+        const sendData = await fetch("/api/orderline", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                pakaianId: currentItems[0].id,
+                quantity: cartCount,
+            }),
+        });
+    };
 
     return (
         <div id="katalog_pakaian">
@@ -166,8 +177,8 @@ const KatalogPakaian = () => {
             </div>
 
             {isCreateFormVisible && (
-                    <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                    <CreateForm closeCreateForm={closeCreateForm}/>
+                <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+                    <CreateForm closeCreateForm={closeCreateForm} />
                 </div>
             )}
 
@@ -179,11 +190,15 @@ const KatalogPakaian = () => {
             />
 
             {showAddToCartButton && (
-                <div id="add_to_cart" className="fixed flex items-center bottom-8 left-[50%] translate-x-[-50%]">
+                <div
+                    id="add_to_cart"
+                    className="fixed flex items-center bottom-8 left-[50%] translate-x-[-50%]"
+                >
                     <Button
                         text="Add to Cart"
                         className="shadow-lg w-[300px] h-[40px]"
                         type="secondary"
+                        onClick={}
                     />
                     {/* Cart icon */}
                     <Image
