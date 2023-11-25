@@ -87,7 +87,7 @@ export default function CartPage() {
 
     return (
         <>
-            <div className="flex flex-col mt-[80px]">
+            <div className="flex flex-col mt-[100px]">
                 <div className="flex items-baseline">
                     <p className="font-black text-2xl mb-[20px] ml-[100px]">
                         Keranjang
