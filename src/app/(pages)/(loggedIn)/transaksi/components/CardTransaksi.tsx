@@ -17,26 +17,31 @@ export default function CardTransaksi(props: CardTransaksiProps) {
     <>
       <div className="border border-black rounded-md p-4 relative duration-100 bg-[#EDEDED]">
         <h1 className="font-semibold text-h6 mb-2">{props.nama}</h1>
-        <div className="flex flex-row gap-5">
-          <div className="">
-            <p>ID Transaksi</p>
-            <p>Nama Pelanggan</p>
-            <p>Tanggal Transaksi</p>
-            <p>Status</p>
-          </div>
-          <div className="ml-4">
-            <p>:</p>
-            <p>:</p>
-            <p>:</p>
-            <p>:</p>
-          </div>
-          <div className="">
-            <p>{props.id}</p>
-            <p>{props.nama_customer}</p>
-            <p>{props.tanggal}</p>
-            <p>{props.status}</p>
-          </div>
-        </div>
+        <table>
+          <tbody>
+            <tr>
+              <td>ID Transaksi</td>
+              <td className="px-5">:</td>
+              <td>{props.id}</td>
+            </tr>
+            <tr>
+              <td>Nama Pelanggan</td>
+              <td className="px-5">:</td>
+              <td>{props.nama_customer}</td>
+            </tr>
+            <tr>
+              <td>Tanggal Transaksi</td>
+              <td className="px-5">:</td>
+              <td>{props.tanggal}</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td className="px-5">:</td>
+              <td>{props.status}</td>
+            </tr>
+          </tbody>
+        </table>
+
         <Button
           id="detailTransaksiBtn"
           type="primary"
