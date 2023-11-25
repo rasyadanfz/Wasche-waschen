@@ -48,15 +48,27 @@ export async function PUT(req:NextRequest){
 
     for(let i = 0;i < ClothesCartData.length;i++){
         // update each pakaian
-        const updatePakaian = await prisma.orderline.updateMany({
-            where:{
-                pakaianId:ClothesCartData[i].pakaianId,
-                keranjangId:keranjang?.id
-            },data:{
-                kuantitas:ClothesCartData[i].kuantitas,
-                total_harga:ClothesCartData[i].total_harga
-            }
-        })
+        
+        if(ClothesCartData[i].kuantitas == 0){
+            // delete
+            const delPakaian = await prisma.orderline.deleteMany({
+                where:{
+                    pakaianId:ClothesCartData[i].pakaianId
+                }
+            })
+        }else{
+            const updatePakaian = await prisma.orderline.updateMany({
+                where:{
+                    pakaianId:ClothesCartData[i].pakaianId,
+                    keranjangId:keranjang?.id
+                },data:{
+                    kuantitas:ClothesCartData[i].kuantitas,
+                    total_harga:ClothesCartData[i].total_harga
+                }
+            })
+        }
+
+
     }
 
     return NextResponse.json(

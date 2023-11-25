@@ -1,7 +1,11 @@
-export default function Home() {
-    return (
-        <main className="flex min-h-[1080px] flex-col items-center justify-between p-24">
-            <h1>Wasche Waschen</h1>
-        </main>
-    );
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+
+export default async function Home() {
+    const session = await getServerSession();
+    if (!session) {
+        redirect("/login");
+    } else {
+        redirect("/catalog");
+    }
 }
