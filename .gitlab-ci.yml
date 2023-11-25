@@ -9,22 +9,16 @@ cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
     - node_modules/
-    - prisma/
-
-before_script:
-  - npm install -g prisma
 
 build:
   stage: build
   script:
     - npm ci
-    - npm install -g prisma
-    - prisma generate
+    - npx prisma generate
     - npm run build
   artifacts:
     paths:
       - .next/
-      - prisma/
 
 deploy_preview:
   stage: deploy
@@ -46,5 +40,4 @@ deploy_production:
     - npm install -g vercel
     - $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::Machine) + ";" + [System.Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::Process)
     - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
-    - prisma generate
     - vercel deploy --prod --token=$VERCEL_TOKEN
