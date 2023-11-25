@@ -9,7 +9,7 @@ cache:
   key: ${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA}
   paths:
     - node_modules/
-    - .prisma/
+    - prisma/
 
 build:
   stage: build
@@ -20,7 +20,7 @@ build:
   artifacts:
     paths:
       - .next/
-      - .prisma/
+      - prisma/
 
 deploy_preview:
   stage: deploy
