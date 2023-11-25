@@ -11,16 +11,13 @@ const AddButton = ({ updateCartCount, disabledButton }: { updateCartCount: (coun
   }
 
     const handleSubstract = () => {
-        if (count > 0) {
-            setCount((prevCount) => {
-                if (prevCount === 1) {
-                    setShowTambahButton(true);
-                }
-                return prevCount - 1;
-            });
-        }
-        return prevCount - 1
-      });
+      if (count > 0) {
+          setCount((prevCount) => {
+              if (prevCount === 1) {
+                  setShowTambahButton(true);
+              }
+              return prevCount - 1;
+          });
     }
     updateCartCount(-1);
   }

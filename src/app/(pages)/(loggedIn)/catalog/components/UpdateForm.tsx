@@ -30,7 +30,7 @@ const UpdateForm = ({ id, closeUpdateForm }: { id: string, closeUpdateForm: () =
         getDataPakaian(id).then((pakaian) => {
             setCurrData(pakaian);
         })
-    })
+    }, [id]);
     
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCurrData({
@@ -67,6 +67,7 @@ const UpdateForm = ({ id, closeUpdateForm }: { id: string, closeUpdateForm: () =
         }
 
         closeUpdateForm();
+        window.location.reload();
     }
 
     return (
