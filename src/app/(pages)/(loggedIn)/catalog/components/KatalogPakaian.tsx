@@ -187,6 +187,7 @@ const KatalogPakaian = () => {
                         </div>
                         {admin && (
                             <button
+                                id="create_button"
                                 className="font-semibold hover:cursor-pointer rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center h-14 border border-black hover:bg-secondary-300 bg-secondary-400"
                                 onClick={() => setIsCreateFormVisible(true)}
                             >

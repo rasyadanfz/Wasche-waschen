@@ -106,11 +106,13 @@ const PakaianComponent = ({
                 ) : (
                     <div className="p-4 w-full flex gap-2">
                         <Button
+                            id="edit_button"
                             text="Edit"
                             type="warning"
                             onClick={() => setIsUpdateFormVisible(true)}
                         />
                         <Button
+                            id="delete_button"
                             text="Delete"
                             type="danger"
                             onClick={() => setIsConfirmDeleteFormVisible(true)}
@@ -150,6 +152,7 @@ const PakaianComponent = ({
                         <div className="border-t border-gray-300 mb-5"></div>
                         <div className="flex justify-end gap-2">
                             <Button
+                                id="cancel"
                                 text="Cancel"
                                 type="secondary"
                                 onClick={() =>
@@ -157,6 +160,7 @@ const PakaianComponent = ({
                                 }
                             />
                             <Button
+                                id="delete"
                                 text="Delete"
                                 type="danger"
                                 onClick={() => handleDelete(pakaian.id)}
