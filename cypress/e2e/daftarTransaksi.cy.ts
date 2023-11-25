@@ -2,7 +2,7 @@ describe("Riwayat Transaksi", () => {
     beforeEach(() => {
         cy.loginWithTestAccount("admin2W@gmail.com", "waschewaschenadmin");
         cy.get("a[href='/transaksi']").click();
-        cy.wait(3000);
+        cy.wait(2500);
     });
 
     it("should display daftar transaksi", () => {

@@ -2,9 +2,9 @@ describe("Edit Profile", () => {
     beforeEach(() => {
         cy.loginWithTestAccount("testingaccount@gmail.com", "testaccount13579");
         cy.get("a#profile[href='/profile']").click();
-        cy.wait(500);
+        cy.wait(1000);
         cy.get("button#editProfile").click();
-        cy.wait(500);
+        cy.wait(1000);
     });
 
     it("should be able cancel edit profile", () => {
@@ -59,11 +59,11 @@ describe("Edit Profile", () => {
     });
 
     it("should successfully edit profile", () => {
-        cy.get("input[id=name]").clear().type("Testing Account");
+        cy.get("input[id=name]").clear().type("Testing Account Change");
         cy.get("input[id=email]").clear().type("testingaccount@gmail.com");
-        cy.get("input[id=no_telp]").clear().type("081234567890");
+        cy.get("input[id=no_telp]").clear().type("0812345678910");
         cy.get("form").find("button[id=submit]").click();
-        cy.wait(3000);
+        cy.wait(1500);
         cy.location("pathname").should("eq", "/profile");
     });
 });
