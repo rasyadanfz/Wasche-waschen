@@ -1,20 +1,25 @@
 import Button from "@/components/Button";
+import { ExistingPakaian } from "@prisma/client";
 import { useState } from "react";
 
 const AddButton = ({
+    pakaian,
     updateCartCount,
+    updatePakaianInCart,
     disabledButton,
 }: {
+    pakaian: ExistingPakaian;
     updateCartCount: (count: number) => void;
+    updatePakaianInCart: (pakaianName: string, pakaianCount: number) => void;
     disabledButton: boolean;
 }) => {
     const [count, setCount] = useState(0);
     const [showTambahButton, setShowTambahButton] = useState(true);
 
     const handleAdd = () => {
-        let prevCount = count;
         setCount((prevCount) => prevCount + 1);
         updateCartCount(1);
+        updatePakaianInCart(pakaian.id, 1);
     };
 
     const handleSubstract = () => {
@@ -27,6 +32,7 @@ const AddButton = ({
             });
         }
         updateCartCount(-1);
+        updatePakaianInCart(pakaian.id, -1);
     };
 
     const handleTambah = () => {
