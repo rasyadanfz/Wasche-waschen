@@ -133,11 +133,13 @@ const PakaianComponent = ({
                         <div className="border-t border-gray-300 mb-5"></div>
                         <div className="flex justify-end gap-2">
                             <Button
+                                id="cancel"
                                 text="Cancel"
                                 type="secondary"
                                 onClick={() => setIsConfirmDeleteFormVisible(false)}
                             />
                             <Button
+                                id="delete"
                                 text="Delete"
                                 type="danger"
                                 onClick={() => handleDelete(pakaian.id)}
