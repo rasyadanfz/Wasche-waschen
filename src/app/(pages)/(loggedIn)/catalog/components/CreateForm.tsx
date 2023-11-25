@@ -1,23 +1,18 @@
-import Button from "@/components/Button"
-import FormInput from "@/components/FormInput"
-import { errorToastOptions } from "@/toastConfig"
-import { useEffect, useState } from "react"
-import toast, { Toaster } from "react-hot-toast"
+import Button from "@/components/Button";
+import FormInput from "@/components/FormInput";
+import { errorToastOptions } from "@/toastConfig";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { IoMdClose } from "react-icons/io";
-
-interface Pakaian {
-    name: string,
-    price: number,
-    unit: string,
-}
+import { ChangeablePakaianData } from "./UpdateForm";
 
 const CreateForm = ({ closeCreateForm }: { closeCreateForm: () => void }) => {
-    const [currData, setCurrData] = useState<Pakaian>({
+    const [currData, setCurrData] = useState<ChangeablePakaianData>({
         name: "",
         price: 0,
-        unit: ""
+        unit: "",
     });
-    
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCurrData({
             ...currData,
@@ -25,7 +20,7 @@ const CreateForm = ({ closeCreateForm }: { closeCreateForm: () => void }) => {
         });
     };
 
-    const handleSave = async(e: React.FormEvent<HTMLFormElement>) => {
+    const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (currData.name === "") {
@@ -50,13 +45,12 @@ const CreateForm = ({ closeCreateForm }: { closeCreateForm: () => void }) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(currData)
-        })
+            body: JSON.stringify(currData),
+        });
 
         if (res.ok) {
             toast.success(`${currData.name} created!`);
-        }
-        else {
+        } else {
             toast.error(`Failed to create ${currData.name}`);
         }
 
@@ -70,13 +64,11 @@ const CreateForm = ({ closeCreateForm }: { closeCreateForm: () => void }) => {
                 <Toaster toastOptions={errorToastOptions} />
             </div>
             <div className="flex justify-end">
-                <button
-                    onClick={closeCreateForm}
-                >
+                <button onClick={closeCreateForm}>
                     <IoMdClose />
                 </button>
             </div>
-            <form 
+            <form
                 action=""
                 className="flex flex-col gap-y-3"
                 onSubmit={handleSave}
@@ -109,7 +101,7 @@ const CreateForm = ({ closeCreateForm }: { closeCreateForm: () => void }) => {
                 />
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default CreateForm
+export default CreateForm;
