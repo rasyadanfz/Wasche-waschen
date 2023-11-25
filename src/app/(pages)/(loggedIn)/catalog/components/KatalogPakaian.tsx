@@ -9,6 +9,8 @@ import Dropdown from "@/app/(pages)/(loggedIn)/catalog/components/Dropdown";
 import { useSession } from "next-auth/react";
 import CreateForm from "./CreateForm";
 import AddToCart from "./AddToCart";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 async function getDataPakaian() {
     const res = await fetch("/api/pakaian", {
@@ -21,6 +23,7 @@ async function getDataPakaian() {
 
 const KatalogPakaian = () => {
     const session = useSession();
+    const router = useRouter();
 
     let disabledButton = true;
     if (session.status === "authenticated") {
@@ -43,7 +46,9 @@ const KatalogPakaian = () => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
-    const [pakaianInCart, setPakaianInCart] = useState<{ [name: string]: number }[]>([]); // list of pakaian in cart
+    const [pakaianInCart, setPakaianInCart] = useState<
+        { [pakaianId: string]: number }[]
+    >([]); // list of pakaian in cart
     const [cartCount, setCartCount] = useState(0);
     const [showAddToCartButton, setShowAddToCartButton] = useState(false);
 
@@ -95,23 +100,23 @@ const KatalogPakaian = () => {
         setCartCount((prevCount) => prevCount + count);
     };
 
-    const updatePakaianInCart = (pakaianName: string, pakaianCount: number) => {
-        const existingItemIndex = pakaianInCart.findIndex(item => Object.keys(item)[0] === pakaianName);
+    const updatePakaianInCart = (pakaianId: string, pakaianCount: number) => {
+        const existingItemIndex = pakaianInCart.findIndex(
+            (item) => Object.keys(item)[0] === pakaianId
+        );
 
         if (existingItemIndex !== -1) {
             const updatedCart = [...pakaianInCart];
-            updatedCart[existingItemIndex][pakaianName] += pakaianCount;
+            updatedCart[existingItemIndex][pakaianId] += pakaianCount;
 
-            if (updatedCart[existingItemIndex][pakaianName] == 0) {
+            if (updatedCart[existingItemIndex][pakaianId] == 0) {
                 updatedCart.splice(existingItemIndex, 1);
             }
 
             setPakaianInCart(updatedCart);
+        } else {
+            setPakaianInCart([...pakaianInCart, { [pakaianId]: pakaianCount }]);
         }
-        else {
-            setPakaianInCart([...pakaianInCart, {[pakaianName]: pakaianCount}]);
-        }
-        console.log(pakaianInCart);
     };
 
     useEffect(() => {
@@ -130,18 +135,25 @@ const KatalogPakaian = () => {
         setIsCreateFormVisible(false);
     };
 
-    // const addToCart = async () => {
-    //     const sendData = await fetch("/api/orderline", {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //             pakaianId: currentItems[0].id,
-    //             quantity: cartCount,
-    //         }),
-    //     });
-    // };
+    const addToCart = async () => {
+        // Send POST request to create orderlines
+        const sendData = await fetch("/api/orderline", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: session.data?.user.id,
+                pakaianInCart: pakaianInCart,
+            }),
+        });
+        // Clear pakaianInCart and direct user to cart
+        setPakaianInCart([]);
+        toast.success("Berhasil menambahkan ke keranjang");
+        setTimeout(() => {
+            router.push("/cart");
+        }, 1000);
+    };
 
     return (
         <div id="katalog_pakaian">
@@ -175,6 +187,7 @@ const KatalogPakaian = () => {
                         </div>
                         {admin && (
                             <button
+                                id="create_button"
                                 className="font-semibold hover:cursor-pointer rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center h-14 border border-black hover:bg-secondary-300 bg-secondary-400"
                                 onClick={() => setIsCreateFormVisible(true)}
                             >
@@ -212,8 +225,9 @@ const KatalogPakaian = () => {
 
             {showAddToCartButton && (
                 <div>
-                    <AddToCart 
+                    <AddToCart
                         pakaianInCart={pakaianInCart}
+                        onClick={addToCart}
                     />
                 </div>
             )}
