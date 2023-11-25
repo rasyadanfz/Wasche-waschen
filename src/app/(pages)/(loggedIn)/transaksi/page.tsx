@@ -8,7 +8,7 @@ export default async function TransaksiPage() {
     if (!session) {
         redirect("/login");
     } else if (session.user.role !== "Admin") {
-        redirect("/catalog");
+        redirect("/riwayat-transaksi");
     } else {
         return (
             <>

@@ -8,6 +8,8 @@ import LaporanCard from "./components/LaporanCard";
 import { ReportData } from "@/app/api/laporan/route";
 import ReportChart from "./components/ReportChart";
 import PeriodSelector from "./components/PeriodSelector";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export interface LaporanDataProps {
     current: ReportData;
@@ -15,6 +17,12 @@ export interface LaporanDataProps {
 }
 
 const LaporanPage = () => {
+    const session = useSession();
+    if (!session.data) {
+        redirect("/login");
+    } else if (session.data.user.role !== "Admin") {
+        redirect("/catalog");
+    }
     const [originalData, setOriginalData] = useState<LaporanDataProps>(
         {} as LaporanDataProps
     );
@@ -44,7 +52,6 @@ const LaporanPage = () => {
             setJumlahTransaksi(data["data"]["current"]["totalTransactions"]);
             setTotalBiaya(data["data"]["current"]["totalPendapatan"]);
             setIsLoading(false);
-            console.log(data);
         };
 
         fetchData();

@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { NextRequest, NextResponse } from "next/server";
-
-const prisma = new PrismaClient();
+import { NextResponse } from "next/server";
+import prisma from "../../../../prismaSingleton/prismaSingleClient";
 
 export async function GET( req: NextRequest ) {
     try {
@@ -25,9 +24,8 @@ export async function GET( req: NextRequest ) {
     }
     catch (err) {
         console.error(err);
-        return NextResponse.json({ error: "Error occured." }, { status: 403 })
-    }
-    finally {
+        return NextResponse.json({ error: "Error occured." }, { status: 403 });
+    } finally {
         await prisma.$disconnect();
     }
 }

@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import { useState } from "react"
+import { useState } from "react";
 
 const AddButton = ({ updateCartCount, disabledButton }: { updateCartCount: (count: number) => void, disabledButton: boolean }) => {
   const [count, setCount] = useState(0);
@@ -10,11 +10,14 @@ const AddButton = ({ updateCartCount, disabledButton }: { updateCartCount: (coun
     updateCartCount(1);
   }
 
-  const handleSubstract = () => {
-    if (count > 0) {
-      setCount((prevCount) => {
-        if (prevCount === 1) {
-          setShowTambahButton(true);
+    const handleSubstract = () => {
+        if (count > 0) {
+            setCount((prevCount) => {
+                if (prevCount === 1) {
+                    setShowTambahButton(true);
+                }
+                return prevCount - 1;
+            });
         }
         return prevCount - 1
       });
@@ -43,4 +46,4 @@ const AddButton = ({ updateCartCount, disabledButton }: { updateCartCount: (coun
   )
 }
 
-export default AddButton
+export default AddButton;
