@@ -5,7 +5,7 @@ import { ExistingPakaian } from "@prisma/client";
 import AddButton from "./AddButton";
 import Button from "@/components/Button";
 import UpdateForm from "./UpdateForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { IoMdClose } from "react-icons/io";
 
@@ -29,8 +29,15 @@ const PakaianComponent = ({
     disabledButton: boolean;
     admin: boolean;
 }) => {
+    const [isImageExists, setisImageExists] = useState(false);
     const [isUpdateFormVisible, setIsUpdateFormVisible] = useState(false);
-    const [isConfirmDeleteFormVisible, setIsConfirmDeleteFormVisible] = useState(false);
+    const [isConfirmDeleteFormVisible, setIsConfirmDeleteFormVisible] =
+        useState(false);
+
+    useEffect(() => {
+        checkImageExists();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const closeUpdateForm = () => {
         setIsUpdateFormVisible(false);
@@ -43,12 +50,20 @@ const PakaianComponent = ({
 
         if (res.ok) {
             toast.success("Successfully deleted pakaian");
-        }
-        else {
+        } else {
             toast.error("Failed to delete pakaian");
         }
 
         window.location.reload();
+    };
+
+    const checkImageExists = () => {
+        const status = imageExists(`/assets/${pakaian.name}.jpg`);
+        if (status === false) {
+            setisImageExists(false);
+        } else {
+            setisImageExists(true);
+        }
     };
 
     const [isHovered, setIsHovered] = useState(false);
@@ -65,7 +80,7 @@ const PakaianComponent = ({
                 <div className="">
                     <Image
                         src={
-                            imageExists(`/assets/${pakaian.name}.jpg`)
+                            isImageExists
                                 ? `/assets/${pakaian.name}.jpg`
                                 : `/assets/no_picture.jpg`
                         }
@@ -117,7 +132,11 @@ const PakaianComponent = ({
                 <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
                     <div className="bg-white p-4 rounded shadow-md">
                         <div className="flex justify-end">
-                            <button onClick={() => setIsConfirmDeleteFormVisible(false)}>
+                            <button
+                                onClick={() =>
+                                    setIsConfirmDeleteFormVisible(false)
+                                }
+                            >
                                 <IoMdClose />
                             </button>
                         </div>
@@ -133,7 +152,9 @@ const PakaianComponent = ({
                             <Button
                                 text="Cancel"
                                 type="secondary"
-                                onClick={() => setIsConfirmDeleteFormVisible(false)}
+                                onClick={() =>
+                                    setIsConfirmDeleteFormVisible(false)
+                                }
                             />
                             <Button
                                 text="Delete"

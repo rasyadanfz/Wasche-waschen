@@ -8,7 +8,7 @@ export default function CartCard({
 }: ClothesCartData) {
     return (
         <>
-            <div className="border border-black rounded-md p-4 relative duration-100 bg-[#EDEDED] mx-[100px] my-[20px]">
+            <div className="border border-black rounded-md p-4 relative duration-100 bg-[#EDEDED] my-[20px]">
                 <div className="flex flex-row justify-between items-center">
                     <div>
                         <h1 className="font-semibold text-h6 mb-2">

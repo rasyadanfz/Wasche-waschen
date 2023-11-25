@@ -17,12 +17,15 @@ export interface LaporanDataProps {
 }
 
 const LaporanPage = () => {
-    const session = useSession();
-    if (!session.data) {
-        redirect("/login");
-    } else if (session.data.user.role !== "Admin") {
-        redirect("/catalog");
+    const { data: session, status } = useSession();
+    if (status !== "loading") {
+        if (!session) {
+            redirect("/login");
+        } else if (session?.user.role !== "Admin") {
+            redirect("/catalog");
+        }
     }
+
     const [originalData, setOriginalData] = useState<LaporanDataProps>(
         {} as LaporanDataProps
     );
