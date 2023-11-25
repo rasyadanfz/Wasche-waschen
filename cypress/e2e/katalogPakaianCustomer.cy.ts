@@ -1,10 +1,6 @@
 describe("Katalog Pakaian", () => {
     beforeEach(() => {
-        cy.visit("/login");
-        cy.get("input[id=email]").type("fren@gmail.com");
-        cy.get("input[id=password]").type("fren");
-        cy.get("form").find("button[id=submit]").click();
-        cy.wait(500);
+        cy.loginWithTestAccount("fren@gmail.com", "fren");
         cy.visit("/catalog");
         cy.wait(500);
     });
