@@ -58,4 +58,46 @@ describe("Katalog Pakaian Admin", () => {
     it("should display create button", () => {
         cy.get("#create_button").should("exist").should("be.visible");
     })
+
+    it("should create pakaian", () => {
+        cy.get("#create_button").click();
+        cy.get("input[id=name]").type("Test pakaian");
+        cy.get("input[id=price]").type("2000");
+        cy.get("input[id=unit]").type("satuan");
+        cy.get("button[id=submit]").click();
+        cy.wait(500);
+        cy.get("#katalog_pakaian")
+            .should("be.visible")
+            .contains("Test pakaian")
+    })
+
+    it("should edit pakaian", () => {
+        cy.get("#pakaian_card")
+            .should("be.visible")
+            .contains("Kemeja")
+            .parent()
+            .parent()
+        cy.get("#edit_button").click();
+        cy.get("input[id=price]").type("1000");
+        cy.get("button[id=submit]").click();
+        cy.wait(1000);
+        cy.get("#katalog_pakaian")
+            .should("be.visible")
+            .contains("Kemeja")
+            .parent()
+            .contains("1000")
+    })
+
+    it("should delete pakaian", () => {
+        cy.get("#pakaian_card")
+            .should("be.visible")
+            .contains("Test pakaian")
+            .parent()
+            .parent()
+        cy.get("#delete_button").click();
+        cy.get("#delete").click();
+        cy.wait(1000);
+        cy.get("#katalog_pakaian")
+            .should("not.contain", "Test pakaian")
+    })
 })
