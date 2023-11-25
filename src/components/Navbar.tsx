@@ -102,7 +102,7 @@ const Navbar = () => {
     <div>
       {disabledNavbar.includes(currentPathName) ? null : loading ? null : (
         <header
-          className={` fixed top-0 left-0 w-full flex items-center py-4 duration-500 shadow-lg z-10 ${
+          className={`px-5 fixed top-0 left-0 w-full flex items-center py-4 duration-500 shadow-lg z-10 ${
             isTop ? "bg-transparent" : "bg-primary-300"
           }`}
         >
