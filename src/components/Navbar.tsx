@@ -70,42 +70,22 @@ const Navbar = () => {
         setCurrentPathName(pathName);
     }, [pathName]); // Run this effect only once after mounting
 
-    const navbarDataCustomer = [
-        {
-            label: "Home",
-            link: "/catalog",
-        },
-        {
-            label: "Riwayat Transaksi",
-            link: "/riwayat-transaksi",
-        },
-    ];
-
-    const navbarDataAdmin = [
-        {
-            label: "Home",
-            link: "/catalog",
-        },
-        {
-            label: "Daftar Transaksi",
-            link: "/transaksi",
-        },
-        {
-            label: "Laporan",
-            link: "/laporan",
-        },
-    ];
-
-    const navbarData = isAdmin ? navbarDataAdmin : navbarDataCustomer;
-
-    return (
-        <div>
-            {disabledNavbar.includes(
-                currentPathName
-            ) ? null : loading ? null : (
-                <header
-                    className={` fixed top-0 left-0 w-full flex items-center py-4 duration-500 shadow-lg z-10 ${
-                        isTop ? "bg-transparent" : "bg-primary-300"
+  return (
+    <div>
+      {disabledNavbar.includes(currentPathName) ? null : loading ? null : (
+        <header
+          className={`px-5 fixed top-0 left-0 w-full flex items-center py-4 duration-500 shadow-lg z-10 ${
+            isTop ? "bg-transparent" : "bg-primary-300"
+          }`}
+        >
+          <div className="container relative z-50 mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md sm:max-w-screen-sm">
+            <div className="flex items-center justify-between relative">
+              {/* Logo */}
+              <div>
+                <Link id="companylogo" href="/">
+                  <h1
+                    className={`font-bold text-[1.5rem] ${itim.className} ${
+                      isTop ? "text-primary-500" : "text-white"
                     }`}
                 >
                     <div className="container relative z-50 mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md sm:max-w-screen-sm">
