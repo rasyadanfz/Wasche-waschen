@@ -114,7 +114,7 @@ export default function Transaksi() {
 
   return (
     <div id="riwayat-transaksi">
-      <div className="min-h-screen container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md px-5 sm:px-0">
+      <div className="min-h-screen container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md px-5">
         <div className="w-full mb-[50px]">
           <div className="">
             <h1 className="font-bold text-h3 mt-[100px]">Riwayat Transaksi</h1>

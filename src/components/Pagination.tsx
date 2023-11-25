@@ -63,7 +63,7 @@ const Pagination: React.FC<PaginationProps> = ({
       );
 
       return (
-        <div>
+        <div className="">
           {currentPage > 1 && (
             <>
               <button
@@ -122,23 +122,26 @@ const Pagination: React.FC<PaginationProps> = ({
         <Toaster position="top-right" toastOptions={errorToastOptions} />
       </div>
       <div className="flex justify-center mt-5 gap-4 mb-5 items-center">
-        {renderPaginationButtons()}
-        {/* Input for entering the page number */}
-        <input
-          id="inputPage"
-          type="number"
-          value={inputPage}
-          onChange={(e) => setInputPage(e.target.value)}
-          className="border border-gray-500 px-3 py-2 rounded-md transition-colors duration-300 ease-in-out focus:outline-none text-center w-20"
-        />
-        of {pageNumbers.length}
-        <button
-          id="goToPageBtn"
-          className="border border-gray-500 px-3 py-2 rounded-full transition-colors duration-300 ease-in-out focus:outline-none hover:bg-gray-200"
-          onClick={handleGoToPage}
-        >
-          Go
-        </button>
+        <div className="flex flex-col gap-4 md:gap-8 items-center md:flex-row">
+          {renderPaginationButtons()}
+          <div className="flex flex-row gap-3 items-center">
+            <input
+              id="inputPage"
+              type="number"
+              value={inputPage}
+              onChange={(e) => setInputPage(e.target.value)}
+              className="border border-gray-500 px-3 py-2 rounded-md transition-colors duration-300 ease-in-out focus:outline-none text-center w-20"
+            />
+            of {pageNumbers.length}
+            <button
+              id="goToPageBtn"
+              className="border border-gray-500 px-3 py-2 rounded-full transition-colors duration-300 ease-in-out focus:outline-none hover:bg-gray-200"
+              onClick={handleGoToPage}
+            >
+              Go
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
