@@ -53,8 +53,6 @@ const UpdateForm = ({
             return;
         }
 
-        console.log(currData.price);
-
         const res = await fetch(`/api/pakaian?id=${id}`, {
             method: "PUT",
             headers: {
