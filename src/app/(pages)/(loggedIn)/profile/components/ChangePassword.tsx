@@ -124,7 +124,7 @@ export default function ChangePassword() {
             text="Cancel"
             className="w-[24rem] mt-2"
             onClick={() => router.push("/profile")}
-            id="cancel"
+            id="cancelBtn"
           />
         </div>
       </div>

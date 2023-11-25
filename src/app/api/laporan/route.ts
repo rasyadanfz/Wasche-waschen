@@ -1,8 +1,8 @@
 import { ReportClothesData } from "@/app/(pages)/(loggedIn)/laporan/components/JenisPakaianTable";
 import { Pakaian, PrismaClient, Transaksi } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+import prisma from "../../../../prismaSingleton/prismaSingleClient";
 
-const prisma = new PrismaClient();
 const pastDays = 7;
 const pastWeeks = 5;
 const pastMonths = 6;
@@ -30,6 +30,7 @@ const getClothesReportData = async (transactionList: Transaksi[]) => {
     const transactionIds = transactionList.map((transaction) => {
         return transaction.id;
     });
+
     const arrayOrderlines = await prisma.orderline.findMany({
         where: {
             transaksiId: {

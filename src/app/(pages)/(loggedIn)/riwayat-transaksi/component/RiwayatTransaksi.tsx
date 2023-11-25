@@ -1,11 +1,12 @@
 "use client";
 
+// Transaksi.tsx
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import CardRiwayat from "./CardRiwayat";
 import Pagination from "@/components/Pagination";
 import { getSession } from "next-auth/react";
-
+import FilterTransaksi from "./FilterTransaksi";
 
 interface Transaksi {
   id: string;
@@ -35,9 +36,9 @@ async function getDataTransaksi() {
 export default function Transaksi() {
   const [dataTransaksi, setDataTransaksi] = useState<Transaksi[] | null>(null);
   const [query, setQuery] = useState("");
-  const [filteredData, setFilteredData] = useState(dataTransaksi); // State untuk menyimpan data yang telah difilter
-  const [currentPage, setCurrentPage] = useState(1); // State untuk menyimpan data halaman yang sedang dibuka
-  const itemsPerPage = 5; // Jumlah item per halaman
+  const [filteredData, setFilteredData] = useState(dataTransaksi);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,7 +47,6 @@ export default function Transaksi() {
         setDataTransaksi(data);
       } catch (error) {
         console.error("Error fetching data:", error);
-        // Handle error if needed
       }
     };
 
@@ -61,6 +61,7 @@ export default function Transaksi() {
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+
   const handleSearch = () => {
     if (!dataTransaksi) return;
     const result = dataTransaksi.filter((item: Transaksi) => {
@@ -85,7 +86,19 @@ export default function Transaksi() {
     setCurrentPage(1);
   };
 
-  // Logika untuk mengatur data yang ditampilkan pada setiap halaman
+  const handleResetFilter = () => {
+    setStatusFilters({
+      done: false,
+      onProgress: false,
+      notConfirmed: false,
+    });
+    setStartDate("");
+    setEndDate("");
+    setQuery("");
+    setFilteredData(dataTransaksi);
+    setCurrentPage(1);
+  }
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems =
@@ -100,99 +113,40 @@ export default function Transaksi() {
   }, [dataTransaksi]);
 
   return (
-    <>
+    <div id="riwayat-transaksi">
       <div className="min-h-screen">
         <div className="w-full mb-[50px]">
           <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
             <h1 className="font-bold text-h3 mt-[100px]">Riwayat Transaksi</h1>
             <div className="">
               <div className="flex flex-row justify-between gap-6 items-end">
-                <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md w-full">
+                <div className="flex border items-center border-black bg-[#EDEDED] justify-between py-1.5 px-5 rounded-md w-full">
+                  <FaSearch size={18} />
                   <input
+                    id="searchRiwayatTransaksi"
                     type="text"
                     placeholder="Cari Transaksi"
-                    className="px-4 py-2 outline-none bg-transparent w-full focus:ring-1"
+                    className="px-4 py-2 outline-none bg-transparent w-full active:outline-none"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleSearch();
+                      }
+                    }}
                   />
                 </div>
                 <div className="flex justify-end mt-2">
-                  <button
-                    className="px-4 py-2 bg-transparant rounded-md border text-black border-black font-semibold h-14 active:bg-primary active:text-white"
-                    onClick={handleSearch}
-                  >
-                    <FaSearch size={18} />
-                  </button>
-                </div>
-              </div>
-              
-
-              <div className="flex flex-col mt-2">
-                <h1 className="font-semibold text-h6 mb-4">Filter :</h1>
-                <div className="flex flex-row gap-16 item justify-center md:justify-start">
-                  <div className="flex flex-col">
-                    <h2 className="mb-2 font-semibold">Status Transaksi</h2>
-                    <label>
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        checked={statusFilters.done}
-                        onChange={() =>
-                          setStatusFilters((prevFilters) => ({
-                            ...prevFilters,
-                            done: !prevFilters.done,
-                          }))
-                        }
-                      />
-                      Done
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        checked={statusFilters.onProgress}
-                        onChange={() =>
-                          setStatusFilters((prevFilters) => ({
-                            ...prevFilters,
-                            onProgress: !prevFilters.onProgress,
-                          }))
-                        }
-                      />
-                      On Progress
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        checked={statusFilters.notConfirmed}
-                        onChange={() =>
-                          setStatusFilters((prevFilters) => ({
-                            ...prevFilters,
-                            notConfirmed: !prevFilters.notConfirmed,
-                          }))
-                        }
-                      />
-                      Not Confirmed
-                    </label>
-                  </div>
-                  <div className="">
-                    <h2 className="font-semibold mb-2">Tanggal Transaksi</h2>
-                    <div className="flex flex-col md:flex-row gap-2 items-center">
-                      <input
-                        type="date"
-                        className="border border-black rounded-md px-2 py-1"
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                      />
-                      <p>to</p>
-                      <input
-                        type="date"
-                        className="border border-black rounded-md px-2 py-1"
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                      />
-                    </div>
-                  </div>
+                  <FilterTransaksi
+                    statusFilters={statusFilters}
+                    startDate={startDate}
+                    endDate={endDate}
+                    setStatusFilters={setStatusFilters}
+                    setStartDate={setStartDate}
+                    setEndDate={setEndDate}
+                    handleSearch={handleSearch}
+                    handleClearFilter={handleResetFilter}
+                  />
                 </div>
               </div>
             </div>
@@ -202,24 +156,25 @@ export default function Transaksi() {
           {dataTransaksi !== null ? (
             currentItems.length > 0 ? (
               currentItems.map((item: Transaksi) => (
-                  <CardRiwayat
-                    key={item.id}
-                    id={item.id}
-                    nama={item.nama}
-                    tanggal={item.tanggal}
-                    status={item.status}
-                    total_harga={item.total_harga}
-                  />
+                <CardRiwayat
+                  key={item.id}
+                  id={item.id}
+                  nama={item.nama}
+                  tanggal={item.tanggal}
+                  status={item.status}
+                  total_harga={item.total_harga}
+                />
               ))
             ) : (
               <h2 className="font-semibold text-center">Tidak ada transaksi</h2>
             )
           ) : (
-            <h2 className="font-semibold text-center animate-pulse">Loading...</h2>
+            <h2 className="font-semibold text-center animate-pulse">
+              Loading...
+            </h2>
           )}
         </div>
-        {/* Pagination Controls */}
-        {/* Pagination Controls */}
+
         <Pagination
           filteredData={filteredData || []}
           itemsPerPage={itemsPerPage}
@@ -227,6 +182,6 @@ export default function Transaksi() {
           paginate={paginate}
         />
       </div>
-    </>
+    </div>
   );
 }

@@ -20,7 +20,6 @@ export default function Profile() {
   const [no_telp, setNoTelp] = useState("");
   const [loading, setLoading] = useState(true); // Add loading state
 
-
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -88,18 +87,21 @@ export default function Profile() {
             </div>
             <div className="mt-12 gap-2 flex flex-col">
               <Button
+                id="editProfile"
                 text="Edit Profile"
                 className="w-[24rem]"
                 type="primary"
                 onClick={() => router.push("/profile/editProfile")}
               />
               <Button
+                id="changePassword"
                 text="Ganti Password"
                 className="w-[24rem]"
                 type="primary"
                 onClick={() => router.push("/profile/changePassword")}
               />
               <Button
+                id="logout"
                 text="Logout"
                 className="w-[24rem]"
                 type="danger"

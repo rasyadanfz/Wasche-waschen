@@ -98,7 +98,7 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
   };
 
   return (
-    <>
+    <div id="detail-transaksi">
       <div className="error_toast">
         <Toaster position="top-right" toastOptions={errorToastOptions} />
       </div>
@@ -189,6 +189,7 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
                             </div>
                           </div>
                           <button
+                            id="saveBtn"
                             onClick={handleSave}
                             disabled={!modified} // Disable the button if not modified
                             className={`bg-primary-400 text-white px-4 py-2 text-h6 rounded-md mt-12 w-[200px] ${
@@ -211,6 +212,6 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

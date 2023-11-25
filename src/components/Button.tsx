@@ -5,6 +5,7 @@ interface ButtonProps {
     id?: string;
     type?: string;
     children?: React.ReactNode;
+    icon?: React.ReactNode;
     disabled?: boolean;
 }
 
@@ -15,9 +16,9 @@ const Button = ({
     id,
     type = "primary",
     disabled = false,
+    icon,
 }: ButtonProps) => {
-    const baseClassName =
-        "text-button px-4 py-2 rounded-md font-raleway";
+    const baseClassName = "text-button px-4 py-2 rounded-md font-raleway";
 
     let buttonColorClass;
     switch (type) {
@@ -54,10 +55,15 @@ const Button = ({
                 id={id}
                 disabled={disabled}
             >
-                <div
-                    className={type === "warning" ? "text-black" : "text-white"}
-                >
-                    {text}
+                <div className="flex justify-center items-center">
+                    {icon}
+                    <div
+                        className={
+                            type === "warning" ? "text-black" : "text-white"
+                        }
+                    >
+                        {text}
+                    </div>
                 </div>
             </button>
         </div>

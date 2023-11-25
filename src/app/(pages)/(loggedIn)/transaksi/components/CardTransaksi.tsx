@@ -38,6 +38,7 @@ export default function CardTransaksi(props: CardTransaksiProps) {
           </div>
         </div>
         <Button
+          id="detailTransaksiBtn"
           type="primary"
           text="Detail"
           className="md:absolute mt-6 w-full md:w-fit md:mt-0 right-4 bottom-4"

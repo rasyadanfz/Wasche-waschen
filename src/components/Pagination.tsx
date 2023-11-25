@@ -63,7 +63,7 @@ const Pagination: React.FC<PaginationProps> = ({
       );
 
       return (
-        <>
+        <div>
           {currentPage > 1 && (
             <>
               <button
@@ -111,13 +111,13 @@ const Pagination: React.FC<PaginationProps> = ({
               </button>
             </>
           )}
-        </>
+        </div>
       );
     }
   };
 
   return (
-    <>
+    <div id="pagination">
       <div className="error_toast">
         <Toaster position="top-right" toastOptions={errorToastOptions} />
       </div>
@@ -125,6 +125,7 @@ const Pagination: React.FC<PaginationProps> = ({
         {renderPaginationButtons()}
         {/* Input for entering the page number */}
         <input
+          id="inputPage"
           type="number"
           value={inputPage}
           onChange={(e) => setInputPage(e.target.value)}
@@ -132,13 +133,14 @@ const Pagination: React.FC<PaginationProps> = ({
         />
         of {pageNumbers.length}
         <button
+          id="goToPageBtn"
           className="border border-gray-500 px-3 py-2 rounded-full transition-colors duration-300 ease-in-out focus:outline-none hover:bg-gray-200"
           onClick={handleGoToPage}
         >
           Go
         </button>
       </div>
-    </>
+    </div>
   );
 };
 

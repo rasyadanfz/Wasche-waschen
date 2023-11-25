@@ -8,6 +8,14 @@
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
+Cypress.Commands.add("loginWithTestAccount", (username, password) => {
+    cy.visit("/login");
+    cy.get("input[id=email]").type(username);
+    cy.get("input[id=password]").type(password);
+    cy.get("form").find("button[id=submit]").click();
+    cy.wait(2000);
+});
+
 //
 //
 // -- This is a parent command --

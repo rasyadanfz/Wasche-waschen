@@ -4,7 +4,27 @@ import { randomInt } from "crypto";
 
 const prisma = new PrismaClient();
 
-const main = async () => {
+const deleteOrderlinesandTransaction = async () => {
+    await prisma.orderline.deleteMany();
+    await prisma.transaksi.deleteMany();
+    const user = await prisma.user.findUnique({
+        where: {
+            email: "test12345@gmail.com",
+        },
+    });
+    await prisma.keranjang.delete({
+        where: {
+            userId: user.id,
+        },
+    });
+    await prisma.user.delete({
+        where: {
+            email: "test12345@gmail.com",
+        },
+    });
+};
+
+const seedOrderlineandTransactions = async () => {
     const pakaianArray = await prisma.pakaian.findMany();
     const isUserExist = async (email) => {
         const user = await prisma.user.findUnique({
@@ -142,6 +162,11 @@ const main = async () => {
     console.log(
         "Successfully created " + transactionList.length + " transactions!"
     );
+};
+
+const main = async () => {
+    await deleteOrderlinesandTransaction();
+    await seedOrderlineandTransactions();
 };
 
 main();
