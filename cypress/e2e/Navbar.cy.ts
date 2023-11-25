@@ -1,6 +1,7 @@
 describe("Navbar", () => {
     beforeEach(() => {
         cy.loginWithTestAccount("testingaccount@gmail.com", "testaccount13579");
+        cy.wait(1000);
     });
 
     it("should redirect to profile page", () => {

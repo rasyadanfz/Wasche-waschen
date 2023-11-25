@@ -1,10 +1,17 @@
 describe("Change Password", () => {
+    before(() => {
+        cy.visit("/login");
+        cy.wait(2000);
+        cy.get("form").find("button[id=submit]").click();
+        cy.wait(5000);
+    });
+
     beforeEach(() => {
         cy.loginWithTestAccount("testingaccount@gmail.com", "testaccount13579");
         cy.get("a#profile[href='/profile']").click();
         cy.wait(500);
         cy.get("button#changePassword").click();
-        cy.wait(500);
+        cy.wait(1000);
     });
 
     it("should be able cancel change password", () => {
