@@ -47,18 +47,14 @@ const MinusButton = ({
         baseClassName + " " + buttonColorClass + " " + className;
     return (
         <div className="">
-            <button 
+            <button
                 type="submit"
                 className={buttonClassName}
                 onClick={onClick}
                 id={id}
                 disabled={disabled}
             >
-                <div
-                    className={"text-red-600"}
-                >
-                    {text}
-                </div>
+                <div className={"text-black font-semibold"}>{text}</div>
             </button>
         </div>
     );
