@@ -47,18 +47,14 @@ const CreateOrderButton = ({
         baseClassName + " " + buttonColorClass + " " + className;
     return (
         <div className="">
-            <button 
+            <button
                 type="submit"
                 className={buttonClassName}
                 onClick={onClick}
                 id={id}
                 disabled={disabled}
             >
-                <div
-                    className={"text-black"}
-                >
-                    {text}
-                </div>
+                <div className={"text-black font-bold"}>{text}</div>
             </button>
         </div>
     );

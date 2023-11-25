@@ -12,8 +12,6 @@ export default function StatusDetailTransaksi(
         props.status || "Not Confirmed"
     );
 
-    console.log(selectedStatus);
-
     const statusOptions = ["Not Confirmed", "On Progress", "Done"];
     const color =
         selectedStatus === "Done"
