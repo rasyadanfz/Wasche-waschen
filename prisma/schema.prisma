@@ -13,7 +13,7 @@ model User{
   name String
   no_telp String
   hashedPassword String
-  role String @default("Customer")
+  role String @default("Customer")  
   keranjang Keranjang?
   Transaksi Transaksi[]
 }
@@ -36,7 +36,7 @@ model Transaksi{
   userId String @db.ObjectId
   orderlines Orderline[]
 }
-
+  
 model Orderline{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   kuantitas Int
@@ -44,10 +44,10 @@ model Orderline{
   noted String
   pakaian Pakaian @relation(fields: [pakaianId], references: [id])
   pakaianId String @db.ObjectId 
-  transaksi Transaksi? @relation(fields: [transaksiId], references: [id])
-  transaksiId String? @db.ObjectId
   keranjang Keranjang? @relation(fields: [keranjangId], references: [id])
   keranjangId String? @db.ObjectId
+  transaksi Transaksi? @relation(fields: [transaksiId], references: [id])
+  transaksiId String? @db.ObjectId
 }
 
 model Keranjang{
