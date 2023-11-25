@@ -103,7 +103,7 @@ export default function Profile() {
               <Button
                 id="logout"
                 text="Logout"
-                className="w-[24rem]"
+                className="w-[24rem] mb-6"
                 type="danger"
                 onClick={handleLogout}
               />

@@ -104,7 +104,7 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
       </div>
       <div>
         <div className="w-full">
-          <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md sm:max-w-screen-sm">
+          <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md px-5 md:px-0">
             <h1 className="font-bold text-h3 mt-[100px] mb-10">
               Detail Transaksi
             </h1>
@@ -119,24 +119,28 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
                     {data?.orderlines && data.orderlines.length > 0 ? (
                       <>
                         {/* Display the list of items here */}
-                        <div className="flex flex-col gap-2 lg:flex-row justify-between">
-                          <div className="flex flex-row gap-4">
-                            <div className="flex flex-col font-semibold gap-2">
-                              <p>ID Transasksi</p>
-                              <p>Nama Transaksi</p>
-                              <p>Tanggal</p>
-                            </div>
-                            <div className="flex flex-col font-semibold ml-4 gap-2">
-                              <p>:</p>
-                              <p>:</p>
-                              <p>:</p>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                              <p>{data?.id}</p>
-                              <p>{data?.nama}</p>
-                              <p>{data?.tanggal}</p>
-                            </div>
-                          </div>
+                        <div className="flex flex-col gap-8 lg:flex-row justify-between">
+                          <table>
+                            <tbody>
+                              <tr>
+                                <td className="font-semibold">ID Transaksi</td>
+                                <td className="px-5">:</td>
+                                <td>{data?.id}</td>
+                              </tr>
+                              <tr>
+                                <td className="font-semibold">
+                                  Nama Transaksi
+                                </td>
+                                <td className="px-5">:</td>
+                                <td>{data?.nama}</td>
+                              </tr>
+                              <tr>
+                                <td className="font-semibold">Tanggal</td>
+                                <td className="px-5">:</td>
+                                <td>{data?.tanggal}</td>
+                              </tr>
+                            </tbody>
+                          </table>
                           <StatusDetailTransaksi
                             status={data?.status}
                             onChange={handleStatusChange} // Pass the status change handler
@@ -145,27 +149,44 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
 
                         <div className="my-10">
                           {/* Buat tabel yang memiliki header Item, harga/unit, kuantitas, subtotal*/}
-                          <table className="min-w-full bg-[#EDEDED] rounded-md">
+                          <table className="min-w-full bg-[#EDEDED] rounded-md text-md md:text-h6">
                             <thead>
                               <tr>
-                                <th className="border border-black text-center py-2 text-h6">No.</th>
-                                <th className="border border-black text-center py-2 text-h6">Item</th>
-                                <th className="border border-black text-center py-2 text-h6">Harga/Unit</th>
-                                <th className="border border-black text-center py-2 text-h6">Kuantitas</th>
-                                <th className="border border-black text-center py-2 text-h6">Subtotal</th>
+                                <th className="border border-black text-center py-2">
+                                  No.
+                                </th>
+                                <th className="border border-black text-center py-2">
+                                  Item
+                                </th>
+                                <th className="border border-black text-center py-2">
+                                  Harga/Unit
+                                </th>
+                                <th className="border border-black text-center py-2">
+                                  Kuantitas
+                                </th>
+                                <th className="border border-black text-center py-2">
+                                  Subtotal
+                                </th>
                               </tr>
                             </thead>
                             <tbody>
                               {data?.orderlines.map((orderline, index) => (
                                 <tr key={orderline.id}>
-                                  <td className="border border-black text-center py-2 text-h6">{index + 1}</td>
-                                  <td className="border border-black text-center py-2 text-h6">{orderline.nama_pakaian}</td>
-                                  <td className="border border-black text-center py-2 text-h6">
-                                    Rp.{" "}
-                                    {orderline.harga_pakaian.toLocaleString()}/{orderline.unit_pakaian}
+                                  <td className="border border-black text-center py-2">
+                                    {index + 1}
                                   </td>
-                                  <td className="border border-black text-center py-2 text-h6">{orderline.kuantitas} </td>
-                                  <td className="border border-black text-center py-2 text-h6">
+                                  <td className="border border-black text-center py-2">
+                                    {orderline.nama_pakaian}
+                                  </td>
+                                  <td className="border border-black text-center py-2">
+                                    Rp.{" "}
+                                    {orderline.harga_pakaian.toLocaleString()}/
+                                    {orderline.unit_pakaian}
+                                  </td>
+                                  <td className="border border-black text-center py-2">
+                                    {orderline.kuantitas}{" "}
+                                  </td>
+                                  <td className="border border-black text-center py-2">
                                     Rp. {orderline.total_harga.toLocaleString()}
                                   </td>
                                 </tr>
@@ -179,7 +200,7 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
                             <div className="font-bold text-body">
                               Total Harga :
                             </div>
-                            <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md w-96">
+                            <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md w-96 mb-6">
                               <div className="font-bold text-h6">
                                 Rp. {data?.total_harga.toLocaleString()}
                               </div>
