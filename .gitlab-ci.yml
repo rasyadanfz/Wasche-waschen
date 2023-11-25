@@ -42,4 +42,5 @@ deploy_production:
     - npm install -g vercel
     - $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::Machine) + ";" + [System.Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::Process)
     - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+    - npx prisma generate
     - vercel deploy --prod --token=$VERCEL_TOKEN
