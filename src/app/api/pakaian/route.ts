@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../prismaSingleton/prismaSingleClient";
 
-export async function GET( req: NextRequest ) {
+export async function GET(req: NextRequest) {
     try {
         const params = new URLSearchParams(req.nextUrl.search);
         const id = params.get("id");
@@ -12,17 +12,15 @@ export async function GET( req: NextRequest ) {
         if (id) {
             data = await prisma.existingPakaian.findUnique({
                 where: {
-                    pakaianId: id
-                }
+                    pakaianId: id,
+                },
             });
-        }
-        else {
+        } else {
             data = await prisma.existingPakaian.findMany();
         }
 
-        return NextResponse.json(data, { status: 200 })
-    }
-    catch (err) {
+        return NextResponse.json(data, { status: 200 });
+    } catch (err) {
         console.error(err);
         return NextResponse.json({ error: "Error occured." }, { status: 403 });
     } finally {
@@ -30,12 +28,12 @@ export async function GET( req: NextRequest ) {
     }
 }
 
-export async function POST( req: NextRequest ) {
+export async function POST(req: NextRequest) {
     const body = await req.json();
     const name = body.name;
     const price = body.price;
     const unit = body.unit;
-    
+
     try {
         const data = await prisma.pakaian.create({
             data: {
@@ -47,74 +45,68 @@ export async function POST( req: NextRequest ) {
                         name: name,
                         price: price,
                         unit: unit,
-                    }
-                }
-            }
+                    },
+                },
+            },
         });
         return NextResponse.json(data, { status: 200 });
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
-        return NextResponse.json({ error: "Error occured." }, { status: 403 })
-    }
-    finally {
+        return NextResponse.json({ error: "Error occured." }, { status: 403 });
+    } finally {
         await prisma.$disconnect();
     }
 }
 
-export async function PUT( req: NextRequest ) {
+export async function PUT(req: NextRequest) {
     const params = new URLSearchParams(req.nextUrl.search);
     const id = params.get("id");
     const body = await req.json();
     const price = body.price;
-    
+
     try {
         const updateData = await prisma.pakaian.update({
             where: {
-                id: id as string
+                id: id as string,
             },
             data: {
-                price: price
-            }
+                price: price,
+            },
         });
 
         await prisma.existingPakaian.update({
             where: {
-                pakaianId: id as string
+                pakaianId: id as string,
             },
             data: {
-                price: price
-            }
+                price: price,
+            },
         });
 
         return NextResponse.json(updateData, { status: 200 });
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
-        return NextResponse.json({ error: "Error occured." }, { status: 403 })
-    }
-    finally {
+        return NextResponse.json({ error: "Error occured." }, { status: 403 });
+    } finally {
         await prisma.$disconnect();
     }
 }
 
-export async function DELETE( req: NextRequest) {
+export async function DELETE(req: NextRequest) {
     const params = new URLSearchParams(req.nextUrl.search);
     const id = params.get("id");
-    
+
     try {
         const deletedData = await prisma.existingPakaian.delete({
             where: {
-                id: id as string
-            }
+                id: id as string,
+            },
         });
         return NextResponse.json(deletedData, { status: 200 });
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
-        return NextResponse.json({ error: "Error occured." }, { status: 403 })
-    }
-    finally {
+        return NextResponse.json({ error: "Error occured." }, { status: 403 });
+    } finally {
         await prisma.$disconnect();
     }
 }
