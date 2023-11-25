@@ -91,11 +91,13 @@ const PakaianComponent = ({
                 ) : (
                     <div className="p-4 w-full flex gap-2">
                         <Button
+                            id="edit_button"
                             text="Edit"
                             type="warning"
                             onClick={() => setIsUpdateFormVisible(true)}
                         />
                         <Button
+                            id="delete_button"
                             text="Delete"
                             type="danger"
                             onClick={() => setIsConfirmDeleteFormVisible(true)}
