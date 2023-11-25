@@ -30,6 +30,7 @@ const getClothesReportData = async (transactionList: Transaksi[]) => {
     const transactionIds = transactionList.map((transaction) => {
         return transaction.id;
     });
+
     const arrayOrderlines = await prisma.orderline.findMany({
         where: {
             transaksiId: {

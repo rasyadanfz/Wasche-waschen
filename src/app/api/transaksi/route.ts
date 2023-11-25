@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../prismaSingleton/prismaSingleClient";
+import { totalHarga } from "@/app/utils/totalharga";
 
+// Get all transactions
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const user = searchParams.get("user");
@@ -113,11 +115,10 @@ export async function GET(req: NextRequest) {
     } catch (err) {
         console.error(err);
         return NextResponse.json({ error: "Error occured." }, { status: 403 });
-    } finally {
-        await prisma.$disconnect();
     }
 }
 
+// Update transaction status
 export async function PUT(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
@@ -187,18 +188,18 @@ export async function PUT(req: NextRequest) {
     }
 }
 
+// Create new transaction
 export async function POST(req: NextRequest) {
-    const all = await req.json();
-    const id = all.user.id;
+    const { userId } = await req.json();
+    const id = userId;
     if (!id) {
         return NextResponse.json(
-            { message: "There is no userId" },
+            { message: "No user found!" },
             { status: 400 }
         );
     }
 
-    // find the keranjang first
-
+    // Find user keranjang by userId then find the associated orderlines
     const keranjang = await prisma.keranjang.findUnique({
         where: {
             userId: id,
@@ -212,30 +213,24 @@ export async function POST(req: NextRequest) {
         );
     }
 
-    // there is keranjang
-
     const orderLineList = await prisma.orderline.findMany({
         where: {
             keranjangId: keranjang.id,
         },
     });
 
-    // create new transaction
-
-    // create a new date
-    const newDate = new Date();
-
+    // Create new transaction
     const newTransaksi = await prisma.transaksi.create({
         data: {
             nama: String("Testing"),
             total_harga: totalHarga(orderLineList),
-            tanggal: newDate.toUTCString(),
+            tanggal: new Date().toISOString().split("T")[0],
             userId: id,
         },
     });
 
+    // Update orderline data to have transaksiId and delete its keranjangId
     for (let i = 0; i < orderLineList.length; i++) {
-        // edit keranjangId
         const editOrderline = await prisma.orderline.update({
             where: {
                 id: orderLineList[i].id,
@@ -248,7 +243,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(
-        { message: "Succesfully create a new transaction", newTransaksi },
+        { message: "Succesfully created a new transaction", newTransaksi },
         { status: 200 }
     );
 }
