@@ -48,7 +48,7 @@ describe("Katalog Pakaian", () => {
             .parent()
             .parent()
             .find("#tambah_button")
-            .click();
+            .click()
         cy.get("#add_to_cart").should("exist").should("be.visible");
-    });
-});
+    })
+})

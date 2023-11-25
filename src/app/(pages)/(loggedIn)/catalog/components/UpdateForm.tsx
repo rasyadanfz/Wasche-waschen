@@ -35,9 +35,9 @@ const UpdateForm = ({
     useEffect(() => {
         getDataPakaian(id).then((pakaian) => {
             setCurrData(pakaian);
-        });
+        })
     }, [id]);
-
+    
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCurrData({
             ...currData,
@@ -52,8 +52,6 @@ const UpdateForm = ({
             toast.error("Please enter price");
             return;
         }
-
-        console.log(currData.price);
 
         const res = await fetch(`/api/pakaian?id=${id}`, {
             method: "PUT",
@@ -72,7 +70,8 @@ const UpdateForm = ({
         }
 
         closeUpdateForm();
-    };
+        window.location.reload();
+    }
 
     return (
         <div className="bg-white border border-black-500 rounded-md p-6">

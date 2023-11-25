@@ -6,10 +6,9 @@ import PakaianComponent from "@/app/(pages)/(loggedIn)/catalog/components/Pakaia
 import { ExistingPakaian } from "@prisma/client";
 import Pagination from "@/components/Pagination";
 import Dropdown from "@/app/(pages)/(loggedIn)/catalog/components/Dropdown";
-import Button from "@/components/Button";
-import Image from "next/image";
 import { useSession } from "next-auth/react";
 import CreateForm from "./CreateForm";
+import AddToCart from "./AddToCart";
 
 async function getDataPakaian() {
     const res = await fetch("/api/pakaian", {
@@ -33,8 +32,6 @@ const KatalogPakaian = () => {
         admin = true;
     }
 
-    const [cartCount, setCartCount] = useState(0);
-    const [showAddToCartButton, setShowAddToCartButton] = useState(false);
     const [isCreateFormVisible, setIsCreateFormVisible] = useState(false);
     const [dataPakaian, setDataPakaian] = useState([]);
     const [query, setQuery] = useState("");
@@ -45,6 +42,10 @@ const KatalogPakaian = () => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
+    const [pakaianInCart, setPakaianInCart] = useState<{ [name: string]: number }[]>([]); // list of pakaian in cart
+    const [cartCount, setCartCount] = useState(0);
+    const [showAddToCartButton, setShowAddToCartButton] = useState(false);
 
     const onHandlePage = (pageNumber: number) => {
         setCurrentPage(pageNumber);
@@ -92,6 +93,25 @@ const KatalogPakaian = () => {
 
     const updateCartCount = (count: number) => {
         setCartCount((prevCount) => prevCount + count);
+    };
+
+    const updatePakaianInCart = (pakaianName: string, pakaianCount: number) => {
+        const existingItemIndex = pakaianInCart.findIndex(item => Object.keys(item)[0] === pakaianName);
+
+        if (existingItemIndex !== -1) {
+            const updatedCart = [...pakaianInCart];
+            updatedCart[existingItemIndex][pakaianName] += pakaianCount;
+
+            if (updatedCart[existingItemIndex][pakaianName] == 0) {
+                updatedCart.splice(existingItemIndex, 1);
+            }
+
+            setPakaianInCart(updatedCart);
+        }
+        else {
+            setPakaianInCart([...pakaianInCart, {[pakaianName]: pakaianCount}]);
+        }
+        console.log(pakaianInCart);
     };
 
     useEffect(() => {
@@ -168,6 +188,7 @@ const KatalogPakaian = () => {
                                 pakaian={pakaian}
                                 key={pakaian.id}
                                 updateCartCount={updateCartCount}
+                                updatePakaianInCart={updatePakaianInCart}
                                 disabledButton={disabledButton}
                                 admin={admin}
                             />
@@ -190,22 +211,9 @@ const KatalogPakaian = () => {
             />
 
             {showAddToCartButton && (
-                <div
-                    id="add_to_cart"
-                    className="fixed flex items-center bottom-8 left-[50%] translate-x-[-50%]"
-                >
-                    <Button
-                        text="Add to Cart"
-                        className="shadow-lg w-[300px] h-[40px]"
-                        type="secondary"
-                    />
-                    {/* Cart icon */}
-                    <Image
-                        src="/icons/cart-white.svg"
-                        width={20}
-                        height={21}
-                        alt={"Cart"}
-                        className="translate-x-[-200%]"
+                <div>
+                    <AddToCart 
+                        pakaianInCart={pakaianInCart}
                     />
                 </div>
             )}
