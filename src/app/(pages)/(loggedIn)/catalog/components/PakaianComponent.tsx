@@ -6,7 +6,8 @@ import AddButton from "./AddButton";
 import Button from "@/components/Button";
 import UpdateForm from "./UpdateForm";
 import { useState } from "react";
-import { FaRegTrashAlt } from "react-icons/fa";
+import toast from "react-hot-toast";
+import { IoMdClose } from "react-icons/io";
 
 function imageExists(imageUrl: string) {
     var http = new XMLHttpRequest();
@@ -18,24 +19,36 @@ function imageExists(imageUrl: string) {
 const PakaianComponent = ({
     pakaian,
     updateCartCount,
+    updatePakaianInCart,
     disabledButton,
     admin,
 }: {
     pakaian: ExistingPakaian;
     updateCartCount: (count: number) => void;
+    updatePakaianInCart: (pakaianName: string, pakaianCount: number) => void;
     disabledButton: boolean;
     admin: boolean;
 }) => {
     const [isUpdateFormVisible, setIsUpdateFormVisible] = useState(false);
+    const [isConfirmDeleteFormVisible, setIsConfirmDeleteFormVisible] = useState(false);
 
     const closeUpdateForm = () => {
         setIsUpdateFormVisible(false);
     };
 
     const handleDelete = async (id: string) => {
-        await fetch(`/api/pakaian?id=${id}`, {
+        const res = await fetch(`/api/pakaian?id=${id}`, {
             method: "DELETE",
         });
+
+        if (res.ok) {
+            toast.success("Successfully deleted pakaian");
+        }
+        else {
+            toast.error("Failed to delete pakaian");
+        }
+
+        window.location.reload();
     };
 
     const [isHovered, setIsHovered] = useState(false);
@@ -70,7 +83,9 @@ const PakaianComponent = ({
                 </div>
                 {!admin ? (
                     <AddButton
+                        pakaian={pakaian}
                         updateCartCount={updateCartCount}
+                        updatePakaianInCart={updatePakaianInCart}
                         disabledButton={disabledButton}
                     />
                 ) : (
@@ -83,7 +98,7 @@ const PakaianComponent = ({
                         <Button
                             text="Delete"
                             type="danger"
-                            onClick={() => handleDelete(pakaian.id)}
+                            onClick={() => setIsConfirmDeleteFormVisible(true)}
                         />
                     </div>
                 )}
@@ -95,6 +110,38 @@ const PakaianComponent = ({
                         id={pakaian.pakaianId}
                         closeUpdateForm={closeUpdateForm}
                     />
+                </div>
+            )}
+
+            {isConfirmDeleteFormVisible && (
+                <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+                    <div className="bg-white p-4 rounded shadow-md">
+                        <div className="flex justify-end">
+                            <button onClick={() => setIsConfirmDeleteFormVisible(false)}>
+                                <IoMdClose />
+                            </button>
+                        </div>
+                        <div className="text-xl font-bold mb-4">
+                            Delete Confirmation
+                        </div>
+                        <div className="border-t border-gray-300 mb-5"></div>
+                        <div className="bg-red-200 p-4 rounded shadow-md mb-8">
+                            Are you sure you want to delete this item?
+                        </div>
+                        <div className="border-t border-gray-300 mb-5"></div>
+                        <div className="flex justify-end gap-2">
+                            <Button
+                                text="Cancel"
+                                type="secondary"
+                                onClick={() => setIsConfirmDeleteFormVisible(false)}
+                            />
+                            <Button
+                                text="Delete"
+                                type="danger"
+                                onClick={() => handleDelete(pakaian.id)}
+                            />
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
