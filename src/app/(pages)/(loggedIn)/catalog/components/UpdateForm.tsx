@@ -1,17 +1,17 @@
-import Button from "@/components/Button"
-import FormInput from "@/components/FormInput"
-import { errorToastOptions } from "@/toastConfig"
-import { useEffect, useState } from "react"
-import toast, { Toaster } from "react-hot-toast"
+import Button from "@/components/Button";
+import FormInput from "@/components/FormInput";
+import { errorToastOptions } from "@/toastConfig";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { IoMdClose } from "react-icons/io";
 
-interface Pakaian {
-    name: string,
-    price: number,
-    unit: string,
+export interface ChangeablePakaianData {
+    name: string;
+    price: number;
+    unit: string;
 }
 
-async function getDataPakaian( id: string ) {
+async function getDataPakaian(id: string) {
     const res = await fetch(`/api/pakaian/?id=${id}`, {
         method: "GET",
     });
@@ -19,19 +19,25 @@ async function getDataPakaian( id: string ) {
     return pakaian;
 }
 
-const UpdateForm = ({ id, closeUpdateForm }: { id: string, closeUpdateForm: () => void }) => {
-    const [currData, setCurrData] = useState<Pakaian>({
+const UpdateForm = ({
+    id,
+    closeUpdateForm,
+}: {
+    id: string;
+    closeUpdateForm: () => void;
+}) => {
+    const [currData, setCurrData] = useState<ChangeablePakaianData>({
         name: "",
         price: 0,
-        unit: ""
+        unit: "",
     });
 
     useEffect(() => {
         getDataPakaian(id).then((pakaian) => {
             setCurrData(pakaian);
-        })
-    })
-    
+        });
+    }, [id]);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCurrData({
             ...currData,
@@ -39,7 +45,7 @@ const UpdateForm = ({ id, closeUpdateForm }: { id: string, closeUpdateForm: () =
         });
     };
 
-    const handleSave = async(e: React.FormEvent<HTMLFormElement>) => {
+    const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (currData.price.toString() == "") {
@@ -55,19 +61,18 @@ const UpdateForm = ({ id, closeUpdateForm }: { id: string, closeUpdateForm: () =
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                price: currData.price
+                price: currData.price,
             }),
-        })
+        });
 
         if (res.ok) {
             toast.success(`Price of ${currData["name"]} updated!`);
-        }
-        else {
+        } else {
             toast.error(`Failed to update the price of ${currData["name"]}`);
         }
 
         closeUpdateForm();
-    }
+    };
 
     return (
         <div className="bg-white border border-black-500 rounded-md p-6">
@@ -75,13 +80,11 @@ const UpdateForm = ({ id, closeUpdateForm }: { id: string, closeUpdateForm: () =
                 <Toaster toastOptions={errorToastOptions} />
             </div>
             <div className="flex justify-end">
-                <button
-                    onClick={closeUpdateForm}
-                >
+                <button onClick={closeUpdateForm}>
                     <IoMdClose />
                 </button>
             </div>
-            <form 
+            <form
                 action=""
                 className="flex flex-col gap-y-3"
                 onSubmit={handleSave}
@@ -114,7 +117,7 @@ const UpdateForm = ({ id, closeUpdateForm }: { id: string, closeUpdateForm: () =
                 />
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default UpdateForm
+export default UpdateForm;
