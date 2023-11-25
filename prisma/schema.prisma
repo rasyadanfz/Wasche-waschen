@@ -24,6 +24,16 @@ model Pakaian {
   price Int
   unit String
   orderlines Orderline[]
+  existingPakaian ExistingPakaian?
+}
+
+model ExistingPakaian {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  price Int
+  unit String
+  pakaian Pakaian @relation(fields: [pakaianId], references: [id])
+  pakaianId String @db.ObjectId @unique
 }
 
 model Transaksi{
