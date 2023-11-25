@@ -16,27 +16,29 @@ const CreateForm = ({ closeCreateForm }: { closeCreateForm: () => void }) => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCurrData({
             ...currData,
-            [e.target.id]: Number(e.target.value),
+            [e.target.id]: e.target.value,
         });
     };
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (currData.name == "") {
+        if (currData.name === "") {
             toast.error("Please enter the name");
             return;
         }
 
-        if (currData.price.toString() == "") {
+        if (currData.price.toString() === "") {
             toast.error("Please enter the price");
             return;
         }
 
-        if (currData.unit == "") {
+        if (currData.unit === "") {
             toast.error("Please enter the unit");
             return;
         }
+
+        currData.price = Number(currData.price);
 
         const res = await fetch("/api/pakaian", {
             method: "POST",
@@ -53,7 +55,8 @@ const CreateForm = ({ closeCreateForm }: { closeCreateForm: () => void }) => {
         }
 
         closeCreateForm();
-    };
+        window.location.reload();
+    }
 
     return (
         <div className="bg-white border border-black-500 rounded-md p-6 shadow-xl">

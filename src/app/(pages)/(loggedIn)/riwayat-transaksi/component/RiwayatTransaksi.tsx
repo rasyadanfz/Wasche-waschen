@@ -114,9 +114,9 @@ export default function Transaksi() {
 
   return (
     <div id="riwayat-transaksi">
-      <div className="min-h-screen">
+      <div className="min-h-screen container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md px-5 sm:px-0">
         <div className="w-full mb-[50px]">
-          <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
+          <div className="">
             <h1 className="font-bold text-h3 mt-[100px]">Riwayat Transaksi</h1>
             <div className="">
               <div className="flex flex-row justify-between gap-6 items-end">
@@ -152,7 +152,7 @@ export default function Transaksi() {
             </div>
           </div>
         </div>
-        <div className="container mx-auto flex flex-col gap-4 xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
+        <div className=" flex flex-col gap-4 ">
           {dataTransaksi !== null ? (
             currentItems.length > 0 ? (
               currentItems.map((item: Transaksi) => (

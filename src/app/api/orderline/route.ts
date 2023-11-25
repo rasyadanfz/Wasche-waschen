@@ -43,36 +43,55 @@ export async function PATCH(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-    const { user, ArrayOfPakaianCnt } = await req.json();
-    if (!user) {
+    const {
+        userId,
+        pakaianInCart,
+    }: { userId: string; pakaianInCart: { [pakaianId: string]: number }[] } =
+        await req.json();
+    if (!userId) {
         return NextResponse.json({ error: "No user" }, { status: 400 });
     }
 
-    if (!ArrayOfPakaianCnt) {
+    if (!pakaianInCart) {
         return NextResponse.json(
             { error: "No Array of PakaianCnt" },
             { status: 400 }
         );
     }
 
+    // Get user's keranjang
     const keranjang = await prisma.keranjang.findUnique({
         where: {
-            userId: user.id,
+            userId: userId,
         },
     });
 
     if (!keranjang) {
         return NextResponse.json({ error: "No Keranjang" }, { status: 400 });
     }
-
-    for (let i = 0; i < ArrayOfPakaianCnt.length; i++) {
-        if (ArrayOfPakaianCnt[i].count != 0) {
+    for (let i = 0; i < pakaianInCart.length; i++) {
+        if (pakaianInCart[i].count != 0) {
             // check whether there's already an orderline of that pakaian or not
-            const pakaian = ArrayOfPakaianCnt[i].pakaian;
+            const existingPakaianId = Object.keys(pakaianInCart[i])[0];
+            const qty = pakaianInCart[i][existingPakaianId];
+            const existingpakaian = await prisma.existingPakaian.findUnique({
+                where: {
+                    id: existingPakaianId,
+                },
+                select: {
+                    pakaianId: true,
+                },
+            });
+            const pakaian = await prisma.pakaian.findUnique({
+                where: {
+                    id: existingpakaian!.pakaianId,
+                },
+            });
+
             const tempOrderline = await prisma.orderline.findMany({
                 where: {
                     keranjangId: keranjang.id,
-                    pakaianId: pakaian.id,
+                    pakaianId: pakaian!.id,
                 },
             });
 
@@ -82,12 +101,12 @@ export async function POST(req: NextRequest) {
                 // there is no orderlin
                 const createOrderline = await prisma.orderline.create({
                     data: {
-                        kuantitas: ArrayOfPakaianCnt[i].count,
-                        total_harga: pakaian.price,
+                        kuantitas: qty,
+                        total_harga: pakaian!.price * qty,
                         noted: "noted",
                         pakaian: {
                             connect: {
-                                id: pakaian.id,
+                                id: pakaian!.id,
                             },
                         },
                         keranjang: {
@@ -101,13 +120,11 @@ export async function POST(req: NextRequest) {
                 // update old orderline
                 const updateOrderline = await prisma.orderline.updateMany({
                     where: {
-                        pakaianId: pakaian.id,
+                        pakaianId: pakaian!.id,
                         keranjangId: keranjang.id,
                     },
                     data: {
-                        kuantitas:
-                            checkOrderline.kuantitas +
-                            ArrayOfPakaianCnt[i].count,
+                        kuantitas: checkOrderline.kuantitas + qty,
                     },
                 });
             }
@@ -118,111 +135,4 @@ export async function POST(req: NextRequest) {
         { message: "Succesfully added pakaian" },
         { status: 200 }
     );
-
-    /*
-    const {pakaian,user} = await req.json();
-
-
-
-    const keranjang = user.keranjang;
-
-    if(!keranjang){
-        return NextResponse.json(
-            {error:"No keranjang"},
-            {status:400}
-        )
-    }
-
-    const tempOrderline = await prisma.orderline.findMany({
-        where:{
-            pakaianId: pakaian.id,
-            keranjangId:keranjang.id,
-        }
-    })
-
-    const orderline = tempOrderline[0];
-
-    if(orderline === null){
-        // create new orderline
-        const createOrderline = await prisma.orderline.create({
-            data:{
-                kuantitas:1,
-                total_harga:pakaian.price,
-                noted:"Noted",
-                pakaian:{
-                    connect:{
-                        id:pakaian.id,
-                    }
-                },
-                keranjang:{
-                    connect:{
-                        id:keranjang.id,
-                    }
-                },
-            }
-        })
-    }else{
-
-    }
-
-
-    
-    const orderline = tempOrderline[0];
-
-
-    // we can do the create or update
-
-    // make sure whether the orderline has exist or not
-    if(orderline.id === null){
-        // create new orderline
-        const newOrderline = await prisma.orderline.create({
-            data: {
-                kuantitas:1,
-                total_harga:pakaian.price,
-                pakaian:{
-                    connect:{
-                        id:pakaian.id,
-                    }
-                },
-                noted:"",
-                keranjang:{
-                    connect:{
-                        id:keranjang.id,
-                    }
-                },
-                transaksi:{
-                    connect:{
-                        id:transaksi.id,
-                    }
-                },
-              },
-
-        })
-
-        return NextResponse.json({
-            message:"Succesfully added new cloth",
-            status:200,
-        })
-
-
-    }else{
-
-        // update old orderline
-        const updateOrderline = await prisma.orderline.update({
-            where:{
-                id:orderline.id
-            },data:{
-                total_harga:orderline.total_harga + pakaian.price,
-                kuantitas: orderline.kuantitas+1
-            }
-        })
-
-        return NextResponse.json({
-            message:"Succesfully added the cloth",
-            status:200
-        })
-
-    }
-
-    */
 }

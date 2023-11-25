@@ -1,10 +1,6 @@
 describe("Katalog Pakaian", () => {
     beforeEach(() => {
-        cy.visit("/login");
-        cy.get("input[id=email]").type("fren@gmail.com");
-        cy.get("input[id=password]").type("fren");
-        cy.get("form").find("button[id=submit]").click();
-        cy.wait(500);
+        cy.loginWithTestAccount("fren@gmail.com", "fren");
         cy.visit("/catalog");
         cy.wait(500);
     });
@@ -48,7 +44,7 @@ describe("Katalog Pakaian", () => {
             .parent()
             .parent()
             .find("#tambah_button")
-            .click();
+            .click()
         cy.get("#add_to_cart").should("exist").should("be.visible");
-    });
-});
+    })
+})
