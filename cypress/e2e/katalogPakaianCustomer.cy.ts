@@ -44,13 +44,14 @@ describe("Katalog Pakaian", () => {
             .contains("Kemeja");
     })
 
-    // it("should display add to cart button", () => {
-    //     cy.get("#pakaian_card")
-    //         .should("be.visible")
-    //         .contains("Kemeja")
-    //         .parent()
-    //         .find("#tambah_button")
-    //         .click()
-    //     cy.get("#add_to_cart").should("exist").should("be.visible");
-    // })
+    it("should display add to cart button", () => {
+        cy.get("#pakaian_card")
+            .should("be.visible")
+            .contains("Kemeja")
+            .parent()
+            .parent()
+            .find("#tambah_button")
+            .click()
+        cy.get("#add_to_cart").should("exist").should("be.visible");
+    })
 })

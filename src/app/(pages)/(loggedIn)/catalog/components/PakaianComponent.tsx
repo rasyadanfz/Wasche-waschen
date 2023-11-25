@@ -17,11 +17,13 @@ function imageExists(imageUrl: string) {
 const PakaianComponent = ({
     pakaian,
     updateCartCount,
+    updatePakaianInCart,
     disabledButton,
     admin,
 }: {
     pakaian: ExistingPakaian;
     updateCartCount: (count: number) => void;
+    updatePakaianInCart: (pakaianName: string, pakaianCount: number) => void;
     disabledButton: boolean;
     admin: boolean;
 }) => {
@@ -63,7 +65,9 @@ const PakaianComponent = ({
                 </div>
                 {!admin ? (
                     <AddButton
+                        pakaian={pakaian}
                         updateCartCount={updateCartCount}
+                        updatePakaianInCart={updatePakaianInCart}
                         disabledButton={disabledButton}
                     />
                 ) : (
