@@ -1,28 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import { totalHarga } from "@/app/utils/totalharga";
+import prisma from "../../../../../prismaSingleton/prismaSingleClient";
 
-
-
-const prisma = new PrismaClient();
-
-
-
-
-export async function GET(req:NextRequest,{params}:{params:{id:string}}){
-    const {id} = params
-
+// Get all transactions done by user with id
+export async function GET(
+    req: NextRequest,
+    { params }: { params: { id: string } }
+) {
+    const { id } = params;
     const transaksi = await prisma.transaksi.findMany({
-        where:{
-            userId:id    
-        }
-    })
+        where: {
+            userId: id,
+        },
+    });
 
     return NextResponse.json(
-        {messagge:"Success",transaksi},
-        {status:200}
-    )
-
-
+        { messagge: "Success", transaksi },
+        { status: 200 }
+    );
 }
-

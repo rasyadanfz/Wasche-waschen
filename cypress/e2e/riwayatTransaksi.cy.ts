@@ -2,7 +2,7 @@ describe("Riwayat Transaksi", () => {
     beforeEach(() => {
         cy.loginWithTestAccount("test12345@gmail.com", "fuckyou");
         cy.get("a[href='/riwayat-transaksi']").click();
-        cy.wait(500);
+        cy.wait(2500);
     });
 
     it("should display riwayat transaksi", () => {

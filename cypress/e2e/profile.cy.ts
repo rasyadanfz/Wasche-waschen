@@ -2,7 +2,7 @@ describe("Profile", () => {
     beforeEach(() => {
         cy.loginWithTestAccount("testingaccount@gmail.com", "testaccount13579");
         cy.get("a#profile[href='/profile']").click();
-        cy.wait(500);
+        cy.wait(2500);
     });
 
     it("should redirect to edit profile page", () => {
