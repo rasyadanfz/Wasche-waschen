@@ -218,11 +218,16 @@ export async function POST(req: NextRequest) {
             keranjangId: keranjang.id,
         },
     });
+    const numOfTransaction = await prisma.transaksi.aggregate({
+        _count: {
+            id: true,
+        },
+    });
 
     // Create new transaction
     const newTransaksi = await prisma.transaksi.create({
         data: {
-            nama: String("Testing"),
+            nama: String("Transaksi " + (numOfTransaction._count.id + 1)),
             total_harga: totalHarga(orderLineList),
             tanggal: new Date().toISOString().split("T")[0],
             userId: id,

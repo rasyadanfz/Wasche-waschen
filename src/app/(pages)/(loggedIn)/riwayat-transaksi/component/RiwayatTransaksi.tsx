@@ -46,7 +46,7 @@ export default function Transaksi() {
         const fetchData = async () => {
             try {
                 const data = await getDataTransaksi();
-                setDataTransaksi(data);
+                setDataTransaksi(data.reverse());
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
