@@ -1,9 +1,14 @@
+import { Pakaian } from "@prisma/client";
 
 describe('Add some clothes to cart',()=>{
 
+    let pakaianFromDatabase;
+
     beforeEach(() => {
         cy.loginWithTestAccount("addToCart@gmail.com", "addToCart");
-
+        cy.task('fetchPakaianFromDatabase').then((data)=>{
+            pakaianFromDatabase=data;
+        })
     });
 
 
@@ -25,6 +30,14 @@ describe('Add some clothes to cart',()=>{
             .click();
     })
 
+
+    it('The cart should have the same quantity and price',()=>{
+        cy.visit('/cart')
+        cy.wait(2000)
+
+        
+        
+    })
 
 
 })
