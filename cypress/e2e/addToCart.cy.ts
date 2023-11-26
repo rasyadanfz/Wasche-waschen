@@ -16,14 +16,14 @@ describe('Add some clothes to cart',()=>{
 
     // add some clothes
     it('It should add some clothes',()=>{
-        cy.get('*[class^="border flex flex-col justify-between my-5 items-start gap-4 shadow-md transition-transform "]')
+        cy.get('*[class^="border flex flex-col justify-between my-5 items-center md:items-center gap-4 shadow-md transition-transform "]')
             .find('button')
             .each(($button)=>{
                 cy.wrap($button).click();
                 cntPakaian++;
             });
 
-        cy.get('*[class^="border flex flex-col justify-between my-5 items-start gap-4 shadow-md transition-transform "]')
+        cy.get('*[class^="border flex flex-col justify-between my-5 items-center md:items-center gap-4 shadow-md transition-transform "]')
            .find('#add_button')
            .each(($button)=>{
                 cy.wrap($button).click();
@@ -38,7 +38,7 @@ describe('Add some clothes to cart',()=>{
         cy.visit('/cart')
         cy.wait(5000)
 
-        cy.get('*[class^="flex flex-row justify-between items-center"]')
+        cy.get('*[class^="flex flex-col md:flex-row justify-center items-between md:justify-between md:items-center gap-y-4"]')
             .each(($div,index)=>{
                 let pakaianName:string;
                 let pakaianQuantity:number;
