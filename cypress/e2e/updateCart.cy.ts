@@ -144,8 +144,6 @@ describe('Update a cart',()=>{
                     expect(text).not.to.equal(pakaianDeleted);
                 });
 
-
-
                 cntAfterDelete++;
             }).then(()=>{
                 expect(cntAfterDelete).to.equal(cntBeforeDelete-1);
@@ -154,7 +152,36 @@ describe('Update a cart',()=>{
     })
 
     it('it should delete all of them',()=>{
-        
+        cy.visit('/cart')
+
+        cy.get('*[class^="flex flex-col md:flex-row justify-center items-between md:justify-between md:items-center gap-y-4"]')
+            .each(($div,index)=>{
+                // we want to del
+                cy.wrap($div)
+                    .find('button')
+                    .click()
+            })
+
+        cy.wait(1000)
+
+        cy.get('*[class^="flex flex-row justify-between md:justify-end md:gap-x-[50px]"]')
+            .find('div')
+            .each(($div,index)=>{
+                if(index === 0){
+                    // click the button
+                    cy.wrap($div)
+                        .find('button')
+                        .click();
+                }
+            })
+
+        cy.wait(5000)
+
+        cy.get('*[class^="text-center absolute top-[50%] left-[50%] translate-x-[-50%] items-center justify-center"]')
+            .find('Keranjang Kosong')
+            .should('exist')
+
+
     })
 
 
