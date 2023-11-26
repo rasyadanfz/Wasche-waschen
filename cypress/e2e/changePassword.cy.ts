@@ -3,7 +3,7 @@ describe("Change Password", () => {
         cy.visit("/login");
         cy.wait(2000);
         cy.get("form").find("button[id=submit]").click();
-        cy.wait(5000);
+        cy.wait(3000);
     });
 
     beforeEach(() => {

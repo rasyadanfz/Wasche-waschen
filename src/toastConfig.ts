@@ -2,7 +2,7 @@ import { DefaultToastOptions } from "react-hot-toast";
 
 export const successToastOptions: DefaultToastOptions = {
     duration: 3000,
-    position: "top-right",
+    position: "top-center",
     style: {
         background: "#25AAE1",
         color: "#FFFFFF",

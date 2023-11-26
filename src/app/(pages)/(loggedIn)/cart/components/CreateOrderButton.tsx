@@ -54,7 +54,13 @@ const CreateOrderButton = ({
                 id={id}
                 disabled={disabled}
             >
-                <div className={"text-black font-bold"}>{text}</div>
+                <div
+                    className={
+                        "text-black text-[0.85em] md:text-body font-bold"
+                    }
+                >
+                    {text}
+                </div>
             </button>
         </div>
     );

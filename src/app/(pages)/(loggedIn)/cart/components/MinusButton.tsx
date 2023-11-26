@@ -54,7 +54,13 @@ const MinusButton = ({
                 id={id}
                 disabled={disabled}
             >
-                <div className={"text-black font-semibold"}>{text}</div>
+                <div
+                    className={
+                        "text-black text-[0.8em] md:text-body font-semibold"
+                    }
+                >
+                    {text}
+                </div>
             </button>
         </div>
     );

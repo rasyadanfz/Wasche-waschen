@@ -29,7 +29,7 @@ const LaporanCard = ({ type, data, children }: LaporanCardProps) => {
         " w-[64px] h-[64px] rounded-full flex items-center justify-center";
 
     return (
-        <div id="card" className={`rounded-md min-w-[250px] grow`}>
+        <div id="card" className={`rounded-md min-w-[150px] grow`}>
             <div
                 className={`flex flex-col md:flex-row md:p-5 font-raleway items-center gap-x-4 mb-2`}
             >
@@ -45,7 +45,7 @@ const LaporanCard = ({ type, data, children }: LaporanCardProps) => {
                     )}
                 </div>
                 <div className="flex flex-col">
-                    <div id="cardtitle" className="text-h6 font-semibold">
+                    <div id="cardtitle" className="font-semibold text-h6">
                         {type === "totalPendapatan" && "Total Pendapatan"}
                         {type === "jumlahTransaksi" && "Jumlah Transaksi"}
                         {type === "jenisPakaian" && "Jumlah Jenis Pakaian"}
