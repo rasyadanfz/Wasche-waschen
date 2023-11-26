@@ -59,11 +59,17 @@ describe("Edit Profile", () => {
     });
 
     it("should successfully edit profile", () => {
-        cy.get("input[id=name]").clear().type("Testing Account Change");
+        cy.get("input[id=name]").clear().type("Testing Account");
         cy.get("input[id=email]").clear().type("testingaccount@gmail.com");
         cy.get("input[id=no_telp]").clear().type("0812345678910");
         cy.get("form").find("button[id=submit]").click();
         cy.wait(1500);
         cy.location("pathname").should("eq", "/profile");
+        cy.go("back");
+        cy.get("input[id=name]").clear().type("Testing Account Change");
+        cy.get("input[id=email]").clear().type("testingaccount@gmail.com");
+        cy.get("input[id=no_telp]").clear().type("0812345678910");
+        cy.get("form").find("button[id=submit]").click();
+        cy.wait(1000);
     });
 });

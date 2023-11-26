@@ -4,6 +4,40 @@ import { randomInt } from "crypto";
 
 const prisma = new PrismaClient();
 
+const resetPakaian = async () => {
+    const deleteExistingPakaian = await prisma.existingPakaian.deleteMany();
+    const deletePakaian = await prisma.pakaian.deleteMany();
+
+    const namaPakaian = [
+        "Kemeja",
+        "Celana jeans",
+        "Handuk",
+        "Jaket",
+        "Sprei - selimut",
+        "Sepatu",
+    ];
+    const hargaPakaian = [500, 1000, 4000, 8000, 14000, 10000];
+    const unit = ["satuan", "satuan", "satuan", "satuan", "satuan", "satuan"];
+
+    for (let i = 0; i < namaPakaian.length; i++) {
+        await prisma.pakaian.create({
+            data: {
+                name: namaPakaian[i],
+                price: hargaPakaian[i],
+                unit: unit[i],
+                existingPakaian: {
+                    create: {
+                        name: namaPakaian[i],
+                        price: hargaPakaian[i],
+                        unit: unit[i],
+                    },
+                },
+            },
+        });
+    }
+    console.log("Done resetting pakaian & existing pakaian!");
+};
+
 const deleteOrderlinesandTransaction = async () => {
     await prisma.orderline.deleteMany();
     await prisma.transaksi.deleteMany();
@@ -22,6 +56,7 @@ const deleteOrderlinesandTransaction = async () => {
             email: "test12345@gmail.com",
         },
     });
+    console.log("Orderlines & Transactions deleted!");
 };
 
 const seedOrderlineandTransactions = async () => {
@@ -166,6 +201,7 @@ const seedOrderlineandTransactions = async () => {
 
 const main = async () => {
     await deleteOrderlinesandTransaction();
+    await resetPakaian();
     await seedOrderlineandTransactions();
 };
 
