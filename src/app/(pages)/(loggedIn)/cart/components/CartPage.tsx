@@ -4,8 +4,9 @@ import { ClothesCartData } from "@/app/api/keranjang/[id]/route";
 import CartCard from "./CartCard";
 import CreateOrderButton from "./CreateOrderButton";
 import { Session } from "next-auth";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { errorToastOptions, successToastOptions } from "@/toastConfig";
 
 async function updateCart(newCart: ClothesCartData[], userId: string) {
     const res = await fetch("/api/keranjang", {
@@ -82,7 +83,10 @@ export default function CartPage({ session }: { session: Session }) {
 
     return (
         <>
-            <div className="flex flex-col mt-[100px] mx-[150px]">
+            <div className="success_toast">
+                <Toaster toastOptions={successToastOptions} />
+            </div>
+            <div className="flex flex-col mt-[100px] mx-[1.5em] md:mx-[2.5em] lg:mx-[3em]">
                 <div className="flex items-baseline">
                     <p className="font-black text-2xl mb-[20px]">Keranjang</p>
                 </div>
@@ -111,7 +115,7 @@ export default function CartPage({ session }: { session: Session }) {
                 </div>
                 <div>
                     {dataKeranjang.length !== 0 ? (
-                        <div className="flex flex-row justify-end gap-x-[50px]">
+                        <div className="flex flex-row justify-between md:justify-end md:gap-x-[50px]">
                             <CreateOrderButton
                                 onClick={async () => {
                                     await updateCart(
@@ -119,6 +123,10 @@ export default function CartPage({ session }: { session: Session }) {
                                         session!.user.id
                                     );
                                     setCountChange(countChange + 1);
+                                    toast.success("Barang berhasil diubah!");
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 1500);
                                 }}
                                 className="items-center justify-center px-4 py-2 font-bold text-white"
                                 text="Update Keranjang"

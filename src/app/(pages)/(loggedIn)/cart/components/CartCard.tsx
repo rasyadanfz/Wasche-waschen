@@ -9,7 +9,7 @@ export default function CartCard({
     return (
         <>
             <div className="border border-black rounded-md p-4 relative duration-100 bg-[#EDEDED] my-[20px]">
-                <div className="flex flex-row justify-between items-center">
+                <div className="flex flex-col md:flex-row justify-center items-between md:justify-between md:items-center gap-y-4">
                     <div>
                         <h1 className="font-semibold text-h6 mb-2">
                             {pakaianNama}

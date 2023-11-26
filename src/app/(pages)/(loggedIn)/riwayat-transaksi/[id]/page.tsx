@@ -108,7 +108,7 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
             <div>
                 <div className="w-full">
                     <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md px-5 md:px-0">
-                        <h1 className="font-bold text-h3 mt-[100px] mb-10">
+                        <h1 className="font-bold text-h4 md:text-h3 mt-[100px] mb-10">
                             Detail Transaksi
                         </h1>
                         {loading ? (
@@ -135,7 +135,7 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
                                                                 <td className="px-5">
                                                                     :
                                                                 </td>
-                                                                <td>
+                                                                <td className="break-all">
                                                                     {data?.id}
                                                                 </td>
                                                             </tr>
@@ -176,7 +176,7 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
 
                                                 <div className="my-10">
                                                     {/* Buat tabel yang memiliki header Item, harga/unit, kuantitas, subtotal*/}
-                                                    <table className="min-w-full bg-[#EDEDED] rounded-md text-md md:text-h6">
+                                                    <table className="min-w-full bg-[#EDEDED] rounded-md text-[0.8em] md:text-h6">
                                                         <thead>
                                                             <tr>
                                                                 <th className="border border-black text-center py-2">
@@ -245,8 +245,8 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
                                                         <div className="font-bold text-body">
                                                             Total Harga :
                                                         </div>
-                                                        <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md w-96 mb-6">
-                                                            <div className="font-bold text-h6">
+                                                        <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md w-64 md:w-96 mb-6">
+                                                            <div className="font-bold md:text-h6 text-[0.8rem]">
                                                                 Rp.{" "}
                                                                 {data?.total_harga.toLocaleString()}
                                                             </div>
