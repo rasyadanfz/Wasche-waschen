@@ -125,6 +125,8 @@ export async function POST(req: NextRequest) {
                     },
                     data: {
                         kuantitas: checkOrderline.kuantitas + qty,
+                        total_harga:
+                            checkOrderline.total_harga + qty * pakaian!.price,
                     },
                 });
             }

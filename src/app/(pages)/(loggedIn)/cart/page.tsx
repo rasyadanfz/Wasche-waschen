@@ -12,7 +12,7 @@ export default async function Home() {
     }
 
     return (
-        <div>
+        <div className="pb-14">
             <CartPage session={session} />
         </div>
     );
