@@ -91,6 +91,13 @@ describe('Update a cart',()=>{
                     cy.wrap($div)
                         .find('button')
                         .click();
+                    cy.wrap($div)
+                        .find('button')
+                        .click();
+                    cy.wrap($div)
+                        .find('button')
+                        .click();
+                        
 
                     cy.wrap($div)
                         .find('h1.text-h6.mb-2') // Adjust the selector based on your actual HTML structure
@@ -112,6 +119,8 @@ describe('Update a cart',()=>{
                         .click();
                 }
             })
+
+        cy.wait(5000);
 
         cy.get('*[class^="flex flex-col md:flex-row justify-center items-between md:justify-between md:items-center gap-y-4"]')
             .each(($div,index)=>{
