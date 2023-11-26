@@ -218,7 +218,10 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
                                                                         </td>
                                                                         <td className="border border-black text-center py-2">
                                                                             Rp.{" "}
-                                                                            {orderline.harga_pakaian.toLocaleString()}
+                                                                            {(
+                                                                                orderline.total_harga /
+                                                                                orderline.kuantitas
+                                                                            ).toLocaleString()}
                                                                             /
                                                                             {
                                                                                 orderline.unit_pakaian
