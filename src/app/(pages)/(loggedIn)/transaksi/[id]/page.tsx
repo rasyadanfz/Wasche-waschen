@@ -259,8 +259,8 @@ export default function DetailTransaksiPage(props: DetailTransaksiPageProps) {
                                                         <div className="font-bold text-body">
                                                             Total Harga :
                                                         </div>
-                                                        <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md w-96">
-                                                            <div className="font-bold md:text-h6 text-md">
+                                                        <div className="flex border border-black bg-[#EDEDED] justify-between py-1.5 px-3 rounded-md w-64 md:w-96">
+                                                            <div className="font-bold md:text-h6 text-[0.8rem]">
                                                                 Rp.{" "}
                                                                 {data?.total_harga.toLocaleString()}
                                                             </div>
