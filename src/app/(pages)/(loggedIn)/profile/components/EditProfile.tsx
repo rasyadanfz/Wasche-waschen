@@ -141,7 +141,7 @@ export default function EditProfile() {
                         >
                             {!isAdmin && (
                                 <FormInput
-                                    className="w-96"
+                                    className="w-[16rem] md:w-[24rem] lg:w-[40rem]"
                                     type="text"
                                     id="name"
                                     placeholder="Masukkan Nama"
@@ -151,7 +151,7 @@ export default function EditProfile() {
                                 />
                             )}
                             <FormInput
-                                className="w-96"
+                                className="w-[16rem] md:w-[24rem] lg:w-[40rem]"
                                 type="text"
                                 id="email"
                                 placeholder="Masukkan Email"
@@ -160,7 +160,7 @@ export default function EditProfile() {
                                 onChange={handleInputChange}
                             />
                             <FormInput
-                                className="w-96"
+                                className="w-[16rem] md:w-[24rem] lg:w-[40rem]"
                                 type="text"
                                 id="no_telp"
                                 placeholder="Masukkan Nomor Telepon"
@@ -172,7 +172,7 @@ export default function EditProfile() {
                                 text="Save"
                                 id="submit"
                                 disabled={disabledSave()}
-                                className={`w-[24rem] mt-10 ${
+                                className={`w-[16rem] md:w-[24rem] lg:w-[40rem] mt-10 ${
                                     disabledSave() ? "cursor-not-allowed" : ""
                                 }`}
                             />
@@ -182,7 +182,7 @@ export default function EditProfile() {
                             type="danger"
                             text="Cancel"
                             onClick={() => router.push("/profile")}
-                            className={`w-[24rem] mt-2`}
+                            className={`w-[16rem] md:w-[24rem] lg:w-[40rem] mt-2`}
                         />
                     </div>
                 ) : (

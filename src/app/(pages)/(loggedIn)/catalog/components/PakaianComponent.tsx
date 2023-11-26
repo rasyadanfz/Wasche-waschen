@@ -71,7 +71,7 @@ const PakaianComponent = ({
     return (
         <div>
             <div
-                className={`border flex flex-col justify-between my-5 items-start gap-4 shadow-md transition-transform ${
+                className={`border flex flex-col justify-between my-5 items-center md:items-center gap-4 shadow-md transition-transform ${
                     isHovered ? "hover:scale-110" : ""
                 }`}
                 onMouseEnter={() => setIsHovered(true)}

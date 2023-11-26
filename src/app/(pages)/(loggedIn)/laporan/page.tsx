@@ -103,7 +103,7 @@ const LaporanPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="md:grid md:grid-cols-2 border border-black rounded-md p-3 my-3 shadow-md gap-x-5 items-center">
+                <div className="md:grid md:grid-cols-2 border border-black rounded-md p-3 my-3 shadow-md gap-x-10 items-center">
                     <div className="md:col-span-1 md:self-start">
                         <LaporanCard type="jenisPakaian">
                             <div className="mt-3">
