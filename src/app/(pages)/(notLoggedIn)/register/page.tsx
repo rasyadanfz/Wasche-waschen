@@ -12,7 +12,7 @@ const RegisterPage = async () => {
     }
 
     return (
-        <div className="lg:mt-5 lg:mx-20">
+        <div className="lg:mt-5 lg:mx-20 lg:h-[90vh] flex flex-col justify-center">
             <div className="hidden lg:flex justify-between items-center mb-5">
                 <div className="text-h3 font-itim text-primary-400">
                     Wäsche Waschen
@@ -24,7 +24,7 @@ const RegisterPage = async () => {
                     Login
                 </Link>
             </div>
-            <div className="lg:grid lg:grid-cols-2 lg:gap-x-12 lg:items-center lg:pb-6">
+            <div className="lg:grid lg:grid-cols-2 lg:gap-x-12 lg:items-center lg:pb-6 lg:my-auto">
                 <div className="flex flex-col px-10 py-4 mt-4 lg:mr-2 font-raleway lg:border-2 lg:border-black rounded-lg bg-[#FBFBFB]">
                     <div className="text-h3 font-bold">Register</div>
                     <p className="text-h6 mt-2">Hi, Welcome👋</p>
