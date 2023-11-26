@@ -86,7 +86,7 @@ export default function CartPage({ session }: { session: Session }) {
             <div className="success_toast">
                 <Toaster toastOptions={successToastOptions} />
             </div>
-            <div className="flex flex-col mt-[100px] mx-[150px]">
+            <div className="flex flex-col mt-[100px] mx-[1.5em] md:mx-[2.5em] lg:mx-[3em]">
                 <div className="flex items-baseline">
                     <p className="font-black text-2xl mb-[20px]">Keranjang</p>
                 </div>
@@ -115,7 +115,7 @@ export default function CartPage({ session }: { session: Session }) {
                 </div>
                 <div>
                     {dataKeranjang.length !== 0 ? (
-                        <div className="flex flex-row justify-end gap-x-[50px]">
+                        <div className="flex flex-row justify-between md:justify-end md:gap-x-[50px]">
                             <CreateOrderButton
                                 onClick={async () => {
                                     await updateCart(

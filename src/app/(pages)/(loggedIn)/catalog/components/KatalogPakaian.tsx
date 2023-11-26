@@ -157,45 +157,50 @@ const KatalogPakaian = () => {
 
     return (
         <div id="katalog_pakaian">
-            <div className="w-full min-h-screen mb-[50px] bg-backgroundcolor">
+            <div className="mx-5 min-h-screen mb-[50px] bg-backgroundcolor">
                 <div className="container mx-auto max-w-screen-lg">
-                    <h1 className="font-bold text-3xl mt-[100px] font-raleway text-h2">
+                    <h1 className="font-bold text-h3 mt-[100px] font-raleway md:text-h2">
                         Pakaian
                     </h1>
-                    <div className="flex flex-row justify-between gap-6 items-end">
-                        <div className="flex items-center border border-black hover:bg-white rounded-md w-full px-4 mt-4 h-14">
-                            <FaSearch size={18} />
-                            <input
-                                id="search_bar"
-                                type="text"
-                                placeholder="Cari Pakaian"
-                                className="px-4 py-2 outline-none bg-transparent w-full focus:ring-1"
-                                value={query}
-                                onChange={(e) => setQuery(e.target.value)}
-                                onKeyDown={(e) => {
-                                    if (e.key === "Enter") {
-                                        handleSearch();
-                                    }
-                                }}
-                            />
-                        </div>
-                        <div id="filter_dropdown">
-                            <Dropdown
-                                updateFilteredData={updateFilteredData}
-                                updateDataToOriginal={updateDataToOriginal}
-                            />
+                    <div className="flex flex-col md:flex-row md:justify-between gap-6 md:items-end">
+                        <div className="flex justify-between gap-6 items-end grow">
+                            <div className="flex items-center border border-black hover:bg-white rounded-md w-full px-4 mt-4 h-14">
+                                <FaSearch size={18} />
+                                <input
+                                    id="search_bar"
+                                    type="text"
+                                    placeholder="Cari Pakaian"
+                                    className="px-4 py-2 outline-none bg-transparent w-full focus:ring-1"
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            handleSearch();
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <div id="filter_dropdown">
+                                <Dropdown
+                                    updateFilteredData={updateFilteredData}
+                                    updateDataToOriginal={updateDataToOriginal}
+                                />
+                            </div>
                         </div>
                         {admin && (
                             <button
                                 id="create_button"
-                                className="font-semibold hover:cursor-pointer rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center h-14 border border-black hover:bg-secondary-300 bg-secondary-400"
+                                className="font-semibold hover:cursor-pointer text-white justify-center rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center h-14 border border-black hover:bg-secondary-300 bg-secondary-400"
                                 onClick={() => setIsCreateFormVisible(true)}
                             >
-                                Create
+                                Add New Pakaian
                             </button>
                         )}
                     </div>
-                    <div id="pakaian_card" className="grid grid-cols-4 gap-4">
+                    <div
+                        id="pakaian_card"
+                        className="flex flex-col gap-y-3 md:grid md:grid-cols-4 md:gap-4"
+                    >
                         {currentItems.map((pakaian: ExistingPakaian) => (
                             <PakaianComponent
                                 pakaian={pakaian}

@@ -56,17 +56,22 @@ const CreateForm = ({ closeCreateForm }: { closeCreateForm: () => void }) => {
 
         closeCreateForm();
         window.location.reload();
-    }
+    };
 
     return (
         <div className="bg-white border border-black-500 rounded-md p-6 shadow-xl">
             <div className="error_toast">
                 <Toaster toastOptions={errorToastOptions} />
             </div>
-            <div className="flex justify-end">
-                <button onClick={closeCreateForm}>
-                    <IoMdClose />
-                </button>
+            <div className="flex justify-between mb-4">
+                <div className="text-h6 font-bold font-raleway">
+                    New Pakaian
+                </div>
+                <div className="flex justify-end">
+                    <button onClick={closeCreateForm}>
+                        <IoMdClose />
+                    </button>
+                </div>
             </div>
             <form
                 action=""
