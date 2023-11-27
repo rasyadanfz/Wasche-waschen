@@ -20,6 +20,7 @@ export async function PUT(req: NextRequest) {
             const delPakaian = await prisma.orderline.deleteMany({
                 where: {
                     pakaianId: ClothesCartData[i].pakaianId,
+                    keranjangId: keranjang?.id,
                 },
             });
         } else {

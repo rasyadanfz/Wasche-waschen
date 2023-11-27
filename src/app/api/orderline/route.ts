@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import prisma from "../../../../prismaSingleton/prismaSingleClient";
 
 export async function PATCH(req: NextRequest) {
@@ -114,6 +113,7 @@ export async function POST(req: NextRequest) {
                                 id: keranjang.id,
                             },
                         },
+                        transaksiId: undefined,
                     },
                 });
             } else {

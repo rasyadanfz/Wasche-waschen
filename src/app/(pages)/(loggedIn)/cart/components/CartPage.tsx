@@ -105,7 +105,7 @@ export default function CartPage({ session }: { session: Session }) {
 
 
     return (
-        <div id="CartPage">
+        <div id="keranjang_cart">
             {isLoading ? (
                 <div className="absolute translate-x-[-50%] translate-y-[-50%] animate-pulse top-[50%] left-[50%] text-h2  font-raleway font-bold">
                     <div>Loading...</div>
@@ -117,35 +117,46 @@ export default function CartPage({ session }: { session: Session }) {
                     </div>
                     <div className="flex flex-col mt-[100px]">
                         <div className="flex items-baseline">
-                            <p className="font-black text-2xl mb-[20px]">
+                            <p className="font-bold text-h3 md:text-h2 font-raleway mb-[20px]">
                                 Keranjang
                             </p>
                         </div>
                         <div>
                             {dataKeranjang.length === 0 ? (
                                 <div className="text-center absolute top-[50%] left-[50%] translate-x-[-50%] items-center justify-center">
-                                    <p className="font-black text-2xl">
+                                    <p className="font-semibold text-h5 md:text-h4 font-raleway">
                                         Keranjang Kosong
                                     </p>
                                 </div>
                             ) : (
-                                <div id="keranjang_card">
-                                    {dataKeranjang.map(
-                                        (
-                                            item: ClothesCartData,
-                                            index: number
-                                        ) => (
-                                            <CartCard
-                                                subtract={() =>
-                                                    handleSubtract(index)
-                                                }
-                                                key={index}
-                                                pakaianNama={item.pakaianNama}
-                                                total_harga={item.total_harga}
-                                                kuantitas={item.kuantitas}
-                                            />
-                                        )
-                                    )}
+                                <div>
+                                    <div id="keranjang_card">
+                                        {dataKeranjang.map(
+                                            (
+                                                item: ClothesCartData,
+                                                index: number
+                                            ) => (
+                                                <CartCard
+                                                    subtract={() =>
+                                                        handleSubtract(index)
+                                                    }
+                                                    key={index}
+                                                    pakaianNama={
+                                                        item.pakaianNama
+                                                    }
+                                                    total_harga={
+                                                        item.total_harga
+                                                    }
+                                                    kuantitas={item.kuantitas}
+                                                />
+                                            )
+                                        )}
+                                    </div>
+                                    <div className="flex justify-end ">
+                                        <TotalHargaCart
+                                            total_harga={totalPriceCart}
+                                        />
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -170,6 +181,7 @@ export default function CartPage({ session }: { session: Session }) {
                                         text="Update Keranjang"
                                     />
                                     <CreateOrderButton
+                                        id="Create_Order"
                                         onClick={async () => {
                                             await createNewTransaction(
                                                 session!.user.id
@@ -184,8 +196,13 @@ export default function CartPage({ session }: { session: Session }) {
                                                 );
                                             }, 1500);
                                         }}
-                                        className="items-center justify-center px-4 py-2 font-bold text-white"
-                                        id="Create_Order"
+
+                                        disabled={isChanged}
+                                        className={`items-center justify-center px-4 py-2 font-bold text-white ${
+                                            isChanged
+                                                ? "hover:cursor-not-allowed bg-primary-400 hover:bg-primary-400"
+                                                : ""
+                                        }`}
                                     />
                                 </div>
                             ) : (
