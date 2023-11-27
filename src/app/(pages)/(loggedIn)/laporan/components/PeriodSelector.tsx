@@ -8,7 +8,7 @@ const PeriodSelector = ({ onChange }: { onChange: (type: string) => void }) => {
     return (
         <div>
             <div
-                className="relative flex justify-between px-4 py-1 border border-black rounded-md hover:bg-gray-200 hover:cursor-pointer"
+                className="relative flex justify-between px-4 py-2 border border-black rounded-md hover:bg-gray-200 hover:cursor-pointer"
                 onClick={() => setShowDropdown(!showDropdown)}
             >
                 <p id="choice">{choice}</p>
