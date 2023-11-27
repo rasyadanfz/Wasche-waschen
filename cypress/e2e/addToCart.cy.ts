@@ -1,5 +1,3 @@
-import { Pakaian } from "@prisma/client";
-
 describe('Add some clothes to cart',()=>{
 
     let pakaianFromDatabase:any;
@@ -25,6 +23,8 @@ describe('Add some clothes to cart',()=>{
                 cy.wrap($div)
                     .find('#add_button')
                     .click();
+                
+                cntPakaian++;
             })     
 
         cy.get('#add_to_cart')
@@ -34,71 +34,61 @@ describe('Add some clothes to cart',()=>{
         cy.wait(3000)
     })
 
+    it('The cart should have the same quantity and price',()=>{
+        cy.visit('/cart')
+        cy.wait(5000)
 
-    // it('The cart should have the same quantity and price',()=>{
-    //     cy.visit('/cart')
-    //     cy.wait(5000)
+        cy.get('#keranjang_card')
+            .children('div')
+            .each(($div)=>{
+                let pakaianName:string;
+                let pakaianQuantity:number;
+                let pakaianTotalHarga:number;
 
-    //     cy.get('*[class^="flex flex-row justify-between items-center"]')
-    //         .each(($div,index)=>{
-    //             let pakaianName:string;
-    //             let pakaianQuantity:number;
-    //             let pakaianTotalHarga:number;
+                cy.wrap($div)
+                    .find('div > div > h1')
+                    .invoke('text')
+                    .then((text)=>{
+                        pakaianName = text;
+                    })
 
-    //             cy.wrap($div)
-    //                 .find('h1.text-h6.mb-2') // Adjust the selector based on your actual HTML structure
-    //                 .invoke('text')
-    //                 .then((text) => {
-    //                 pakaianName = text;
-    //             });
-
-                
-    //             cy.wrap($div)
-    //                 .find('div.flex.flex-row.gap-5')
-    //                 .find('div')
-    //                 .eq(2)
-    //                 .find('p')
-    //                 .eq(0)
-    //                 .invoke('text')
-    //                 .then((text)=>{
-    //                     const number = parseInt(text);
-    //                     expect(number).to.be.a('number');
-    //                     pakaianQuantity = number;
-    //                 });
-                
-    //             cy.wrap($div)
-    //                 .find('div.flex.flex-row.gap-5')
-    //                 .find('div')
-    //                 .eq(2)
-    //                 .find('p')
-    //                 .eq(1)
-    //                 .invoke('text')
-    //                 .then((text)=>{
-    //                     const number = parseInt(text);
-    //                     expect(number).to.be.a('number');
-    //                     pakaianTotalHarga = number;
-    //                 });
-
-                
-    //             cntPakaianCart++;
-
+                cy.wrap($div)
+                    .find('div > div > div')
+                    .children('div')
+                    .eq(2)
+                    .children('p')
+                    .each(($p,index)=>{
                     
-    //             cy.then(()=>{
-    //                 cy.log(`Pakaian ${pakaianName} has the quantity of ${pakaianQuantity} with total harga of ${pakaianTotalHarga}`)
+                        cy.wrap($p)
+                            .invoke('text')
+                            .then((text)=>{
+                                if(index === 0){
+                                    const num = parseInt(text);
+                                    expect(num).to.be.a('number');
+                                    pakaianQuantity = num;
+                                }else{
+                                    const num = parseInt(text);
+                                    expect(num).to.be.a('number');
+                                    pakaianTotalHarga = num;
+                                }
+                            })
 
-    //                 for(let i = 0;i < pakaianFromDatabase.length;i++){
-    //                     if(pakaianName === pakaianFromDatabase[i].name){
-    //                         // same
-    //                     expect(pakaianTotalHarga).to.equal(pakaianFromDatabase[i].price*pakaianQuantity)
-    //                     }
-    //                 }
+                    })
 
-    //             });
+                cy.then(()=>{
+                    for(let i = 0;i < pakaianFromDatabase.length;i++){
+                        if(pakaianFromDatabase[i].name === pakaianName){
+                            // same
+                            expect(pakaianTotalHarga).to.equal(pakaianFromDatabase[i].price*pakaianQuantity);
+                        }
+                    }
+                })
+                
+                cntPakaianCart++;
+            }).then(()=>{
+                expect(cntPakaian).to.equal(cntPakaianCart)
+            })
 
-    //         }).then(()=>{
-    //             expect(cntPakaian).to.equal(cntPakaianCart)
-    //         })
-    // })
-
+    })
 
 })
