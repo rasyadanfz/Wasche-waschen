@@ -24,6 +24,8 @@ describe('Create a new Transaction',()=>{
                 
                 cntPakaian++;
             })     
+        
+        cy.wait(1500)
 
         cy.get('#add_to_cart')
             .find('button')
