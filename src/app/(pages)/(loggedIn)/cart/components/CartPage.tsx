@@ -6,7 +6,14 @@ import CreateOrderButton from "./CreateOrderButton";
 import { Session } from "next-auth";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import TotalHargaCart from "./TotalHargaCart";
 import { errorToastOptions, successToastOptions } from "@/toastConfig";
+
+function calculateTotalHarga(arr: ClothesCartData[]) {
+    var sum = 0;
+    for (let i = 0; i < arr.length; i++) sum += arr[i].total_harga;
+    return sum;
+}
 
 async function updateCart(newCart: ClothesCartData[], userId: string) {
     const res = await fetch("/api/keranjang", {
@@ -36,9 +43,11 @@ async function createNewTransaction(userId: string) {
         }),
     });
 
+    console.log(res);
+
     const data = await res.json();
 
-    return res;
+    return data;
 }
 
 async function getDataKeranjang(userId: string) {
@@ -58,6 +67,17 @@ export default function CartPage({ session }: { session: Session }) {
     const [dataKeranjang, setDataKeranjang] = useState<ClothesCartData[]>([]);
     const [countChange, setCountChange] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
+    const [totalPriceCart, setPriceCart] = useState(0);
+    const [isChanged, setisChanged] = useState(false);
+
+    useEffect(() => {
+        // fetch totalPriceCart with utils
+        setPriceCart(calculateTotalHarga(dataKeranjang));
+    }, [dataKeranjang]);
+
+    // useEffect(()=>{
+    //     setisChanged(true)
+    // },[dataKeranjang]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -81,7 +101,10 @@ export default function CartPage({ session }: { session: Session }) {
             newValues[index].total_harga -= eachValue;
             setDataKeranjang(newValues);
         }
+        setisChanged(true);
     };
+
+    console.log(isChanged);
 
     return (
         <div>
