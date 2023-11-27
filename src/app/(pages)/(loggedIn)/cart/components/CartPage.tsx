@@ -6,7 +6,9 @@ import CreateOrderButton from "./CreateOrderButton";
 import { Session } from "next-auth";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import TotalHargaCart from "./TotalHargaCart";
 import { errorToastOptions, successToastOptions } from "@/toastConfig";
+import { calculateTotalHarga } from "@/app/utils/totalharga";
 
 async function updateCart(newCart: ClothesCartData[], userId: string) {
     const res = await fetch("/api/keranjang", {
@@ -57,6 +59,12 @@ export default function CartPage({ session }: { session: Session }) {
     const router = useRouter();
     const [dataKeranjang, setDataKeranjang] = useState<ClothesCartData[]>([]);
     const [countChange, setCountChange] = useState(0);
+    const [totalPriceCart,setPriceCart] = useState(0);
+
+    useEffect(()=>{
+        // fetch totalPriceCart with utils
+        setPriceCart(calculateTotalHarga(dataKeranjang));
+    },[dataKeranjang])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -98,19 +106,22 @@ export default function CartPage({ session }: { session: Session }) {
                             </p>
                         </div>
                     ) : (
-                        <div>
-                            {dataKeranjang.map(
-                                (item: ClothesCartData, index: number) => (
-                                    <CartCard
-                                        subtract={() => handleSubtract(index)}
-                                        key={index}
-                                        pakaianNama={item.pakaianNama}
-                                        total_harga={item.total_harga}
-                                        kuantitas={item.kuantitas}
-                                    />
-                                )
-                            )}
-                        </div>
+                        <><div>
+                                {dataKeranjang.map(
+                                    (item: ClothesCartData, index: number) => (
+                                        <CartCard
+                                            subtract={() => handleSubtract(index)}
+                                            key={index}
+                                            pakaianNama={item.pakaianNama}
+                                            total_harga={item.total_harga}
+                                            kuantitas={item.kuantitas} />
+                                    )
+                                )}
+                            </div>
+                            <div className="flex">
+                                <TotalHargaCart  total_harga={totalPriceCart}  />
+                            </div>
+                        </>
                     )}
                 </div>
                 <div>
