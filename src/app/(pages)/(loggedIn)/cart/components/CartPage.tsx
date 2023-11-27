@@ -117,14 +117,14 @@ export default function CartPage({ session }: { session: Session }) {
                     </div>
                     <div className="flex flex-col mt-[100px]">
                         <div className="flex items-baseline">
-                            <p className="font-black text-2xl mb-[20px]">
+                            <p className="font-bold text-h3 md:text-h2 font-raleway mb-[20px]">
                                 Keranjang
                             </p>
                         </div>
                         <div>
                             {dataKeranjang.length === 0 ? (
                                 <div className="text-center absolute top-[50%] left-[50%] translate-x-[-50%] items-center justify-center">
-                                    <p className="font-black text-2xl">
+                                    <p className="font-semibold text-h5 md:text-h4 font-raleway">
                                         Keranjang Kosong
                                     </p>
                                 </div>
