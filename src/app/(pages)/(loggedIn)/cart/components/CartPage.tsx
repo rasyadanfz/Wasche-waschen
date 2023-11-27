@@ -50,15 +50,22 @@ async function createNewTransaction(userId: string) {
 }
 
 async function getDataKeranjang(userId: string) {
-    const res = await fetch(`/api/keranjang/${userId}`, {
-        method: "GET",
-    });
+    try {
+        const res = await fetch(`/api/keranjang/${userId}`, {
+            method: "GET",
+        });
 
-    let dataKeranjang;
-    if (res !== undefined) dataKeranjang = await res.json();
-    else dataKeranjang = [];
+        if (!res.ok) {
+            throw new Error(`Failed to fetch data: ${res.statusText}`);
+        }
 
-    return dataKeranjang.cartClothesData;
+        const data = await res.json();
+
+        return data.cartClothesData || []; // Return an empty array if cartClothesData is undefined
+    } catch (error) {
+        console.error("Error fetching data: ", error);
+        return [];
+    }
 }
 
 export default function CartPage({ session }: { session: Session }) {
@@ -164,6 +171,7 @@ export default function CartPage({ session }: { session: Session }) {
                             {dataKeranjang.length !== 0 ? (
                                 <div className="flex flex-row justify-between md:justify-end md:gap-x-[50px]">
                                     <CreateOrderButton
+                                    id="update_keranjang"
                                         onClick={async () => {
                                             await updateCart(
                                                 dataKeranjang,

@@ -123,6 +123,7 @@ const KatalogPakaian = () => {
 
     useEffect(() => {
         handleAddToCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cartCount]);
 
     const handleAddToCart = () => {
