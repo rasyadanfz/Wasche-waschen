@@ -1,17 +1,19 @@
-<h1 align="center">Tugas Besar</h1>
-<h3 align="center">IFIF3152 - Software Engineering IST</h3>
-<h4 align="center">Kelompok 3</h4>
+<div align="center">
+    <h1>Tugas Besar</h1>
+    <h3>IFIF3152 - Software Engineering IST</h3>
+    <h4>Kelompok 3</h4>
+</div>
 <br>
 
 # Wäsche waschen
 
 ## List of Contents
-1. Description
-2. Group's Members
-3. Tech Stack
-4. How to Run
-5. Database Table
-6. List of Use Cases and the Implementers
+1. [Description](#description)
+2. [Group's Members](#groups-members)
+3. [Tech Stack](#tech-stack)
+4. [How to Run](#how-to-run)
+5. [Database Table](#database-table)
+6. [List of Use Cases and the Implementers](#list-of-use-cases-and-the-implementers)
 
 ## Description
 Perangkat lunak Wäsche waschen merupakan sebuah sistem manajemen laundry berbasis website. Aplikasi ini dibuat untuk mengotomatisasi beberapa proses bisnis dalam bisnis laundry sehingga dapat meningkatkan efisiensi operasional bisnis.
@@ -25,20 +27,22 @@ Perangkat lunak Wäsche waschen merupakan sebuah sistem manajemen laundry berbas
     </tr>
     <tr align="center">
         <td>1.</td>
-        <td>2.</td>
-        <td>3.</td>
-        <td>4.</td>
-    </tr>
-    <tr align="center">
         <td>Frendy Sanusi</td>
-        <td>Ahmad Rizki</td>
-        <td>Jonathan Arthurito Aldi Sinaga</td>
-        <td>Rasyadan Faza Safiqur Rahman</td>
+        <td>18221041</td>
     </tr>
     <tr align="center">
-        <td>18221041</td>
+        <td>2.</td>
+        <td>Ahmad Rizki</td>
         <td>18221071</td>
+    </tr>
+    <tr align="center">
+        <td>3.</td>
+        <td>Jonathan Arthurito Aldi Sinaga</td>
         <td>18221079</td>
+    </tr>
+    <tr align="center">
+        <td>4.</td>
+        <td>Rasyadan Faza Safiqur Rahman</td>
         <td>18221103</td>
     </tr>
 </table>
@@ -249,7 +253,7 @@ npm run program
 ![delete_pakaian_page](docs/delete_pakaian_page.png)
 
 11. Melihat Daftar Transaksi (18221071 Ahmad Rizki)
-
+![daftar_transaksi_page](docs/daftar_transaksi_page.png)
 
 12. Melihat Detail Transaksi (18221071 Ahmad Rizki)
 ![detail_transaksi_page](docs/detail_transaksi_page.png)
