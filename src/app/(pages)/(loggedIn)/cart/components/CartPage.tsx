@@ -98,7 +98,7 @@ export default function CartPage({ session }: { session: Session }) {
                             </p>
                         </div>
                     ) : (
-                        <div>
+                        <div id="keranjang_card">
                             {dataKeranjang.map(
                                 (item: ClothesCartData, index: number) => (
                                     <CartCard
@@ -116,7 +116,7 @@ export default function CartPage({ session }: { session: Session }) {
                 <div>
                     {dataKeranjang.length !== 0 ? (
                         <div className="flex flex-row justify-between md:justify-end md:gap-x-[50px]">
-                            <CreateOrderButton
+                            <CreateOrderButton id={"update_keranjang"}
                                 onClick={async () => {
                                     await updateCart(
                                         dataKeranjang,
