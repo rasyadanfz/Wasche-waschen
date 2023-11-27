@@ -218,6 +218,14 @@ export async function POST(req: NextRequest) {
             keranjangId: keranjang.id,
         },
     });
+
+    if (orderLineList.length === 0) {
+        return NextResponse.json(
+            { message: "Keranjang is empty!" },
+            { status: 400 }
+        );
+    }
+
     const numOfTransaction = await prisma.transaksi.aggregate({
         _count: {
             id: true,

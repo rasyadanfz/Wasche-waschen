@@ -144,7 +144,8 @@ const Dropdown = ({
                             id="clear"
                             onClick={handleClearFilter}
                             text="Clear Filter(s)"
-                            className="p-2 flex"
+                            className="p-2 flex bg-white hover:bg-gray-100 active:bg-gray-100 border border-black"
+                            type="clear"
                         />
                     </div>
                 </div>
