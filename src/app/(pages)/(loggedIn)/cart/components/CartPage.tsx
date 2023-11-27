@@ -8,7 +8,12 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import TotalHargaCart from "./TotalHargaCart";
 import { errorToastOptions, successToastOptions } from "@/toastConfig";
-import { calculateTotalHarga } from "@/app/utils/totalharga";
+
+function calculateTotalHarga(arr:ClothesCartData[]){
+    var sum = 0;
+    for(let i = 0;i < arr.length;i++) sum += arr[i].total_harga;
+    return sum;
+}
 
 async function updateCart(newCart: ClothesCartData[], userId: string) {
     const res = await fetch("/api/keranjang", {
@@ -37,10 +42,12 @@ async function createNewTransaction(userId: string) {
             userId: userId,
         }),
     });
+    
+    console.log(res);
 
     const data = await res.json();
 
-    return res;
+    return data;
 }
 
 async function getDataKeranjang(userId: string) {
@@ -60,11 +67,16 @@ export default function CartPage({ session }: { session: Session }) {
     const [dataKeranjang, setDataKeranjang] = useState<ClothesCartData[]>([]);
     const [countChange, setCountChange] = useState(0);
     const [totalPriceCart,setPriceCart] = useState(0);
+    const [isChanged,setisChanged] = useState(false);
 
     useEffect(()=>{
         // fetch totalPriceCart with utils
         setPriceCart(calculateTotalHarga(dataKeranjang));
     },[dataKeranjang])
+
+    // useEffect(()=>{
+    //     setisChanged(true)
+    // },[dataKeranjang]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -87,7 +99,10 @@ export default function CartPage({ session }: { session: Session }) {
             newValues[index].total_harga -= eachValue;
             setDataKeranjang(newValues);
         }
+        setisChanged(true);
     };
+
+    console.log(isChanged)
 
     return (
         <>
@@ -133,6 +148,7 @@ export default function CartPage({ session }: { session: Session }) {
                                         dataKeranjang,
                                         session!.user.id
                                     );
+                                    setisChanged(false);
                                     setCountChange(countChange + 1);
                                     toast.success("Barang berhasil diubah!");
                                     setTimeout(() => {
@@ -141,6 +157,7 @@ export default function CartPage({ session }: { session: Session }) {
                                 }}
                                 className="items-center justify-center px-4 py-2 font-bold text-white"
                                 text="Update Keranjang"
+                                
                             />
                             <CreateOrderButton
                                 onClick={async () => {
@@ -152,8 +169,12 @@ export default function CartPage({ session }: { session: Session }) {
                                     setTimeout(() => {
                                         router.push("/riwayat-transaksi");
                                     }, 1500);
+                                    
+                            
+                                    
                                 }}
                                 className="items-center justify-center px-4 py-2 font-bold text-white"
+                                disabled={isChanged}
                             />
                         </div>
                     ) : (
