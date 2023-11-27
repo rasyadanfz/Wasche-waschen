@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import prisma from "../../../../prismaSingleton/prismaSingleClient";
 
 export async function PATCH(req: NextRequest) {
@@ -69,6 +68,9 @@ export async function POST(req: NextRequest) {
     if (!keranjang) {
         return NextResponse.json({ error: "No Keranjang" }, { status: 400 });
     }
+
+    const updates: Promise<any>[] = [];
+
     for (let i = 0; i < pakaianInCart.length; i++) {
         if (pakaianInCart[i].count != 0) {
             // check whether there's already an orderline of that pakaian or not
@@ -78,20 +80,12 @@ export async function POST(req: NextRequest) {
                 where: {
                     id: existingPakaianId,
                 },
-                select: {
-                    pakaianId: true,
-                },
-            });
-            const pakaian = await prisma.pakaian.findUnique({
-                where: {
-                    id: existingpakaian!.pakaianId,
-                },
             });
 
             const tempOrderline = await prisma.orderline.findMany({
                 where: {
                     keranjangId: keranjang.id,
-                    pakaianId: pakaian!.id,
+                    pakaianId: existingpakaian!.pakaianId,
                 },
             });
 
@@ -99,39 +93,47 @@ export async function POST(req: NextRequest) {
 
             if (!checkOrderline) {
                 // there is no orderlin
-                const createOrderline = await prisma.orderline.create({
-                    data: {
-                        kuantitas: qty,
-                        total_harga: pakaian!.price * qty,
-                        noted: "noted",
-                        pakaian: {
-                            connect: {
-                                id: pakaian!.id,
+                updates.push(
+                    prisma.orderline.create({
+                        data: {
+                            kuantitas: qty,
+                            total_harga: existingpakaian!.price * qty,
+                            noted: "noted",
+                            pakaian: {
+                                connect: {
+                                    id: existingpakaian!.pakaianId,
+                                },
                             },
-                        },
-                        keranjang: {
-                            connect: {
-                                id: keranjang.id,
+                            keranjang: {
+                                connect: {
+                                    id: keranjang.id,
+                                },
                             },
+                            transaksiId: undefined,
                         },
-                    },
-                });
+                    })
+                );
             } else {
                 // update old orderline
-                const updateOrderline = await prisma.orderline.updateMany({
-                    where: {
-                        pakaianId: pakaian!.id,
-                        keranjangId: keranjang.id,
-                    },
-                    data: {
-                        kuantitas: checkOrderline.kuantitas + qty,
-                        total_harga:
-                            checkOrderline.total_harga + qty * pakaian!.price,
-                    },
-                });
+                updates.push(
+                    prisma.orderline.updateMany({
+                        where: {
+                            pakaianId: existingpakaian!.pakaianId,
+                            keranjangId: keranjang.id,
+                        },
+                        data: {
+                            kuantitas: checkOrderline.kuantitas + qty,
+                            total_harga:
+                                checkOrderline.total_harga +
+                                qty * existingpakaian!.price,
+                        },
+                    })
+                );
             }
         }
     }
+
+    await Promise.all(updates);
 
     return NextResponse.json(
         { message: "Succesfully added pakaian" },
