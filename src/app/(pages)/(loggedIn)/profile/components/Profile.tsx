@@ -49,7 +49,7 @@ export default function Profile() {
 
     if (loading) {
         return (
-            <div className="animate-pulse min-h-screen flex items-center justify-center text-h4">
+            <div className="absolute translate-x-[-50%] translate-y-[-50%] animate-pulse top-[50%] left-[50%] text-h2 font-raleway font-bold">
                 Loading...
             </div>
         );

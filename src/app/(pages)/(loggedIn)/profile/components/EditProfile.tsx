@@ -31,7 +31,7 @@ export default function EditProfile() {
         no_telp: "",
     });
 
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -41,8 +41,8 @@ export default function EditProfile() {
             const email = user?.email;
             const no_telp = user?.no_telp;
             const role = user?.role;
-            if (role === "Admin") {
-                setIsAdmin(true);
+            if (role === "Customer") {
+                setIsAdmin(false);
             }
             setCurrData({
                 id: user?.id ?? "",
@@ -119,6 +119,117 @@ export default function EditProfile() {
         );
     };
 
+    const editFormCustomer = (
+        <div>
+            <h1 className="text-h3 font-bold text-center mb-10">
+                Edit Profile
+            </h1>
+            <div className="flex flex-col items-center justify-center">
+                <form
+                    action=""
+                    className="flex flex-col gap-2"
+                    onSubmit={handleSave}
+                >
+                    <FormInput
+                        className="w-[16rem] md:w-[24rem] lg:w-[40rem]"
+                        type="text"
+                        id="name"
+                        placeholder="Masukkan Nama"
+                        text="Nama"
+                        value={currData.name}
+                        onChange={handleInputChange}
+                    />
+                    <FormInput
+                        className="w-[16rem] md:w-[24rem] lg:w-[40rem]"
+                        type="text"
+                        id="email"
+                        placeholder="Masukkan Email"
+                        text="Email"
+                        value={currData.email}
+                        onChange={handleInputChange}
+                    />
+                    <FormInput
+                        className="w-[16rem] md:w-[24rem] lg:w-[40rem]"
+                        type="text"
+                        id="no_telp"
+                        placeholder="Masukkan Nomor Telepon"
+                        text="Nomor Telepon"
+                        value={currData.no_telp}
+                        onChange={handleInputChange}
+                    />
+                    <Button
+                        text="Save"
+                        id="submit"
+                        disabled={disabledSave()}
+                        className={`w-[16rem] md:w-[24rem] lg:w-[40rem] mt-10 ${
+                            disabledSave()
+                                ? "cursor-not-allowed hover:bg-primary-400 active:bg-primary-400"
+                                : ""
+                        }`}
+                    />
+                </form>
+                <Button
+                    id="cancelBtn"
+                    type="danger"
+                    text="Cancel"
+                    onClick={() => router.push("/profile")}
+                    className={`w-[16rem] md:w-[24rem] lg:w-[40rem] mt-2`}
+                />
+            </div>
+        </div>
+    );
+
+    const editFormAdmin = (
+        <div>
+            <h1 className="text-h3 font-bold text-center mb-10">
+                Edit Profile
+            </h1>
+            <div className="flex flex-col items-center justify-center">
+                <form
+                    action=""
+                    className="flex flex-col gap-2"
+                    onSubmit={handleSave}
+                >
+                    <FormInput
+                        className="w-[16rem] md:w-[24rem] lg:w-[40rem]"
+                        type="text"
+                        id="email"
+                        placeholder="Masukkan Email"
+                        text="Email"
+                        value={currData.email}
+                        onChange={handleInputChange}
+                    />
+                    <FormInput
+                        className="w-[16rem] md:w-[24rem] lg:w-[40rem]"
+                        type="text"
+                        id="no_telp"
+                        placeholder="Masukkan Nomor Telepon"
+                        text="Nomor Telepon"
+                        value={currData.no_telp}
+                        onChange={handleInputChange}
+                    />
+                    <Button
+                        text="Save"
+                        id="submit"
+                        disabled={disabledSave()}
+                        className={`w-[16rem] md:w-[24rem] lg:w-[40rem] mt-10 ${
+                            disabledSave()
+                                ? "cursor-not-allowed hover:bg-primary-400 active:bg-primary-400"
+                                : ""
+                        }`}
+                    />
+                </form>
+                <Button
+                    id="cancelBtn"
+                    type="danger"
+                    text="Cancel"
+                    onClick={() => router.push("/profile")}
+                    className={`w-[16rem] md:w-[24rem] lg:w-[40rem] mt-2`}
+                />
+            </div>
+        </div>
+    );
+
     return (
         <div id="profile">
             <div className="error_toast">
@@ -127,68 +238,15 @@ export default function EditProfile() {
                     toastOptions={errorToastOptions}
                 />
             </div>
-            <div className="container mx-auto mt-[100px] xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
-                <h1 className="text-h3 font-bold text-center mb-10">
-                    Edit Profile
-                </h1>
-
-                {!isLoading ? (
-                    <div className="flex flex-col items-center justify-center">
-                        <form
-                            action=""
-                            className="flex flex-col gap-2"
-                            onSubmit={handleSave}
-                        >
-                            {!isAdmin && (
-                                <FormInput
-                                    className="w-[16rem] md:w-[24rem] lg:w-[40rem]"
-                                    type="text"
-                                    id="name"
-                                    placeholder="Masukkan Nama"
-                                    text="Nama"
-                                    value={currData.name}
-                                    onChange={handleInputChange}
-                                />
-                            )}
-                            <FormInput
-                                className="w-[16rem] md:w-[24rem] lg:w-[40rem]"
-                                type="text"
-                                id="email"
-                                placeholder="Masukkan Email"
-                                text="Email"
-                                value={currData.email}
-                                onChange={handleInputChange}
-                            />
-                            <FormInput
-                                className="w-[16rem] md:w-[24rem] lg:w-[40rem]"
-                                type="text"
-                                id="no_telp"
-                                placeholder="Masukkan Nomor Telepon"
-                                text="Nomor Telepon"
-                                value={currData.no_telp}
-                                onChange={handleInputChange}
-                            />
-                            <Button
-                                text="Save"
-                                id="submit"
-                                disabled={disabledSave()}
-                                className={`w-[16rem] md:w-[24rem] lg:w-[40rem] mt-10 ${
-                                    disabledSave() ? "cursor-not-allowed" : ""
-                                }`}
-                            />
-                        </form>
-                        <Button
-                            id="cancelBtn"
-                            type="danger"
-                            text="Cancel"
-                            onClick={() => router.push("/profile")}
-                            className={`w-[16rem] md:w-[24rem] lg:w-[40rem] mt-2`}
-                        />
-                    </div>
-                ) : (
+            <div className="container mx-auto mt-[120px] xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md">
+                {isLoading ? (
                     <div className="absolute translate-x-[-50%] translate-y-[-50%] animate-pulse top-[50%] left-[50%] text-h2 font-raleway font-bold">
                         <div>Loading...</div>
                     </div>
+                ) : isAdmin ? (
+                    editFormAdmin
+                ) : (
+                    editFormCustomer
                 )}
             </div>
         </div>
