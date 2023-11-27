@@ -98,7 +98,7 @@ export default function CartPage({ session }: { session: Session }) {
                             </p>
                         </div>
                     ) : (
-                        <div>
+                        <div id="keranjang_card">
                             {dataKeranjang.map(
                                 (item: ClothesCartData, index: number) => (
                                     <CartCard
