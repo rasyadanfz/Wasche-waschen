@@ -5,7 +5,9 @@
 </div>
 <br>
 
-[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Itim&size=48&pause=1000&center=true&vCenter=true&random=false&width=650&height=60&lines=W%C3%A4scheWaschen;18221041+Frendy+Sanusi;18221071+Ahmad+Rizki;18221079+Jonathan+Arthurito;18221103+Rasyadan+Faza)](https://git.io/typing-svg)
+<div align="center">
+    <img src="https://readme-typing-svg.herokuapp.com?font=Itim&size=48&pause=1000&center=true&vCenter=true&random=false&width=650&height=60&lines=W%C3%A4scheWaschen;18221041+Frendy+Sanusi;18221071+Ahmad+Rizki;18221079+Jonathan+Arthurito;18221103+Rasyadan+Faza" alt="Typing SVG">
+</div>
 
 ## List of Contents
 1. [Description](#description)
