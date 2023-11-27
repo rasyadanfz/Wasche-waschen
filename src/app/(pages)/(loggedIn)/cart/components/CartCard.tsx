@@ -7,7 +7,7 @@ export default function CartCard({
     subtract,
 }: ClothesCartData) {
     return (
-        <>
+        <div id="CartCard">
             <div className="border border-black rounded-md p-4 relative duration-100 bg-[#EDEDED] my-[20px]">
                 <div className="flex flex-col md:flex-row justify-center items-between md:justify-between md:items-center gap-y-4">
                     <div>
@@ -16,7 +16,7 @@ export default function CartCard({
                         </h1>
                         <div className="flex flex-row gap-5">
                             <div className="">
-                                <p>Kuantitas</p>
+                                <p id="kuantitas">Kuantitas</p>
                                 <p>Total Harga</p>
                             </div>
                             <div className="ml-4">
@@ -24,16 +24,16 @@ export default function CartCard({
                                 <p>:</p>
                             </div>
                             <div className="">
-                                <p>{kuantitas}</p>
+                                <p id="kuantitas">{kuantitas}</p>
                                 <p>{total_harga}</p>
                             </div>
                         </div>
                     </div>
                     <div className="justify-self-end items-end">
-                        <MinusButton onClick={subtract} />
+                        <MinusButton onClick={subtract} id="substract_button"/>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
