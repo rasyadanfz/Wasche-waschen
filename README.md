@@ -55,6 +55,7 @@ Perangkat lunak Wäsche waschen merupakan sebuah sistem manajemen laundry berbas
 * React v18.0
 * Tailwind
 * MongoDB
+* Cypress (testing)
 
 ## How to run
 ### By localhost
