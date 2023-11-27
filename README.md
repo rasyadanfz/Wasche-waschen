@@ -60,12 +60,16 @@ Perangkat lunak Wäsche waschen merupakan sebuah sistem manajemen laundry berbas
 ### By localhost
 1. Clone respository ini
 
-2. Jalankan aplikasi menggunakan command berikut
+2. Copy file .env pada link berikut
+<br>https://drive.google.com/file/d/17x_NA3kzNUCkU6VmrA1oGRtvlHGO_CFm/view?usp=sharing
+<br><br>Note: file .env merupakan file rahasia sehingga hanya user tertentu saja yang bisa membuka link tersebut
+
+3. Jalankan aplikasi menggunakan command berikut
 ```
 npm run program
 ```
 
-3. Buka http://localhost:3000 pada browser Anda
+4. Buka http://localhost:3000 pada browser Anda
 
 ### By website
 1. Buka https://wasche-waschen.vercel.app/ pada browser Anda
@@ -221,49 +225,51 @@ npm run program
 
 ## List of Use Cases and the Implementers
 1. Mendaftarkan Akun (18221103 Rasyadan Faza Safiqur Rahman)
-![register_page](docs/register_page.png)
+![register_page](doc/register_page.png)
 
 2. Masuk ke Akun (18221103 Rasyadan Faza Safiqur Rahman)
-![login_page](docs/login_page.png)
+![login_page](doc/login_page.png)
 
 3. Melihat Daftar Pakaian (18221041 Frendy Sanusi)
-![katalog1_page](docs/katalog1_page.png)
-![katalog2_page](docs/katalog2_page.png)
-![katalog3_page](docs/katalog3_page.png)
+![katalog1_page](doc/katalog1_page.png)
+![katalog2_page](doc/katalog2_page.png)
+![katalog3_page](doc/katalog3_page.png)
 
 4. Mencari Jenis Pakaian (18221041 Frendy Sanusi)
-![cari_pakaian1](docs/cari_pakaian1_page.png)
-![cari_pakaian2](docs/cari_pakaian2_page.png)
+![cari_pakaian1](doc/cari_pakaian1_page.png)
+![cari_pakaian2](doc/cari_pakaian2_page.png)
 
 5. Menambah Pakaian ke Keranjang (18221079 Jonathan Arthurito Aldi Sinaga)
-![keranjang_page](docs/keranjang_page.png)
+![keranjang_page](doc/keranjang_page.png)
 
 6. Melihat Total Harga (18221079 Jonathan Arthurito Aldi Sinaga)
-
+<br>Sama dengan page use case 5
 
 7. Membuat Pesanan Baru (18221079 Jonathan Arthurito Aldi Sinaga)
 <br>Sama dengan page use case 8
 
 8. Melihat Riwayat Transaksi (18221071 Ahmad Rizki)
-![riwayat_transaksi_page](docs/riwayat_transaksi_page.png)
+![riwayat_transaksi_page](doc/riwayat_transaksi_page.png)
 
 9. Mengubah Harga Pakaian (18221041 Frendy Sanusi)
-![edit_pakaian_page](docs/edit_pakaian_page.png)
+![edit_pakaian_page](doc/edit_pakaian_page.png)
 
 10. Mengubah Daftar Pakaian (18221041 Frendy Sanusi)
-![create_pakaian_page](docs/create_pakaian_page.png)
-![delete_pakaian_page](docs/delete_pakaian_page.png)
+![create_pakaian_page](doc/create_pakaian_page.png)
+![delete_pakaian_page](doc/delete_pakaian_page.png)
 
 11. Melihat Daftar Transaksi (18221071 Ahmad Rizki)
-![daftar_transaksi_page](docs/daftar_transaksi_page.png)
+![daftar_transaksi_page](doc/daftar_transaksi_page.png)
 
 12. Melihat Detail Transaksi (18221071 Ahmad Rizki)
-![detail_transaksi_page](docs/detail_transaksi_page.png)
+![detail_transaksi_page](doc/detail_transaksi_page.png)
 
-13. Mengubah Status Pesanan (18221071 Ahmad Rizki) 
+13. Mengubah Status Pesanan (18221071 Ahmad Rizki)
+![mengubah_status_pesanan_page](doc/mengubah_status_pesanan_page.png)
+
 14. Melihat Laporan (18221103 Rasyadan Faza Safiqur Rahman)
-![laporan1_page](docs/laporan1_page.png)
-![laporan2_page](docs/laporan2_page.png)
+![laporan1_page](doc/laporan1_page.png)
+![laporan2_page](doc/laporan2_page.png)
 
 15. Page Profile (18221071)
-![profile_page](docs/profile_page.png)
+![profile_page](doc/profile_page.png)
