@@ -69,7 +69,7 @@ const PakaianComponent = ({
     const [isHovered, setIsHovered] = useState(false);
 
     return (
-        <div>
+        <div id="pakaianComponent">
             <div
                 className={`border flex flex-col justify-between my-5 items-center md:items-center gap-4 shadow-md transition-transform ${
                     isHovered ? "hover:scale-110" : ""
