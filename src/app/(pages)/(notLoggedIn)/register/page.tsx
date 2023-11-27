@@ -12,7 +12,7 @@ const RegisterPage = async () => {
     }
 
     return (
-        <div className="lg:mt-5 lg:mx-20 lg:h-[90vh] flex flex-col justify-center">
+        <div className="lg:mt-5 lg:mx-20 lg:h-full flex flex-col justify-center">
             <div className="hidden lg:flex justify-between items-center mb-5">
                 <div className="text-h3 font-itim text-primary-400">
                     Wäsche Waschen

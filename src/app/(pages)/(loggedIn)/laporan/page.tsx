@@ -68,11 +68,11 @@ const LaporanPage = () => {
         );
     } else {
         return (
-            <div className="mx-16 mb-2 mt-[100px]">
+            <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md px-5 sm:px-0 mt-[100px]">
                 <div className="text-h2 font-raleway font-bold mt-2 mb-5">
                     Laporan
                 </div>
-                <div className="max-w-[300px]">
+                <div className="max-w-full lg:max-w-[350px]">
                     <PeriodSelector onChange={setReportType} />
                 </div>
                 <div className="md:grid md:grid-cols-6 mt-2 md:gap-x-5 flex flex-col gap-y-5">
