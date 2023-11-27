@@ -160,7 +160,7 @@ export default function Transaksi() {
                         </div>
                     </div>
                 </div>
-                <div className=" flex flex-col gap-4 ">
+                <div className=" flex flex-col gap-4 " id="list_transaksi">
                     {dataTransaksi !== null ? (
                         currentItems.length > 0 ? (
                             currentItems.map((item: Transaksi) => (
