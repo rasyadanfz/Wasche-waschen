@@ -242,18 +242,23 @@ export async function POST(req: NextRequest) {
         },
     });
 
+    const updates: Promise<any>[] = [];
     // Update orderline data to have transaksiId and delete its keranjangId
     for (let i = 0; i < orderLineList.length; i++) {
-        const editOrderline = await prisma.orderline.update({
-            where: {
-                id: orderLineList[i].id,
-            },
-            data: {
-                keranjangId: null,
-                transaksiId: newTransaksi.id,
-            },
-        });
+        updates.push(
+            prisma.orderline.update({
+                where: {
+                    id: orderLineList[i].id,
+                },
+                data: {
+                    keranjangId: null,
+                    transaksiId: newTransaksi.id,
+                },
+            })
+        );
     }
+
+    await Promise.all(updates);
 
     return NextResponse.json(
         { message: "Succesfully created a new transaction", newTransaksi },
