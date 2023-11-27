@@ -46,17 +46,22 @@ const deleteOrderlinesandTransaction = async () => {
             email: "test12345@gmail.com",
         },
     });
-    await prisma.keranjang.delete({
-        where: {
-            userId: user.id,
-        },
-    });
-    await prisma.user.delete({
-        where: {
-            email: "test12345@gmail.com",
-        },
-    });
-    console.log("Orderlines & Transactions deleted!");
+    try {
+        await prisma.keranjang.delete({
+            where: {
+                userId: user.id,
+            },
+        });
+        await prisma.user.delete({
+            where: {
+                email: "test12345@gmail.com",
+            },
+        });
+    } catch (error) {
+        console.log(error);
+    } finally {
+        console.log("Orderlines & Transactions deleted!");
+    }
 };
 
 const seedOrderlineandTransactions = async () => {
