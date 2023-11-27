@@ -43,8 +43,7 @@ async function createNewTransaction(userId: string) {
         }),
     });
 
-    console.log(res);
-
+    
     const data = await res.json();
 
     return data;
@@ -104,10 +103,9 @@ export default function CartPage({ session }: { session: Session }) {
         setisChanged(true);
     };
 
-    console.log(isChanged);
 
     return (
-        <div>
+        <div id="CartPage">
             {isLoading ? (
                 <div className="absolute translate-x-[-50%] translate-y-[-50%] animate-pulse top-[50%] left-[50%] text-h2  font-raleway font-bold">
                     <div>Loading...</div>
@@ -131,7 +129,7 @@ export default function CartPage({ session }: { session: Session }) {
                                     </p>
                                 </div>
                             ) : (
-                                <div>
+                                <div id="keranjang_card">
                                     {dataKeranjang.map(
                                         (
                                             item: ClothesCartData,
