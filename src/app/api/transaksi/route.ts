@@ -219,10 +219,23 @@ export async function POST(req: NextRequest) {
         },
     });
 
+    if (orderLineList.length === 0) {
+        return NextResponse.json(
+            { message: "Keranjang is empty!" },
+            { status: 400 }
+        );
+    }
+
+    const numOfTransaction = await prisma.transaksi.aggregate({
+        _count: {
+            id: true,
+        },
+    });
+
     // Create new transaction
     const newTransaksi = await prisma.transaksi.create({
         data: {
-            nama: String("Testing"),
+            nama: String("Transaksi " + (numOfTransaction._count.id + 1)),
             total_harga: totalHarga(orderLineList),
             tanggal: new Date().toISOString().split("T")[0],
             userId: id,

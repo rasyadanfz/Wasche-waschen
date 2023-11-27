@@ -59,7 +59,11 @@ const Button = ({
                     {icon}
                     <div
                         className={
-                            type === "warning" ? "text-black" : "text-white"
+                            type === "warning"
+                                ? "text-black"
+                                : type === "clear"
+                                ? "text-black"
+                                : "text-white"
                         }
                     >
                         {text}

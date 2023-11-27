@@ -36,7 +36,7 @@ export default function Transaksi() {
         const fetchData = async () => {
             try {
                 const data = await getDataTransaksi();
-                setDataTransaksi(data);
+                setDataTransaksi(data.reverse());
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -151,19 +151,17 @@ export default function Transaksi() {
                 <div className="flex flex-col gap-4">
                     {dataTransaksi !== null ? (
                         currentItems.length > 0 ? (
-                            currentItems
-                                .reverse()
-                                .map((item: Transaksi) => (
-                                    <CardTransaksi
-                                        key={item.id}
-                                        id={item.id}
-                                        nama={item.nama}
-                                        tanggal={item.tanggal}
-                                        status={item.status}
-                                        total_harga={item.total_harga}
-                                        nama_customer={item.nama_customer}
-                                    />
-                                ))
+                            currentItems.map((item: Transaksi) => (
+                                <CardTransaksi
+                                    key={item.id}
+                                    id={item.id}
+                                    nama={item.nama}
+                                    tanggal={item.tanggal}
+                                    status={item.status}
+                                    total_harga={item.total_harga}
+                                    nama_customer={item.nama_customer}
+                                />
+                            ))
                         ) : (
                             <h2 className="font-semibold text-center">
                                 Tidak ada transaksi
