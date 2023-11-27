@@ -104,10 +104,8 @@ export default function CartPage({ session }: { session: Session }) {
         setisChanged(true);
     };
 
-    console.log(isChanged);
-
     return (
-        <div>
+        <div id="keranjang_cart">
             {isLoading ? (
                 <div className="absolute translate-x-[-50%] translate-y-[-50%] animate-pulse top-[50%] left-[50%] text-h2  font-raleway font-bold">
                     <div>Loading...</div>
@@ -132,22 +130,33 @@ export default function CartPage({ session }: { session: Session }) {
                                 </div>
                             ) : (
                                 <div>
-                                    {dataKeranjang.map(
-                                        (
-                                            item: ClothesCartData,
-                                            index: number
-                                        ) => (
-                                            <CartCard
-                                                subtract={() =>
-                                                    handleSubtract(index)
-                                                }
-                                                key={index}
-                                                pakaianNama={item.pakaianNama}
-                                                total_harga={item.total_harga}
-                                                kuantitas={item.kuantitas}
-                                            />
-                                        )
-                                    )}
+                                    <div>
+                                        {dataKeranjang.map(
+                                            (
+                                                item: ClothesCartData,
+                                                index: number
+                                            ) => (
+                                                <CartCard
+                                                    subtract={() =>
+                                                        handleSubtract(index)
+                                                    }
+                                                    key={index}
+                                                    pakaianNama={
+                                                        item.pakaianNama
+                                                    }
+                                                    total_harga={
+                                                        item.total_harga
+                                                    }
+                                                    kuantitas={item.kuantitas}
+                                                />
+                                            )
+                                        )}
+                                    </div>
+                                    <div className="flex justify-end ">
+                                        <TotalHargaCart
+                                            total_harga={totalPriceCart}
+                                        />
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -186,7 +195,12 @@ export default function CartPage({ session }: { session: Session }) {
                                                 );
                                             }, 1500);
                                         }}
-                                        className="items-center justify-center px-4 py-2 font-bold text-white"
+                                        disabled={isChanged}
+                                        className={`items-center justify-center px-4 py-2 font-bold text-white ${
+                                            isChanged
+                                                ? "hover:cursor-not-allowed bg-primary-400 hover:bg-primary-400"
+                                                : ""
+                                        }`}
                                     />
                                 </div>
                             ) : (
