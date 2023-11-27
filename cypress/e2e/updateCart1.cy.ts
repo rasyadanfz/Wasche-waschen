@@ -1,129 +1,106 @@
-function generateRandomString(length: number): string {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-
-    for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        result += characters.charAt(randomIndex);
-    }
-
-    return result;
-}
-
-
-describe('Update a cart',()=>{
-
-
-    let cntBeforeDelete:number = 0;
-    let cntAfterDelete:number = 0;
-    let pakaianDeleted:string;
-    let gmail:string;
-    let password:string;
-
-    before(()=>{
-        // make a gmail
-        gmail = generateRandomString(10) + "@gmail.com";
-        password = generateRandomString(10);
-
-        // register it 
-        cy.visit('/register')
-        cy.get('*[class^="flex flex-col gap-y-1 font-raleway"]')
-            .each(($div,index)=>{
-                
-                if(index === 1){
-                    // simulate typing gmail
-                    cy.wrap($div)
-                        .find('input')
-                        .type(`${gmail}`);
-                }else{
-                    cy.wrap($div)
-                        .find('input')
-                        .type(`${password}`);
-                }
-            })
-
-            cy.get('#submit')
-                .click()
-            cy.wait(5000)
-
-    })
-
+describe("Update a cart", () => {
     beforeEach(() => {
-        cy.loginWithTestAccount(`${gmail}`, `${password}`);
+      cy.loginWithTestAccount("test12345@gmail.com", "fuckyou");
     });
-
-
-    it('It should add some clothes',()=>{
-        cy.get('#pakaian_card') 
+  
+    it("Update Cart", () => {
+      // nambah katalog
+      const jumlahCatalog = 6;
+      let i = 0;
+      let kuantitas = 0;
+      let limit = 2;
+  
+     cy.get('#pakaian_card') 
             .children('div')
             .each(($div)=>{
-                cy.wrap($div)
-                    .find('button')
-                    .click();
+                for(let i = 0;i < limit;i++){
+                    if(i === 0){
+                        cy.wrap($div)
+                        .find('#tambah_button')
+                        .click();
+                    }else{
+                        cy.wrap($div)
+                        .find('#add_button')
+                        .click();
+                    }
 
-                cy.wrap($div)
-                    .find('#add_button')
-                    .click();
+                }
                 
-                cntBeforeDelete++;
             })     
+        
+        cy.wait(1500)
 
         cy.get('#add_to_cart')
             .find('button')
             .click()
 
         cy.wait(3000)
-    })
+  
+      let jumlahCart = 0;   
+      cy.visit('/cart')
 
-    it('it should subtract all element by 1 and then delete one of the pakaian',()=>{
-        cy.visit('/cart')
-        // delete
-        cy.get('#keranjang_card')
+      cy.get("div#keranjang_card")
             .children('div')
-            .each(($div,index)=>{
-
-                cy.wrap($div)
-                    .find('button')
-                    .click()
-                    .click()
-                    .click()
-                    .click()
-                    
-
+            .each(($div)=>{
+                    cy.wrap($div)
+                        .find('div > div > div')
+                        .eq(3)
+                        .find('p')
+                        .eq(0)
+                        .invoke('text')
+                        .then((text)=>{
+                            kuantitas = parseInt(text);
+                            cy.log(`${text}`)
+                            kuantitas+=2
+                            while(kuantitas>0){
+                                kuantitas--;
+                                cy.wrap($div)
+                                .find('button')
+                                .click()
+                                .wait(1000);
+                            }
+                            // for(let i = 0;i < kuantitas;i++){
+                            //     cy.wrap($div)
+                            //         .find('button')
+                            //         .click();
+                            // }
+                        })
             })
-
-
-        cy.get('#update_keranjang')
-            .click()
-
-        cy.wait(10000)
-
-        // checking
-
-        // cy.get('#keranjang_card')
-        //     .children('div')
-        //     .each(($div)=>{
-        //         cntAfterDelete++;
-        //         cy.wrap($div)
-        //             .find('div > div > h1')
-        //             .invoke('text')
-        //             .then((text)=>{
-        //                 expect(text).not.equal(pakaianDeleted);
-        //             })
-        //         cy.wrap($div)
-        //             .children('div')
-        //             .eq(2)
-        //             .children('p')
-        //             .eq(0)
-        //             .should('equal','1')
-        //     })
-
-        
-        
-
-        
-    })
-
-})
-
-
+  
+    //   cy.get("div#keranjang_cart")
+    //     .find("div#keranjang_card")
+    //     .its("length")
+    //     .then((length) => {
+    //       jumlahCart += length;
+    //       // substract hingga kuantitas menjadi 0 menggunakan button#substract_button
+    //       for (let j = 0; j < jumlahCart; j++) {
+    //         let kuantitas = 0;
+  
+    //         // ambil kuantitas dari CartCard
+    //         cy.get("div#keranjang_card")
+    //           .eq(j)
+    //           .find('p#kuantitas')
+    //           .invoke('text')
+    //           .then((text) => {
+    //             kuantitas = parseInt(text);
+    //             cy.log(`Kuantitas ${kuantitas}`)
+    //             // substract hingga kuantitas menjadi 0 menggunakan button#substract_button
+    //             for (let k = 0; k < kuantitas; k++) {
+    //               cy.get("div#keranjang_cart")
+    //                 .find("div#keranjang_card")
+    //                 .eq(j)
+    //                 .find("button#substract_button")
+    //                 .click();
+    //             }
+    //           });
+    //       }
+    //     });
+  
+      cy.get("div#keranjang_cart").find("button#update_keranjang").click();
+  
+      cy.wait(5000);
+      cy.get("div#keranjang_cart").contains("Keranjang Kosong");
+    });
+  });
+  
+  

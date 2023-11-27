@@ -36,6 +36,7 @@ const KatalogPakaian = () => {
     }
 
     const [isCreateFormVisible, setIsCreateFormVisible] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [dataPakaian, setDataPakaian] = useState([]);
     const [query, setQuery] = useState("");
     const [filteredData, setFilteredData] = useState(dataPakaian);
@@ -61,6 +62,7 @@ const KatalogPakaian = () => {
             const data = await getDataPakaian();
             setDataPakaian(data);
             setFilteredData(data);
+            setIsLoading(false);
         };
 
         fetchData();
@@ -156,9 +158,9 @@ const KatalogPakaian = () => {
     };
 
     return (
-        <div id="katalog_pakaian">
-            <div className="mx-5 min-h-screen mb-[50px] bg-backgroundcolor">
-                <div className="container mx-auto max-w-screen-lg">
+        <div id="katalog_pakaian" className="">
+            <div className="min-h-screen mb-[50px] bg-backgroundcolor">
+                <div className="container mx-auto xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md pl-5 pr-10 sm:px-0">
                     <h1 className="font-bold text-h3 mt-[100px] font-raleway md:text-h2">
                         Pakaian
                     </h1>
@@ -190,28 +192,34 @@ const KatalogPakaian = () => {
                         {admin && (
                             <button
                                 id="create_button"
-                                className="font-semibold hover:cursor-pointer text-white justify-center rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center h-14 border border-black hover:bg-secondary-300 bg-secondary-400"
+                                className="font-semibold mb-3 md:mb-0 hover:cursor-pointer text-white justify-center rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center h-14 border border-black hover:bg-secondary-300 bg-secondary-400"
                                 onClick={() => setIsCreateFormVisible(true)}
                             >
                                 Add New Pakaian
                             </button>
                         )}
                     </div>
-                    <div
-                        id="pakaian_card"
-                        className="flex flex-col gap-y-3 md:grid md:grid-cols-4 md:gap-4"
-                    >
-                        {currentItems.map((pakaian: ExistingPakaian) => (
-                            <PakaianComponent
-                                pakaian={pakaian}
-                                key={pakaian.id}
-                                updateCartCount={updateCartCount}
-                                updatePakaianInCart={updatePakaianInCart}
-                                disabledButton={disabledButton}
-                                admin={admin}
-                            />
-                        ))}
-                    </div>
+                    {isLoading ? (
+                        <div className="absolute translate-x-[-50%] translate-y-[-50%] animate-pulse top-[60%] left-[50%] text-h2  font-raleway font-bold">
+                            <div>Loading...</div>
+                        </div>
+                    ) : (
+                        <div
+                            id="pakaian_card"
+                            className="flex flex-col gap-y-3 md:grid md:grid-cols-5 md:gap-x-8"
+                        >
+                            {currentItems.map((pakaian: ExistingPakaian) => (
+                                <PakaianComponent
+                                    pakaian={pakaian}
+                                    key={pakaian.id}
+                                    updateCartCount={updateCartCount}
+                                    updatePakaianInCart={updatePakaianInCart}
+                                    disabledButton={disabledButton}
+                                    admin={admin}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
 

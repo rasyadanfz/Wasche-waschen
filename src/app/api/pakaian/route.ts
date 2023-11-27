@@ -102,6 +102,19 @@ export async function DELETE(req: NextRequest) {
                 id: id as string,
             },
         });
+
+        const deletedPakaian = await prisma.pakaian.findUnique({
+            where: {
+                id: deletedData.pakaianId,
+            },
+        });
+
+        const deleteKeranjangOrderlines = await prisma.orderline.deleteMany({
+            where: {
+                pakaianId: deletedPakaian?.id,
+                transaksiId: undefined,
+            },
+        });
         return NextResponse.json(deletedData, { status: 200 });
     } catch (err) {
         console.error(err);

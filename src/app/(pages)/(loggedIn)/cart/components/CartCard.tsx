@@ -16,7 +16,7 @@ export default function CartCard({
                         </h1>
                         <div className="flex flex-row gap-5">
                             <div className="">
-                                <p>Kuantitas</p>
+                                <p id="kuantitas">Kuantitas</p>
                                 <p>Total Harga</p>
                             </div>
                             <div className="ml-4">
