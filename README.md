@@ -5,7 +5,7 @@
 </div>
 <br>
 
-# Wäsche waschen
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Itim&size=48&pause=1000&center=true&vCenter=true&random=false&width=650&height=60&lines=W%C3%A4scheWaschen;18221041+Frendy+Sanusi;18221071+Ahmad+Rizki;18221079+Jonathan+Arthurito;18221103+Rasyadan+Faza)](https://git.io/typing-svg)
 
 ## List of Contents
 1. [Description](#description)
