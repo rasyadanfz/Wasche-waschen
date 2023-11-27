@@ -113,6 +113,7 @@ export async function POST(req: NextRequest) {
                                 id: keranjang.id,
                             },
                         },
+                        transaksiId: undefined,
                     },
                 });
             } else {
