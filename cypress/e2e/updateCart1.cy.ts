@@ -44,7 +44,7 @@ describe("Update a cart", () => {
             .each(($div)=>{
                     cy.wrap($div)
                         .find('div > div > div')
-                        .eq(3)
+                        .eq(4)
                         .find('p')
                         .eq(0)
                         .invoke('text')
