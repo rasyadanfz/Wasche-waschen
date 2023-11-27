@@ -43,8 +43,7 @@ async function createNewTransaction(userId: string) {
         }),
     });
 
-    console.log(res);
-
+    
     const data = await res.json();
 
     return data;
@@ -104,6 +103,7 @@ export default function CartPage({ session }: { session: Session }) {
         setisChanged(true);
     };
 
+
     return (
         <div id="keranjang_cart">
             {isLoading ? (
@@ -130,7 +130,7 @@ export default function CartPage({ session }: { session: Session }) {
                                 </div>
                             ) : (
                                 <div>
-                                    <div>
+                                    <div id="keranjang_card">
                                         {dataKeranjang.map(
                                             (
                                                 item: ClothesCartData,
@@ -181,6 +181,7 @@ export default function CartPage({ session }: { session: Session }) {
                                         text="Update Keranjang"
                                     />
                                     <CreateOrderButton
+                                        id="Create_Order"
                                         onClick={async () => {
                                             await createNewTransaction(
                                                 session!.user.id
@@ -195,6 +196,7 @@ export default function CartPage({ session }: { session: Session }) {
                                                 );
                                             }, 1500);
                                         }}
+
                                         disabled={isChanged}
                                         className={`items-center justify-center px-4 py-2 font-bold text-white ${
                                             isChanged
