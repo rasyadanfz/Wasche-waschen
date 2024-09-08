@@ -61,8 +61,7 @@ Perangkat lunak Wäsche waschen merupakan sebuah sistem manajemen laundry berbas
 ### By localhost
 1. Clone respository ini
 
-2. Copy file .env pada link berikut
-<br>https://drive.google.com/file/d/17x_NA3kzNUCkU6VmrA1oGRtvlHGO_CFm/view?usp=sharing
+2. Copy file .env
 <br><br>Note: file .env merupakan file rahasia sehingga hanya user tertentu saja yang bisa membuka link tersebut
 
 3. Jalankan aplikasi menggunakan command berikut
